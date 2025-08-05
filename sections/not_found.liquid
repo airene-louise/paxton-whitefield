@@ -1,0 +1,27 @@
+<div class="not-found__container">
+  <h1 class="not-found__title">404</h1>
+  <p class="not-found__message">{{ section.settings.message }}</p>
+  <a href="{{ shop.url }}" class="not-found__button">{{ section.settings.button_text }}</a>
+</div>
+
+{% schema %}
+  {
+    "name": "404",
+    "tag": "section",
+    "class": "not-found",
+    "settings": [
+      {
+        "type": "text",
+        "id": "message",
+        "label": "Message",
+        "default": "The page you are looking for could not be found."
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button",
+        "default": "Continue Shopping"
+      }
+    ]
+  }
+{% endschema %}

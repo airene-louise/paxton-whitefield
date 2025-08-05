@@ -1,0 +1,55 @@
+<div class="collection__header">
+{% if collection.metafields.custom.collection_page_header %}
+  {{ collection.metafields.custom.collection_page_header  | image_url: width: 1464, height: 360, crop: 'center' | image_tag:
+    loading: "lazy",
+    sizes: '(min-width: 750px) 25vw, 100vw',
+    widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+  }}
+{% else %}
+  {% if collection.image %}
+    {{ collection.image | image_url: width: 1464, height: 360, crop: 'center' | image_tag:
+      loading: "lazy",
+      sizes: '(min-width: 750px) 25vw, 100vw',
+      widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+    }}
+  {% endif %}
+{% endif %}
+  <div class="collection__header__container">
+  {% if collection.title %}
+    <h1 class="collection__header__title">{{ collection.title }}</h1>
+  {% endif%}
+  {% if collection.description %}
+    <div class="collection__header__description rte">
+      {{ collection.description }}
+    </div>
+  {% endif %}
+  </div>
+  {% if collection.metafields.custom.connected_collections %}
+    <div class="collection__connected__container">
+      <div class="collection__connected">
+        {% for collection in collection.metafields.custom.connected_collections.value %}
+          <a class="collection__connected__item" href="{{ sibling_collection.url }}">
+            {% if collection.metafields.custom.short_title != blank %}
+              {{ collection.metafields.custom.short_title.value }}
+            {% else %}
+              {{ collection.title }}
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>  
+
+{% if collection.metafields.custom.collection_page_header == blank and collection.image == blank %}
+  <style>
+    .collection__header {
+      padding-top: 100px;
+    }
+    @media (min-width: 768px) {
+      .collection__header {
+        padding-top: 150px;
+      }
+    }
+  </style>
+{% endif %}

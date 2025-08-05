@@ -1,0 +1,321 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "show_title": false
+      }
+    },
+    "page_header_7HQ8qD": {
+      "type": "page-header",
+      "settings": {
+        "background_image": "shopify:\/\/shop_images\/Book_and_Appointment_Banner_-_Green_Street_Bath-_2160x720px.jpg",
+        "page_title": "Book an Appointment",
+        "page_subtitle": "Free Wedding & Celebration Cake Cheese Cake Consultancy",
+        "show_page_title": true,
+        "hide_image_on_mobile": false
+      }
+    },
+    "ancillary_page_nav_RA49w9": {
+      "type": "ancillary-page-nav",
+      "blocks": {
+        "link_qdTfJN": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/terms-conditions",
+            "button_text": "Terms & Conditions"
+          }
+        },
+        "link_gQLNH8": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/privacy-cookies",
+            "button_text": "Privacy & Cookies"
+          }
+        },
+        "link_fzLXFi": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/faq",
+            "button_text": "FAQs"
+          }
+        },
+        "link_g9YqcP": {
+          "type": "Link",
+          "settings": {
+            "button_url": "",
+            "button_text": "Best sellers"
+          }
+        }
+      },
+      "block_order": [
+        "link_qdTfJN",
+        "link_gQLNH8",
+        "link_fzLXFi",
+        "link_g9YqcP"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "content_richtext_btXP4c": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<h3>Book in for your Wedding Celebration Cheese Cake Consultancy <\/h3><p>From intimate ceremonies to family gatherings, it’s been a real pleasure talking to excited couples planning their upcoming celebrations.<\/p><p>We have a delicious selection of cheese ‘wedding cakes’ perfect for your big day. Alternatively, if you fancy something a little more bespoke, why not book in with our shops who can schedule you in for an appointment for in-store tastings. Held at our shops, the tastings are there for your to find your dream cheese tower and to allow the undivided attention of an expert cheesemonger. <\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "center",
+        "margin": 30,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "images_three_VHDjxr": {
+      "type": "images_three",
+      "blocks": {
+        "image_FhpLwW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Book_and_Appointment_Page_-_Jermyn_Street_Church_Wedding_Cake_-_600x700px.jpg"
+          }
+        },
+        "image_3QAQq3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Book_and_Appointment_Page_-_Wedding_Cake_-_600x700px.jpg"
+          }
+        },
+        "image_gGM634": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Book_and_Appointment_Page_-_JST_Wedding_Cake_-_600x700px.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_FhpLwW",
+        "image_3QAQq3",
+        "image_gGM634"
+      ],
+      "settings": {
+        "margin_desktop": 40,
+        "margin_mobile": 30,
+        "padding_desktop": 0,
+        "padding_mobile": 0,
+        "background_color": "#fff9f4"
+      }
+    },
+    "content_richtext_Frrgbq": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<h3>Book your free wedding or celebration cheese cake appointment<\/h3><p>To arrange your free cheese cake consultancy, please call or email your nearest Paxton & Whitfield shop:<\/p><p><strong>London Jermyn Street:<br\/><\/strong>Telephone:<strong> <\/strong><a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/Href=tel:0207930259\" target=\"_blank\">020 7930 0259<\/a><a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/Tel:%20020%207584%200751\"><br\/><\/a><br\/>Email: <a href=\"mailto:jermynstreet@paxtonandwhitfield.co.uk\">jermynstreet@paxtonandwhitfield.co.uk<\/a><\/p><p>Or Book online <a href=\"https:\/\/paxtonandwhitfield.co.uk\/products\/jermyn-street-wedding-appt\" title=\"https:\/\/paxtonandwhitfield.co.uk\/products\/jermyn-street-wedding-appt\">HERE<\/a><\/p><p><strong>London Cale Street: <br\/><\/strong>Telephone:<strong> <\/strong><a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/Tel:%20020%207584%200751\">020 7584 0751<br\/><\/a><br\/>Email: <a href=\"mailto:calestreet@paxtonandwhitfield.co.uk\">calestreet@paxtonandwhitfield.co.uk<\/a><\/p><p><strong>Bath: <br\/><\/strong>Telephone:<strong> <\/strong><a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/Tel:%2001225%20466403\">01225 466403<br\/><\/a><br\/>Email: <a href=\"mailto:bath@paxtonandwhitfield.co.uk\">bath@paxtonandwhitfield.co.uk<\/a><br\/><br\/><strong>Canterbury:<\/strong><br\/>Telephone: <a href=\"tel:01227%20785535\">01227 785535<\/a><br\/>Email: <a href=\"mailto:canterbury@paxtonandwhitfield.co.uk\">canterbury@paxtonandwhitfield.co.uk<\/a><\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "center",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "content_richtext_MWhDcC": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<h3>Browse our cheese wedding cakes online<\/h3><p>Our selection of cheese wedding cakes online are designed to work for gatherings of 50, 80, 100, 110 and 220 guests. You can choose one of these ready-designed cheese cakes, or speak to our cheese experts to customise a cake or cheese catering platter to suit your big day. Browse our <a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/shop\/cheese-wedding-cakes\">cheese wedding cakes here<\/a>. Don't forget, with online wedding cakes, you can order a sample box to your chosen address to taste before you buy! And get the money from the sample box off your cake when you order. <\/p><p>For advice on how to display and serve your tiered cheese cake, read our handy <a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/blog\/planning-a-wedding-cheese-cake\">wedding cheese cake Q&A<\/a> with our Bath Manager. <\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "center",
+        "margin": 50,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 12
+      }
+    },
+    "faqs_W6JWF3": {
+      "type": "faqs",
+      "blocks": {
+        "faq_R9kmzX": {
+          "type": "faq",
+          "settings": {
+            "question": "What cheese can we have?",
+            "answer": "<p>We stock over 150 Artisan cheeses in the shops so there is a wide range to suit all tastes. The harder cheeses form the base so they can support the rest of the cake, then a mixture of cheeses becoming gradually smaller make up the top of the cake. Please bear in mind that some cheeses are seasonal and they also have a different taste at different times of the year.<\/p>"
+          }
+        },
+        "faq_XKH6Hp": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you decorate the cakes?",
+            "answer": ""
+          }
+        },
+        "faq_NYpfwb": {
+          "type": "faq",
+          "settings": {
+            "question": "What do we serve with the cake?",
+            "answer": ""
+          }
+        },
+        "faq_e4eQRd": {
+          "type": "faq",
+          "settings": {
+            "question": "What do we present the cake on?",
+            "answer": ""
+          }
+        },
+        "faq_aWNBNX": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you deliver?",
+            "answer": ""
+          }
+        },
+        "faq_jJRwkX": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does the cake need to be stored?",
+            "answer": ""
+          }
+        },
+        "faq_drjjtG": {
+          "type": "faq",
+          "settings": {
+            "question": "How soon do I need to order the cake?",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_R9kmzX",
+        "faq_XKH6Hp",
+        "faq_NYpfwb",
+        "faq_e4eQRd",
+        "faq_aWNBNX",
+        "faq_jJRwkX",
+        "faq_drjjtG"
+      ],
+      "disabled": true,
+      "settings": {
+        "narrow__width__container": true,
+        "title": "Frequently asked questions"
+      }
+    },
+    "explore_products_JeVhrb": {
+      "type": "explore_products",
+      "blocks": {
+        "product_KPMteE": {
+          "type": "product",
+          "settings": {
+            "product": "sample-box-wedding-cheese-cake-for-100"
+          }
+        },
+        "product_zKqkVY": {
+          "type": "product",
+          "settings": {
+            "product": "sample-box-wedding-cheese-cake-for-80"
+          }
+        },
+        "product_4VtDiL": {
+          "type": "product",
+          "settings": {
+            "product": "sample-box-wedding-cheese-cake-for-110"
+          }
+        },
+        "product_YPKQm7": {
+          "type": "product",
+          "settings": {
+            "product": "sample-box-wedding-cheese-cake-for-220"
+          }
+        },
+        "product_7DkkYU": {
+          "type": "product",
+          "settings": {
+            "product": "sample-box-wedding-cheese-cake-for-50"
+          }
+        }
+      },
+      "block_order": [
+        "product_KPMteE",
+        "product_zKqkVY",
+        "product_4VtDiL",
+        "product_YPKQm7",
+        "product_7DkkYU"
+      ],
+      "settings": {
+        "products_on_article_page": false,
+        "title": "Discover our Sample Boxes"
+      }
+    },
+    "explore_products_D8Xb7e": {
+      "type": "explore_products",
+      "blocks": {
+        "product_7kKFDX": {
+          "type": "product",
+          "settings": {
+            "product": "wedding-cheese-cake-for-50"
+          }
+        },
+        "product_MdBRqe": {
+          "type": "product",
+          "settings": {
+            "product": "wedding-cheese-cake-for-80"
+          }
+        },
+        "product_CYn6T6": {
+          "type": "product",
+          "settings": {
+            "product": "wedding-cheese-cake-for-100"
+          }
+        },
+        "product_Nxczmt": {
+          "type": "product",
+          "settings": {
+            "product": "wedding-cheese-cake-for-100"
+          }
+        },
+        "product_UzpH7Y": {
+          "type": "product",
+          "settings": {
+            "product": "wedding-cheese-cake-for-110"
+          }
+        },
+        "product_WaQVQB": {
+          "type": "product",
+          "settings": {
+            "product": "wedding-cheese-cake-for-220"
+          }
+        }
+      },
+      "block_order": [
+        "product_7kKFDX",
+        "product_MdBRqe",
+        "product_CYn6T6",
+        "product_Nxczmt",
+        "product_UzpH7Y",
+        "product_WaQVQB"
+      ],
+      "settings": {
+        "products_on_article_page": false,
+        "title": "Explore our Online Wedding Cakes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "page_header_7HQ8qD",
+    "ancillary_page_nav_RA49w9",
+    "content_richtext_btXP4c",
+    "images_three_VHDjxr",
+    "content_richtext_Frrgbq",
+    "content_richtext_MWhDcC",
+    "faqs_W6JWF3",
+    "explore_products_JeVhrb",
+    "explore_products_D8Xb7e"
+  ]
+}

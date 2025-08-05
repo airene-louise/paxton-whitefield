@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "main": {
+      "type": "cart",
+      "blocks": {
+        "cart_info_icons_MH9JWt": {
+          "type": "cart_info_icons",
+          "settings": {
+            "info_icon_title": "CHOOSE YOUR DELIVERY DAY",
+            "info_icon_image": "shopify:\/\/shop_images\/delivery-date.svg"
+          }
+        },
+        "cart_info_icons_h4djdB": {
+          "type": "cart_info_icons",
+          "settings": {
+            "info_icon_title": "All cheese is cut to order",
+            "info_icon_image": "shopify:\/\/shop_images\/knife_c6bfe3d6-fbc4-41ba-a67b-349ed32900e8.svg"
+          }
+        },
+        "cart_info_icons_qCmDCd": {
+          "type": "cart_info_icons",
+          "settings": {
+            "info_icon_title": "Click & Collect is available to our shops",
+            "info_icon_image": "shopify:\/\/shop_images\/Vector.svg"
+          }
+        }
+      },
+      "block_order": [
+        "cart_info_icons_MH9JWt",
+        "cart_info_icons_h4djdB",
+        "cart_info_icons_qCmDCd"
+      ],
+      "settings": {
+        "empty_title": "Your cart is empty",
+        "continue_shopping": "Continue shopping",
+        "continue_shopping_url": "\/",
+        "cart-breadcrumbs": "Basket,Checkout",
+        "cart_message": "",
+        "checkout_block_message": "All cut cheeses are cut to order and will have approximately 12 days shelf life from the date of dispatch.",
+        "weight_message": "Cheese weights ordered in multiple quantities are cut as these sizes, and weights ordered as a whole will not be cut.",
+        "recos_title": "Our cheesemongers also recommend",
+        "show_free_shipping": true,
+        "free_shipping_threshold": 40,
+        "open_hours": "Mon - Fri: 9am - 5pm"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

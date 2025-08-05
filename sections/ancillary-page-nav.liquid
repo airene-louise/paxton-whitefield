@@ -1,0 +1,41 @@
+<div class="ancillary-page-nav">
+  <div class="ancillary-page-nav__container">
+    <nav class="ancillary-page-nav__nav-link">
+    {% for block in section.blocks %}
+    <a href="{{ block.settings.button_url }}">{{ block.settings.button_text }}</a>
+    {% endfor %}
+   </nav>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ancillary Page Nav",
+  "class": "ancillary-page-navigation-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "Link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Navigation URL"
+        },
+         {
+          "type": "text",
+          "id": "button_text",
+          "label": "Navigation Text",
+          "default": "Best sellers"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ancillary Page Nav"
+    }
+  ]
+}
+{% endschema %}

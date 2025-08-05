@@ -1,0 +1,24 @@
+{%
+  ############################################################################
+  # This section is used to render cart recommendations using the section
+  # rendering API.
+  ############################################################################
+%}
+
+{% if recommendations.performed and recommendations.products_count > 0 %}
+<div class="cart-page__recos__swiper swiper">
+  <div class="swiper-wrapper">
+    {% for product in recommendations.products %}
+      <div class="cart-page__recos__slide swiper-slide">
+        {% render 'product-card', product: product %}
+      </div>
+    {% endfor %}
+  </div>
+</div> 
+{% endif %}
+
+{% schema %}
+{
+  "name": "Cart recommendations"
+} 
+{% endschema %}

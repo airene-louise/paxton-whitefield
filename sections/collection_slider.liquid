@@ -1,0 +1,109 @@
+<section  class="collection-slider__wrapper">
+  {% if section.settings.title %}
+    <h2 class="collection-slider__title">{{ section.settings.title }}</h2>
+  {% endif %}
+  {% if section.settings.description %}
+    <p class="collection-slider__text">{{ section.settings.description }}</p>
+  {% endif %}
+  <div class="collection-slider__swiper swiper">
+    <div class="swiper-wrapper collection-slider__swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide collection-slider__swiper-slide">
+          {% render 'collection-card', block: block %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="collection-slider__controls">
+    <div class="collection-slider__swiper-button-prev">
+      {% render 'icons', icon: 'arrow-left-black' %}
+    </div>
+    <div class="collection-slider__pagination"></div>
+    <div class="collection-slider__swiper-button-next">
+      {% render 'icons', icon: 'arrow-right-black' %}
+    </div>
+  </div>
+</section>
+
+
+<!-- Initialize Swiper -->
+<script>
+  // console.log('cta link', '{{ cta_link }}')
+  document.addEventListener('swiperReady', () => {
+    new Swiper(".collection-slider__swiper", {
+      slidesPerView: 1,
+      breakpoints: {
+        768: {
+        slidesPerView: 3,
+        spaceBetween: 15,
+        },
+        1068: {
+        slidesPerView: 3,
+        spaceBetween: 15,
+        },
+        1268: {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        }
+      },
+      navigation: {
+        nextEl: ".collection-slider__swiper-button-next",
+        prevEl: ".collection-slider__swiper-button-prev",
+      },
+      pagination: {
+        el: ".collection-slider__pagination",
+        type: "fraction",
+      },
+      rewind: true,
+    })
+  })
+</script>
+
+
+  {% schema %}
+  {
+    "name": "Collection Slider",
+    "class": "collection-slider",
+    "max_blocks": 3,
+    "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    }
+    ],
+    "blocks":[
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings":[
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Collection link"
+      }
+      ]
+    }
+    ],    
+    "presets": [
+    {
+      "name": "Collection Slider"
+    }
+    ]
+  }
+  {% endschema %}

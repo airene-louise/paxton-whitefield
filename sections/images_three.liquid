@@ -1,0 +1,121 @@
+{% liquid
+  assign base_class = "images-three"
+%}
+
+<div class="{{ base_class }}__container">
+  <div class="{{ base_class }}__swiper swiper images-three__swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+      <div class="{{ base_class }}__item swiper-slide">
+        <div class="{{ base_class }}__item__image-container">
+          <img
+            class="{{ base_class }}__item__image"
+            src="{{ block.settings.image | image_url: width: 700 }}"
+            alt="{{ block.settings.image.alt }}"
+            width="367"
+            height="442"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --margin-desktop: {{ section.settings.margin_desktop }}px;
+    --margin-mobile: {{ section.settings.margin_mobile }}px;
+    --padding-desktop: {{ section.settings.padding_desktop }}px;
+    --padding-mobile: {{ section.settings.padding_mobile }}px;
+    --background-color: {{ section.settings.background_color }};
+  }
+</style>
+
+<script>
+  document.addEventListener('swiperReady', () => {
+    new Swiper(
+      '#shopify-section-{{ section.id }} .{{ base_class }}__swiper', {
+      slidesPerView: 1.5,
+      spaceBetween: 15,
+      slidesOffsetBefore: 20,
+      breakpoints: {
+        768: {
+          slidesPerView: 3,
+          slidesOffsetBefore: 0
+        }
+      }
+    })
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Three Column Images Block",
+  "class": "images-three",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_desktop",
+      "label": "Margin (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_mobile",
+      "label": "Margin (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Padding (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Padding (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three Column Images Block"
+    }
+  ]
+}
+{% endschema %}

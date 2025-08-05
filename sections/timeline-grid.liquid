@@ -1,0 +1,53 @@
+<div class="timeline-grid">
+  <div class="timeline-grid__container">
+    <h3 class="timeline-grid__title">{{ section.settings.timeline_title }}</h3>
+    <div class="timeline-grid__content">
+      {% for block in section.blocks %}
+        <div class="timeline-grid__content-item">
+          <h4 class="timeline-grid__content-item-title">{{ block.settings.timeline_grid_title }}</h4>
+          <p class="timeline-grid__content-item-copy">{{ block.settings.timeline_grid_copy }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Timeline Grid",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "timeline_title",
+      "label": "Timeline title",
+      "default": "Timeline Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "timeline_item",
+      "name": "Timeline grid item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "timeline_grid_title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "timeline_grid_copy",
+          "label": "Description",
+          "default": "Continued to develop our team through judging artisan food awards. James, Dan and Hero judged at British and World Cheese Awards and Dan and Jazz judged at the Great Taste Awards for the first time."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline Grid"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,51 @@
+<div class="article-image-three__wrapper">
+  <div class="article-image-three__swiper swiper article-image-three__swiper">
+  <div class="swiper-wrapper article-image-three__swiper-wrapper">
+    {% for post in article.metafields.custom.article_image_swiper.value %}
+    <div class="swiper-slide article-image-three__content">
+    <div class="article-image-three__content__photo">
+      <img src="{{ post.image | img_url: 'master' }}" alt="">
+    </div>
+    </div>
+  {% endfor %}
+  </div>
+  </div>
+</div>
+
+<!-- Initialize Swiper -->
+<script>
+  // console.log('cta link', '{{ cta_link }}')
+   document.addEventListener('swiperReady', () => {
+  new Swiper(".article-image-three__swiper", {
+  slidesPerView: 1.5,
+  spaceBetween: 15,
+  breakpoints: {
+  475: {
+     slidesPerView: 2,
+     spaceBetween: 15,
+  },
+  768: {
+     slidesPerView: 1.5,
+     spaceBetween: 15,
+  },
+   1210: {
+    slidesPerView: 3,
+    spaceBetween: 15,
+    }
+  },
+  loop: true,
+  })
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Article Image Swiper",
+  "class": "article-image-swiper",
+  "presets": [
+  {
+    "name": "Article Image Swiper"
+  }
+  ]
+}
+{% endschema %}

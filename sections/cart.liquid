@@ -1,0 +1,794 @@
+{% liquid
+  assign cart_breadcrumbs = section.settings['cart-breadcrumbs'] | split: ','
+  assign cartJson = cart | json
+  assign cartHasSurCharge = false
+  for item in cart.items
+    assign lowerCaseTitle = item.product.title | downcase
+    if lowerCaseTitle contains 'surcharge'
+      assign cartHasSurCharge = true
+      break
+    endif
+  endfor
+
+  assign cartEmpty = false
+  if cart.item_count == 0 or cartHasSurCharge and cart.item_count == 1
+    assign cartEmpty = true
+  endif
+%}
+
+<div class="cart-page__container">
+  {% if cart_breadcrumbs.size > 0 %}
+    <div class="cart-page__breadcrumbs">
+      <ul class="cart-page__breadcrumbs__list">
+        {% for breadcrumb in cart_breadcrumbs %}
+          <li class="cart-page__breadcrumbs__item {% if forloop.first %}active{% endif %}">
+            <span>{{ breadcrumb }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {%- if cartEmpty -%}
+    <div class="cart-page__empty">
+      <h2 class="cart-page__empty-title">{{ section.settings.empty_title }}</h2>
+      <a
+        href="{{ section.settings.continue_shopping_url }}"
+      >
+        {{ section.settings.continue_shopping }}
+      </a>
+    </div>
+
+  {%- else -%}
+    <div class="cart-page__header">
+      {% if section.settings.cart_message != blank %}
+        <div class="cart-page__message" data-closable>
+          {{ section.settings.cart_message }}
+
+          <button
+            class="cart-page__message__close"
+            type="button"
+            data-closable-button
+          >
+            {% render 'icons', icon: 'close' %}
+          </button>
+        </div>
+      {% endif %}
+
+      <h3 class="cart-page__title" data-cart-count="{{ cart.item_count }}">
+        {{ 'cart.my_cart' | t }}
+      </h3>
+    </div>
+
+    <div class="cart-page__main">
+      <div class="cart-page__items">
+        {% if section.blocks.size > 0 %}
+          <div class="cart-page__info-icons">
+            {% for block in section.blocks %}
+              <div class="cart-page__info-icon">
+                <img
+                  src="{{ block.settings.info_icon_image | image_url: width: 50 }}"
+                  alt="{{ block.settings.info_icon_title }}"
+                  width="50"
+                  height="50"
+                  loading="lazy"
+                  class="cart-page__info-icon__image"
+                >
+                <span class="cart-page__info-icon__title">{{ block.settings.info_icon_title }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if cart.item_count == 0 %}
+          <div class="cart-page__no-items">
+            <p>Nothing in your cart</p>
+          </div>
+        {% endif %}
+        {% for item in cart.items %}
+          {% unless item.product.title contains 'Surcharge' %}
+            <div class="cart-page__item">
+              <div class="cart-page__item__image-column">
+                <div class="cart-page__item__image-container">
+                  <a href="{{ item.product.url }}">
+                    <img
+                      src="{{ item.image.src | image_url }}"
+                      alt="{{ item.image.alt }}"
+                      class="cart-page__item__image"
+                      width="300"
+                      height="300"
+                      loading="lazy"
+                    >
+                  </a>
+                </div>
+              </div>
+              <div class="cart-page__item__info-column">
+                <div class="cart-page__item__info-container">
+                  <div class="cart-page__item__info">
+                    <a href="{{ item.product.url }}" style="text-decoration: none;">
+                      <p class="cart-page__item__title">{{ item.product.title }}</p>
+                    </a>
+                    {% if item.selling_plan_allocation != blank %}
+                      <span class="cart-page__item__sub">{{ item.selling_plan_allocation.selling_plan.name }}</span>
+                    {% endif %}
+
+                    {% if item.selling_plan_allocation != blank %}
+                      <p class="cart-page__item__unit-price hide-on-desktop">
+                        {{ item.original_price | money -}}
+                        {%- if item.selling_plan_allocation.compare_at_price > item.original_price -%}
+                          <span class="compare-at"
+                            >&nbsp;<strike>{{ item.selling_plan_allocation.compare_at_price | money }}</strike></span
+                          >
+                        {%- endif %}
+                      </p>
+                    {% else %}
+                      <p class="cart-page__item__unit-price hide-on-desktop">{{ item.original_price | money }}</p>
+                    {% endif %}
+                    {% unless item.product.has_only_default_variant %}
+                      <div class="cart-page__item__options-list">
+                        {% assign has_weight_option = false %}
+                        {% for option in item.options_with_values %}
+                          {% liquid
+                            assign option_value = option.value | downcase
+                            if option_value contains 'g' or option_value contains 'kg'
+                              assign has_weight_option = true
+                            endif
+                          %}
+                          <p class="cart-page__item__option">{{ option.value | capitalize }}</p>
+                        {% endfor %}
+                      </div>
+                    {% endunless %}
+
+                    {% if item.properties.size > 0 %}
+                      <div class="cart-page__item__properties">
+                        {% for property in item.properties %}
+                          {% unless property.first contains '_' %}
+                            <p class="cart-page__item__property">{{ property.first }}: {{ property.last }}</p>
+                          {% endunless %}
+                          {% if property.first == 'isGiftCard' and property.last == 'true' %}
+                            <p class="cart-page__item__property">This item is a gift card.</p>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+
+                    {% if item.product.metafields.custom.cart_message != blank %}
+                      <p class="cart-page__item__weight-message">{{ item.product.metafields.custom.cart_message }}</p>
+                    {% else %}
+                      {% if has_weight_option %}
+                        <p
+                          class="cart-page__item__weight-message cart-page__item__weight-message--desktop hide"
+                          data-weight-message
+                          data-variant-id="{{ item.variant_id }}"
+                          data-option-value="{{ option_value }}"
+                        >
+                          {{ section.settings.weight_message }}
+                        </p>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  <div class="cart-page__item__line-container">
+                    {% unless item.product.title contains 'Gift' %}
+                      <div class="cart-page__item__quantity-wrapper">
+                        <span class="cart-page__item__quantity-title">Qty:</span>
+
+                        <div
+                          class="cart-page__item__quantity-container"
+                          data-quantity-selector
+                          data-update-cart="true"
+                          data-line-item-id="{{ item.id }}"
+                        >
+                          <span class="cart-page__item__decrement" data-quantity-subtract>
+                            {% render 'icons', icon: 'minus' %}
+                          </span>
+
+                          <input
+                            data-id="{{ item.variant_id }}"
+                            max="{{ item.variant.inventory_quantity }}"
+                            min="1"
+                            type="text"
+                            pattern="\d*"
+                            class="cart-page__item__quantity"
+                            value="{{ item.quantity }}"
+                            name="quantity"
+                          >
+
+                          <span class="cart-page__item__increment" data-quantity-add>
+                            {% render 'icons', icon: 'plus' %}
+                          </span>
+                        </div>
+                      </div>
+                    {% endunless %}
+                    <p class="cart-page__item__total-price cart-page__item__total-price--desktop">
+                      {{ item.original_price | money }}
+                      {% if item.selling_plan_allocation.compare_at_price > item.original_price %}
+                        <span class="compare-at"
+                          >&nbsp;
+                          <strike>{{ item.selling_plan_allocation.compare_at_price | money }}</strike>
+                        </span>
+                      {% endif %}
+                    </p>
+
+                    <span data-id="{{ item.variant_id }}" class="cart-page__item__remove">
+                      {%- render 'icons', icon: 'trash' -%}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% if has_weight_option %}
+              <p
+                class="cart-page__item__weight-message cart-page__item__weight-message--mobile hide"
+                data-weight-message
+                data-variant-id="{{ item.variant_id }}"
+                data-option-value="{{ option_value }}"
+              >
+                {{ section.settings.weight_message }}
+              </p>
+            {% endif %}
+          {% endunless %}
+
+          {% if item.selling_plan_allocation != blank %}
+            {% liquid
+              assign object = item.selling_plan.metafields.pdp.subscription_message.value
+            %}
+            <div class="subscription-delivery-note">
+              {% render 'icons', icon: 'delivery' %}
+              <div class="subscription-delivery-note__text">
+                <span class="subscription-delivery-note__text__title">Please note:</span>
+                <span class="subscription-delivery-note__text__text"
+                  >Please note this subscription product is only available for delivery Tuesday to Friday</span
+                >
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        {% if cart.item_count > 0 %}
+          <div class="cart-page__recos hide">
+            <div class="cart-page__recos__header">
+              <h3 class="cart-page__recos__title">{{ section.settings.recos_title }}</h3>
+              <div class="cart-page__recos__nav">
+                <button class="cart-page__recos__nav__button cart-page__recos__nav__button--prev">
+                  {% render 'icons', icon: 'arrow-left' %}
+                </button>
+
+                <button class="cart-page__recos__nav__button cart-page__recos__nav__button--next">
+                  {% render 'icons', icon: 'arrow-right' %}
+                </button>
+              </div>
+            </div>
+
+            <div class="cart-page__recos__products"></div>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="cart-page__meta">
+        <div class="cart-page__meta__container">
+          {% if section.settings.checkout_block_message != blank %}
+            <div class="cart-page__meta__message">
+              <span>{{ section.settings.checkout_block_message }}</span>
+            </div>
+          {% endif %}
+
+          {% form 'cart', cart, class: 'cart-page__meta__form-wrapper' %}
+            <div class="cart-page__meta__options" data-accordion>
+              <div class="cart-page__meta__option" data-accordion-item>
+                <button
+                  class="cart-page__meta__option__title"
+                  type="button"
+                  data-accordion-toggle
+                >
+                  <span>{{ 'cart.checkout_block.add_note' | t }}</span>
+                  {% render 'icons', icon: 'accordion' %}
+                </button>
+
+                <div
+                  class="gift-message cart-page__meta__option__content"
+                  data-accordion-content
+                >
+                  <textarea
+                    name="note"
+                    type="text"
+                    rows="3"
+                    placeholder="e.g. leave in porch"
+                  >{{ cart.note }}</textarea>
+                </div>
+              </div>
+
+              <div class="cart-page__meta__option active" data-accordion-item>
+                <button
+                  class="cart-page__meta__option__title"
+                  type="button"
+                  data-accordion-toggle
+                >
+                  <span>{{ 'cart.checkout_block.add_gift_message' | t }}</span>
+                  {% render 'icons', icon: 'accordion' %}
+                </button>
+
+                <div
+                  class="gift-message cart-page__meta__option__content"
+                  data-accordion-content
+                >
+                  <textarea
+                    type="text"
+                    id="giftMessage"
+                    name="gift_message"
+                    placeholder="Enter gift message"
+                  >{{ cart.attributes["Gift message"] }}</textarea>
+
+                  <canvas
+                    id="giftCanvas"
+                    class="gift-canvas"
+                    width="800"
+                    height="50"
+                  ></canvas>
+                </div>
+              </div>
+
+              {% assign checkForGiftCard = false %}
+              {% for item in cart.items %}
+                {% if item.product.title contains 'Gift Card' or item.product.metafields.custom.gift_card != blank %}
+                  {% assign checkForGiftCard = true %}
+                {% endif %}
+              {% endfor %}
+
+              {% if cart.items.size == 1 and checkForGiftCard %}
+                {% assign checkForGiftCard = true %}
+              {% else %}
+                {% assign checkForGiftCard = false %}
+              {% endif %}
+
+              {% unless cartJson contains 'selling_plan' or checkForGiftCard %}
+                <div class="cart-page__meta__option">
+                  <p>{{ 'cart.checkout_block.choose_delivery_date' | t }}</p>
+                  <div class="cart-page__meta__option__message">
+                    <p>{{ 'cart.checkout_block.choose_delivery_date_message' | t }}</p>
+                  </div>
+                  <div class="cart-page__date-picker"></div>
+                </div>
+              {% endunless %}
+            </div>
+
+            {% if section.settings.show_free_shipping %}
+              {% unless cartJson contains 'selling_plan' or checkForGiftCard %}
+                {% liquid
+                  for item in cart.items
+                    if item.selling_plan_allocation != null
+                      assign has_subscription = true
+                      break
+                    endif
+                  endfor
+
+                  assign totalPrice = cart.total_price | divided_by: 100
+                  assign is_eligible = false
+                  if totalPrice >= section.settings.free_shipping_threshold or has_subscription
+                    assign is_eligible = true
+                  endif
+
+                  assign remaining = section.settings.free_shipping_threshold | minus: totalPrice
+                  if remaining < 0
+                    assign remaining = 0
+                  endif
+                %}
+                <div class="cart-page__free-shipping">
+                  <span class="cart-page__free-shipping__message--elegible {% unless is_eligible %}hide{% endunless %}">
+                    You are eligible for free shipping!
+                  </span>
+
+                  {% unless has_subscription %}
+                    <div class="cart-page__free-shipping__message--not-elegible {% if is_eligible %}hide{% endif %}">
+                      <span>
+                        Spend another <span class="money">{{ remaining | times: 100 | money }}</span> for free UK
+                        mainland delivery
+                      </span>
+                      <progress
+                        value="{{ cart.total_price }}"
+                        max="{{ section.settings.free_shipping_threshold | times: 100 }}"
+                      ></progress>
+                    </div>
+                  {% endunless %}
+                </div>
+              {% endunless %}
+            {% endif %}
+
+            <div class="cart-page__shipping-estimate-wrapper">
+              <span class="cart-page__shipping-estimate-header">
+                {{ 'cart.shipping_estimate_title' | t }}
+              </span>
+              <span class="cart-page__shipping-estimate">
+                {{ 'cart.shipping_estimate' | t }}
+              </span>
+            </div>
+
+            <div class="cart-page__total-wrapper">
+              <span class="minicart__footer__total-header">{{ 'cart.sub_total' | t }}:</span>
+              <span class="minicart__subtotal minicart__footer__total cart-page__total-price">
+                {{- cart.total_price | money -}}
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              class="cart-page__checkout-button"
+              name="checkout"
+            >
+              {{ 'cart.checkout' | t }}
+            </button>
+
+            <div class="cart-page__payment-icons">
+              <span class="cart-page__payment-icons__title">Accepted payment methods</span>
+              {% render : 'payment-icons' %}
+            </div>
+
+            <div class="cart-page__help">
+              <span class="cart-page__help-title">
+                {{ 'cart.help.title' | t }}
+              </span>
+
+              <div class="cart-page__help-content">
+                {% render : "icons", icon: "phone-icon" %}
+                <span>
+                  {{ 'cart.help.content_html' | t: phone: shop.phone }}
+                </span>
+                <span class="cart-page__help-open-hours">
+                  {{ 'cart.help.working_hours' | t }}
+                </span>
+              </div>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- unless cartEmpty %}
+  <script>
+
+    function handleAddToCart(variantID) {
+      Cart.addItem(variantID);
+      location.reload();
+    }
+
+    document.addEventListener("cartReady", function() {
+
+      // Update quantity when user types a new quantity
+      const quantityInputs = document.querySelectorAll('.cart-page__item__quantity');
+        quantityInputs.forEach(quantityInput => {
+        quantityInput.addEventListener('input', event => {
+          if (parseInt(event.target.value) && event.target.value != "") {
+          if (parseInt(event.target.value) > parseInt(event.target.max)) {
+            event.target.value = event.target.max;
+          }
+          Cart.changeItemQuantity(event.target.dataset.id, event.target.value);
+          }
+        });
+
+        toggleWeightMessages();
+
+        const form = document.querySelector('form[action="/cart"]');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          if(event.target.note.value != "") {
+            Cart.addNote(event.target.note.value);
+          }
+          if(event.target.gift_message.value != "") {
+            Cart.addAttribute("Gift Message", event.target.gift_message.value);
+          }
+          window.location.href = "/checkout";
+        });
+      });
+
+      const removes = document.querySelectorAll('.cart-page__item__remove');
+        removes.forEach(remove => {
+        remove.addEventListener('click', event => {
+        const removeId = event.target;
+        Cart.changeItemQuantity(removeId.dataset.id, "0");
+        const lineItem = removeId.closest(".cart-page__item");
+        if (lineItem) lineItem.remove();
+        });
+      });
+
+
+
+    })
+
+    document.addEventListener("cartDataUpdated", function() {
+      if (Cart.cartData.item_count === 0) {
+        location.reload();
+        return;
+      }
+      const subTotal = document.querySelector('.cart-page__total-price');
+      const cartItemQuantity = document.querySelector('.cart-page__item-quantity');
+      const freeShippingProgress = document.querySelector('.cart-page__free-shipping progress');
+      if (subTotal) {
+        subTotal.innerHTML = toMoneyString(Cart.cartData.total_price);
+      }
+      if (cartItemQuantity) {
+        cartItemQuantity.innerHTML = `${Cart.cartData.item_count} items`;
+      }
+      if (freeShippingProgress) {
+        const totalPrice = Cart.cartData.total_price;
+        const threshold = {{ section.settings.free_shipping_threshold | times: 100 }};
+        const elegibleMessage = document.querySelector('.cart-page__free-shipping__message--elegible');
+        const remainingMoney = document.querySelector('.cart-page__free-shipping__message--not-elegible .money');
+        const notElegibleMessage = document.querySelector('.cart-page__free-shipping__message--not-elegible');
+        let remaining = threshold - totalPrice;
+        if (remaining < 0) {
+          remaining = 0;
+        }
+        if (totalPrice >= threshold) {
+          freeShippingProgress.value = threshold;
+          elegibleMessage.classList.remove('hide');
+          notElegibleMessage.classList.add('hide');
+        } else {
+          freeShippingProgress.value = totalPrice;
+          remainingMoney.innerHTML = toMoneyString(remaining);
+          elegibleMessage.classList.add('hide');
+          notElegibleMessage.classList.remove('hide');
+        }
+      }
+      toggleWeightMessages();
+
+    })
+
+    function toggleWeightMessages() {
+      const weightMessages = document.querySelectorAll(
+        '[data-weight-message]'
+      );
+      if (weightMessages.length === 0) return;
+
+      const weightRegex = /(\d+)(g|kg)/;
+      weightMessages.forEach(message => {
+        const optionValue = message.dataset.optionValue;
+        if (!weightRegex.test(optionValue)) return;
+
+        const variantId = message.dataset.variantId;
+        const variant = Cart.cartData.items.find(
+          item => item.variant_id == variantId
+        );
+        if (variant) {
+          if (variant.quantity > 1) {
+            message.classList.remove('hide');
+          } else {
+            message.classList.add('hide');
+          }
+        }
+      });
+    }
+
+    {% if cart.item_count > 0 %}
+    document.addEventListener("productRecommendationsReady", async function() {
+      // Get reco markup
+      const recoSection = 'cart_recos_markup';//sepatate section for markup only
+      const { json, markup } = await ProductRecommendations.getRecommendations(
+        {{ cart.items[0].product_id }},
+        recoSection,
+        8
+      );
+      const productCount = json.products.length;
+
+      // Put reco markup inside product list
+      if (markup && productCount > 0) {
+        const recomendationsSlider = document.querySelector('.cart-page__recos__products');
+        recomendationsSlider.innerHTML = markup;
+        const relatedSlider = new Swiper('.cart-page__recos__swiper', {
+          slidesPerView: 2.2,
+          spaceBetween: 10,
+          navigation: {
+            nextEl: '.cart-page__recos__nav__button--next',
+            prevEl: '.cart-page__recos__nav__button--prev',
+          },
+          breakpoints: {
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 10
+            },
+            1068: {
+              slidesPerView: 4,
+              spaceBetween: 20
+            },
+            1268: {
+              slidesPerView: 5,
+              spaceBetween: 20
+            }
+          }
+        });
+        Quickshop.init();
+
+        const recos = document.querySelector('.cart-page__recos');
+        recos.classList.remove('hide');
+      }
+    });
+    {% endif %}
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ------------------------------------------------------------------
+        Helpers
+      ------------------------------------------------------------------ */
+      const cartToken   = {{ cart.token   | json }};        // stable id
+      const customerId  = {{ customer.id  | json }};        // null if not logged-in
+
+      function capture(evtName, props = {}) {
+        if (!posthog) return;
+
+        posthog.capture(evtName, {
+          cart_token: cartToken,
+          customer_id: customerId,
+          ...props
+        });
+      }
+
+      /* ------------------------------------------------------------------
+        1) Gift-message textarea tracking
+      ------------------------------------------------------------------ */
+      const giftTextarea = document.getElementById('giftMessage');
+      if (giftTextarea) {
+        // when the shopper leaves the field
+        giftTextarea.addEventListener('blur', () => {
+          const message   = giftTextarea.value.trim();
+          const cartToken = {{ cart.token | json }};
+          const props = {
+            cart_token:  cartToken,
+            message,                 // remove if you don’t want to store raw text
+            char_count: message.length
+          };
+
+          capture('gift_message_edited', props);
+        });
+      }
+
+      /* ------------------------------------------------------------------
+        2) Intercept the Checkout button
+      ------------------------------------------------------------------ */
+      const checkoutBtn = document.querySelector(
+        'button.cart-page__checkout-button'
+      );
+      if (checkoutBtn && giftTextarea) {
+        checkoutBtn.addEventListener('click', async (e) => {
+          // do NOT preventDefault – we’ll let your existing form handler run
+          const message = giftTextarea.value.trim();
+
+          // 2a – capture click event (fires even if message is blank)
+          capture('checkout_clicked', {
+            gift_message_present: !!message,
+            char_count: message.length
+          });
+
+          // 2b – attempt to persist Gift Message attribute and log result
+          if (message) {
+            try {
+              await Cart.addAttribute('Gift message', message);
+              capture('gift_message_saved_ok', { message });
+            } catch (err) {
+              capture('gift_message_save_error', {
+                error: err?.message || String(err)
+              });
+              // consider surfacing an on-screen error here…
+            }
+          }
+          // (your original code already continues to Shopify Checkout)
+        }, { capture: true });               // run before your own submit listener
+      }
+
+      /* ------------------------------------------------------------------
+        3) On cart Ajax updates – resync attribute if needed
+        (optional safety net – prevents overwriting a saved message)
+      ------------------------------------------------------------------ */
+      document.addEventListener('cartDataUpdated', () => {
+        if (giftTextarea) {
+          const existing = Cart.cartData.attributes?.["Gift message"] || '';
+          if (!giftTextarea.value && existing) {
+            giftTextarea.value = existing;
+          }
+        }
+      });
+    });
+  </script>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Cart page",
+  "class": "cart-page",
+  "tag": "section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "empty_title",
+      "label": "Empty cart title",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "text",
+      "id": "continue_shopping",
+      "label": "Continue shopping button text",
+      "default": "Continue shopping"
+    },
+    {
+      "type": "url",
+      "id": "continue_shopping_url",
+      "label": "Continue shopping button URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "cart-breadcrumbs",
+      "label": "Breadcrumbs",
+      "default": "Basket,Information,Shipping,Checkout"
+    },
+    {
+      "type": "textarea",
+      "id": "cart_message",
+      "label": "Cart message"
+    },
+    {
+      "type": "textarea",
+      "id": "checkout_block_message",
+      "label": "Checkout block message",
+      "default": "All cut cheeses are cut to order and will have approximately 12 days shelf life from the date of dispatch"
+    },
+    {
+      "type": "textarea",
+      "id": "weight_message",
+      "label": "Weight message",
+      "default": "Cheese weights ordered in multiple quantities are cut as these sizes, and weights ordered as a whole will not be cut'"
+    },
+    {
+      "type": "header",
+      "content": "Recommendations"
+    },
+    {
+      "type": "text",
+      "id": "recos_title",
+      "label": "Title",
+      "default": "Our cheesemongers also recommend"
+    },
+    {
+      "type": "header",
+      "content": "Checkout box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Show free shipping bar",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping threshold",
+      "default": 100
+    },
+    {
+      "type": "text",
+      "id": "open_hours",
+      "label": "Open hours",
+      "default": "Mon - Fri: 9am - 5pm"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cart_info_icons",
+      "name": "Cart info icons",
+      "settings": [
+        {
+          "type": "text",
+          "id": "info_icon_title",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "info_icon_image",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

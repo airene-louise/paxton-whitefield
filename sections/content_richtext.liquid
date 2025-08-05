@@ -1,0 +1,131 @@
+{% liquid
+  assign base_class = "content-richtext"
+  assign use_collection_content = section.settings.use_collection_content
+%}
+<div class="{{ base_class }}__container">
+  <div class="{{ base_class }}__content rte">
+    {% if use_collection_content and collection != blank %}
+      <h2>{{ collection.title }}</h2>
+      <p>{{ collection.description }}</p>
+    {% else %}
+      {{ section.settings.content }}
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --margin: {{ section.settings.margin }}px;
+    --padding: {{ section.settings.padding }}px;
+    --bg-color: {{ section.settings.background_color }};
+    --text-color: {{ section.settings.text_color }};
+    --text-align: {{ section.settings.text_align }};
+    --spacing: {{ section.settings.spacing }}px;
+    {% if section.settings.full_width %}
+      --max-width: 100%;
+    {% else %}
+      --max-width: {{ section.settings.max_width }}px;
+    {% endif %}
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Content Richtext",
+    "tag": "section",
+    "class": "content-richtext",
+    "settings": [ 
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_collection_content",
+        "label": "Use Collection Content",
+        "default": false,
+        "info": "Use the collection title and description as the content for this section."
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#FFF9F4"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "select",
+        "id": "text_align",
+        "label": "Text Align",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "range",
+        "id": "margin",
+        "label": "Margin",
+        "min": 0,
+        "max": 50,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding",
+        "label": "Padding",
+        "min": 0,
+        "max": 50,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "max_width",
+        "label": "Max Width",
+        "default": 900,
+        "min": 600,
+        "max": 900,
+        "step": 5
+      },
+      {
+        "type": "range",
+        "id": "spacing",
+        "label": "Content Spacing",
+        "default": 10,
+        "min": 5,
+        "max": 30
+      }
+    ],
+    "presets": [
+      {
+        "name": "Content Richtext",
+        "category": "Text"
+      }
+    ]
+  }
+{% endschema %}

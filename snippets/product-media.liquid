@@ -1,0 +1,70 @@
+{% case media.media_type %}
+  {% when 'image' %}
+    {% if thumbnails %}
+        {{ media | image_url: width: 150 | image_tag:
+            loading: "lazy",
+            sizes: '(min-width: 750px) 25vw, 100vw',
+            widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+        }}
+    {% else %}
+
+    {% assign lazyloading = "lazy" %}
+
+    {% if forloop.first %}
+        {% assign lazyloading = "eager" %}
+    {% endif %}
+        <div class="swiper-zoom-container">
+            {{ media | image_url: width: 2048 | image_tag:
+                loading: lazyloading,
+                sizes: '(min-width: 750px) 50vw, 100vw',
+                widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+            }}
+        </div>
+    {% endif %}
+  {% when 'external_video' %}
+    {% if thumbnails %}
+        {{ media.preview_image | image_url: width: 150 | image_tag:
+            loading: "lazy",
+            sizes: '(min-width: 750px) 25vw, 100vw',
+            widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+        }}
+    {% else %}
+        {% if media.host == 'youtube' %}
+            {{ media | external_video_url: autoplay: false, loop: false, playlist: media.external_id | external_video_tag: enablejsapi: "1" }}
+        {% else %}
+            {{ media | external_video_url: autoplay: false, loop: false | external_video_tag }}
+        {% endif %}
+    {% endif %}
+  {% when 'video' %}
+    {% if thumbnails %}
+        {{ media.preview_image | image_url: width: 150 | image_tag:
+            loading: "lazy",
+            sizes: '(min-width: 750px) 25vw, 100vw',
+            widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+        }}
+    {% else %}
+        {{ media | media_tag:
+            image_size: "2048x",
+            autoplay: true,
+            loop: true,
+            controls: true,
+            preload: "none"
+        }}
+    {% endif %}
+  {% when 'model' %}
+    {% if thumbnails %}
+        {{ media.preview_image | image_url: width: 150 | image_tag:
+            loading: "lazy",
+            sizes: '(min-width: 750px) 25vw, 100vw',
+            widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+        }}
+    {% else %}
+        {{ media | model_viewer_tag }}
+    {% endif %}
+  {% else %}
+    {% if thumbnails %}
+            THUMB
+        {% else %}
+            {{ media | media_tag }}
+        {% endif %}
+{% endcase %}

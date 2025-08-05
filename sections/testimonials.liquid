@@ -1,0 +1,105 @@
+<div class="testimonials__wrapper">
+  <div class="testimonials__header">
+    <h2 class="testimonials__title">{{ section.settings.title }}</h2> 
+     <div class="testimonials__controls">
+      {% if section.blocks.size > 1  %}
+        <div class="testimonials__swiper-button-prev">
+          {% render 'icons', icon: 'chevron-left' %}
+        </div>
+        <div class="testimonials__pagination"></div>
+        <div class="testimonials__swiper-button-next">
+          {% render 'icons', icon: 'chevron-right' %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="testimonials__swiper swiper">
+    <div class="testimonials__swiper-wrapper swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="testimonials__swiper-slide swiper-slide">
+          <div class="testimonials__item">
+            {% render 'icons', icon: 'stars' %}
+            <h3 class="testimonials__item__title">{{ block.settings.title }}</h3>
+            <p class="testimonials__item__text">{{ block.settings.testimonial }}</p>
+            <p class="testimonials__item__author">{{ block.settings.author }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('swiperReady', () => {
+    const pressCarouselSwiper = new Swiper('.testimonials__swiper', {
+      slidesPerView: 2.3,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: ".testimonials__swiper-button-next",
+        prevEl: ".testimonials__swiper-button-prev",
+      },
+      breakpoints: {
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 80
+        }
+      }
+    })
+  })
+</script>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Testimonials",
+    "tag": "section",
+    "class": "testimonials",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "default": "#F5EFE8",
+        "label": "Background color"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "testimonials item",
+        "type": "testimonials-item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "testimonial",
+            "label": "Testimonial"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials"
+      }
+    ]
+  }
+{% endschema %}

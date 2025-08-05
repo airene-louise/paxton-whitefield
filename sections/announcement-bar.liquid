@@ -1,0 +1,95 @@
+{% liquid
+  assign base_class = "announcement-bar"
+%}
+
+<div class="{{ base_class }}__container">
+  <div class="{{ base_class }}__swiper swiper">
+
+    <div class="{{ base_class }}__navigation">
+    </div>
+
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <div class="{{ base_class }}__message">
+            {{ block.settings.message }}
+
+            <div class="{{ base_class }}__navigation-button {{ base_class }}__navigation-button--prev">
+              {% render 'icons', icon: 'chevron-left-small' %}
+            </div>
+
+            <div class="{{ base_class }}__navigation-button {{ base_class }}__navigation-button--next">
+              {% render 'icons', icon: 'chevron-right-small' %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('swiperReady', () => {
+    const swiper = new Swiper('#shopify-section-{{ section.id }} .swiper', {
+      slidesPerView: 1,
+      centeredSlides: true,
+      autoplay: {
+        delay: 5000,
+      },
+      loop: true,
+      navigation: {
+        nextEl: "#shopify-section-{{ section.id }} .{{ base_class }}__navigation-button--next",
+        prevEl: "#shopify-section-{{ section.id }} .{{ base_class }}__navigation-button--prev",
+      }
+    })
+  })
+</script>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --text-color: {{ section.settings.color_text }};
+    --background-color: {{ section.settings.color_background }};
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Announcement Bar",
+    "class": "announcement-bar",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text color",
+        "default": "#FFF"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Message",
+        "type": "message",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "info": "For admin only"
+          },
+          {
+            "type": "richtext",
+            "id": "message",
+            "label": "Message",
+            "default": "<p>This is a test message</p>"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

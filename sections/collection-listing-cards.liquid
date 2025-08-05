@@ -1,0 +1,74 @@
+{% liquid
+  assign base_class = "collection-listing-cards"
+%}
+
+<div class="{{ base_class }}__container">
+  <div class="{{ base_class }}__grid {{ base_class }}__grid--{{ section.settings.grid_columns }}-col">
+    {% for card in collection.metafields.custom.collection_listing_cards.value %}
+      <div class="{{ base_class }}__item">
+
+        <div class="{{ base_class }}__item__image-container">
+          {{ card.image
+            | image_url: width: 500
+            | image_tag:
+                widths: '300, 600, 900, 1100, 1400, 1440',
+                sizes: '(max-width: 350px) 380px, (max-width: 1440px) 500px',
+                class: 'collection-listing-cards__item__image'
+          }}
+        </div>
+
+        <div class="{{ base_class }}__item__info">
+          <h3 class="{{ base_class }}__item__title">{{ card.title }}</h3>
+          <p class="{{ base_class }}__item__description">{{ card.description }}</p>
+          <a class="{{ base_class }}__item__link" href="{{ card.url }}">Shop now</a>
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --grid-columns: {{ section.settings.grid_columns }};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Listing Cards",
+  "tag": "section",
+  "class": "collection-listing-cards",
+  "settings": [
+    {
+      "type":"paragraph",
+      "content":"This section is used to display collection cards on a collection page. It's content is managed in collection metafields"
+    },
+    {
+      "type": "select",
+      "label": "Grid columns",
+      "id": "grid_columns",
+      "default": "3",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Listing Cards"
+    }
+  ]
+}
+{% endschema %}

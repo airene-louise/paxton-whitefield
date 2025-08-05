@@ -1,0 +1,136 @@
+<div class="filter-group">
+  <div class="filter-group__container">
+
+    <h4 class="filter-group__title">{{ filter.label }}<span>{% render 'icons', icon: 'plus' %}</span></h4>
+
+    <div class="filter-group__dropdown">
+
+
+      <ul class="filter-group__list">
+        {% if filter.type == "price_range" %}
+
+         <div class="filter-group__item filter-group__item--price">
+            <!-- Hidden original inputs -->
+            <input
+              type="hidden"
+              class="price-from"
+              name="filter.v.price.gte"
+              value="0" 
+            >
+            <input
+              type="hidden"
+              class="price-to"
+              name="filter.v.price.lte"
+              value="{{ filter.range_max | divided_by: 100 }}"
+            >
+
+            <!-- Custom slider inputs -->
+            <div class="price-slider__container">
+              <div class="price-slider__background"></div>
+              <div class="price-slider__track"></div>
+              <div class="price-slider__handle min-handle"><span class="price-tag">{{ cart.currency.symbol }}0.00</span></div>
+              <div class="price-slider__handle max-handle"><span class="price-tag">{{ filter.range_max | money }}</span></div>
+            </div>
+          </div>
+          
+        {% else %}
+
+          {% for value in filter.values %}
+            <li class="filter-group__item">
+              <input
+                type="checkbox"
+                name="{{ filter.param_name }}[]"
+                value="{{ value.value | replace: "&amp;", "%26" }}"
+                id="{{ filter.label | handle }}-{{ value.value | handle }}"
+                {% if value.active %}checked{% endif %}
+                onchange="Filter.handleInputChange(event)"
+              >
+              <label for="{{ filter.label | handle }}-{{ value.value | handle }}">{{ value.label }} <span>({{ value.count }})</span></label>
+            </li>
+          {% endfor %}
+
+        {% endif %}
+      </ul>
+
+    </div>
+
+  </div>
+</div>
+
+{% if filter.type == "price_range" %}
+<script>
+
+const sliderContainer = document.querySelector('.price-slider__container');
+const sliderTrack = document.querySelector('.price-slider__track');
+const minHandle = sliderContainer.querySelector('.min-handle');
+const maxHandle = sliderContainer.querySelector('.max-handle');
+const minPriceInput = document.querySelector('.price-from');
+const maxPriceInput = document.querySelector('.price-to');
+
+let draggingHandle;
+
+document.addEventListener('mousedown', (e) => {
+  if (e.target.classList.contains('price-slider__handle')) {
+    draggingHandle = e.target;
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }
+});
+
+function onMouseMove(e) {
+  const rect = sliderContainer.getBoundingClientRect();
+  let newX = e.clientX - rect.left;
+  const maxWidth = rect.width;
+  newX = Math.max(0, Math.min(newX, maxWidth)); // Limit movement within slider
+
+  // Update handle position
+  draggingHandle.style.left = `${(newX / maxWidth) * 100}%`;
+
+  // Update price tag position and value
+  const priceTag = draggingHandle.querySelector('.price-tag');
+  const priceValue = Math.round((newX / maxWidth) * {{ filter.range_max | divided_by: 100 }}); 
+  priceTag.textContent = `{{ cart.currency.symbol }}${priceValue.toFixed(2)}`;
+
+  // Update hidden input values
+  if (draggingHandle.classList.contains('min-handle')) {
+    minPriceInput.value = priceValue
+  } else {
+    maxPriceInput.value = priceValue;
+  }
+
+  // Update slider track to fill between handles
+  updateSliderTrack();
+}
+
+function onMouseUp() {
+  document.removeEventListener('mousemove', onMouseMove);
+  document.removeEventListener('mouseup', onMouseUp);
+  draggingHandle = null;
+
+  // Trigger change event for hidden inputs
+  Filter.handleInputChange({ target: minPriceInput });
+  Filter.handleInputChange({ target: maxPriceInput });
+}
+
+function updateSliderTrack() {
+  const sliderWidth = sliderContainer.offsetWidth;
+  const handleWidth = minHandle.offsetWidth; // Get the handle's width
+
+  // Calculate the percentage positions of handles relative to the slider container
+  const minPercentage = parseFloat(minHandle.style.left) || 0;
+  const maxPercentage = parseFloat(maxHandle.style.left) || 100;
+
+  // Calculate actual positions from percentages
+  const minPosition = (minPercentage / 100) * sliderWidth;
+  const maxPosition = (maxPercentage / 100) * sliderWidth;
+
+  // Calculate the new left position and width for the slider track
+  const newLeft = minPosition + handleWidth / 2; // Start from the center of the min handle
+  const newWidth = maxPosition - minPosition - handleWidth; // End at the center of the max handle
+
+  // Apply the new styles to the slider track
+  sliderTrack.style.left = `${newLeft}px`;
+  sliderTrack.style.width = `${newWidth}px`;
+}
+</script>
+{% endif %}

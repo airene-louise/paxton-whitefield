@@ -1,0 +1,30 @@
+{% assign published_at = article.published_at | date: "%d %B, %Y" %}
+
+<div class="article-main">
+  <div class="article-main__container">
+
+    <div class="article-main__hero{% if article.metafields.custom.hero_dark.value == true %}__dark{% endif %}" style="background-image: url('{{ article.metafields.custom.heading_background_image | img_url: 'master' }}');">
+      <div class="article-main__hero__content{% if article.metafields.custom.hero_dark.value == true %}__dark{% endif %}">
+        <h1 class="article-main__title">{{ article.title }}</h1>
+        <span class="article-main__subtitle">{{ published_at }}</span>
+      </div>
+    </div>
+
+    <div class="article-main__content rte">
+      {{ article.content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

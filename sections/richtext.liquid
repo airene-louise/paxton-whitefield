@@ -1,0 +1,30 @@
+{% liquid
+  assign base_class = "richtext"
+%}
+
+<div class="{{ base_class }}__container">
+  <div class="{{ base_class }}__content rte">
+    {{ section.settings.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "tag": "section",
+  "class": "richtext",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

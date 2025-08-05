@@ -1,0 +1,210 @@
+{
+  "sections": {
+    "page_header_VDhRrd": {
+      "type": "page-header",
+      "settings": {
+        "page_title": "Our Delivery Options",
+        "page_subtitle": "Our artisan cheese and accompaniments are sent with reusable and recyclable ice packs on an overnight delivery service for a fresh arrival. Each piece of cheese is hand-cut, wrapped and packaged by our expert cheesemongers. Our UK parcels are delivered by DPD with free UK delivery when you spend over £40",
+        "show_page_title": true,
+        "hide_image_on_mobile": false
+      }
+    },
+    "ancillary_page_nav_8YwiXe": {
+      "type": "ancillary-page-nav",
+      "blocks": {
+        "link_MmtpW3": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/faq",
+            "button_text": "FAQs"
+          }
+        },
+        "link_xHYX9R": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/contact",
+            "button_text": "Contact us"
+          }
+        },
+        "link_7APJtG": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/terms-conditions",
+            "button_text": "Terms & Conditions"
+          }
+        },
+        "link_gXYMmM": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/privacy-cookies",
+            "button_text": "Privacy & Cookies"
+          }
+        },
+        "link_G4wX7p": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/careers",
+            "button_text": "careers"
+          }
+        },
+        "link_3C8GUm": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/sustainability-policy",
+            "button_text": "Sustainability Policy"
+          }
+        },
+        "link_Gn8L9j": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/become-a-supplier",
+            "button_text": "Become a supplier"
+          }
+        }
+      },
+      "block_order": [
+        "link_MmtpW3",
+        "link_xHYX9R",
+        "link_7APJtG",
+        "link_gXYMmM",
+        "link_G4wX7p",
+        "link_3C8GUm",
+        "link_Gn8L9j"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "show_title": false
+      }
+    },
+    "faqs_PFTD6L": {
+      "type": "faqs",
+      "blocks": {
+        "faq_3LpCBT": {
+          "type": "faq",
+          "settings": {
+            "question": "Named-Day UK* Delivery",
+            "answer": "<p>FREE UK* Delivery when you spend over £40. Excluding certain days please see at checkout. We will deliver them to you within three days of the requested delivery date, or as soon as reasonably possible if a delivery date was not requested. We will contact you with an estimated delivery date.<\/p><p><strong>Fresh, Overnight** UK Cheese Delivery:<\/strong><br\/>Overnight Cheese Delivery: Our UK delivery charge is £6.95 for UK* orders under £40. Delivery for orders over £40 is FREE excluding certain days, please see at checkout.<\/p><p><strong>Named day deliveries on all orders:<\/strong><br\/>You can select a delivery date on Tuesday - Saturday when you go to checkout. <em>(Please note, a surcharge of £10 applies to Saturday deliveries)<\/em>. <\/p><p><strong>Chilled overnight cheese delivery:<\/strong><br\/>All of our cheese parcels are cooled with re-usable ice packs and insulated with recyclable packaging. We always use an overnight delivery service for UK mainland orders to ensure that your cheese arrives with you in fine condition.<\/p><p><strong>Hand cut & hand wrapped:<\/strong><br\/>Our cheese for online orders is hand cut to order and hand wrapped in Paxton & Whitfield wax paper by our expert cheesemongers. Your cheese will have approximately 12 days shelf life from the date of despatch.<\/p><p><strong>Delivery tracking & notifications:<\/strong><br\/>Please provide your mobile phone number or email address and you will receive tracking details and anticipated delivery times. On the day that your order is despatched, you will receive a notification that your delivery is on its way and an anticipated 1 hour delivery time slot.<\/p><p><strong>Carbon-neutral delivery:<\/strong><br\/>Our delivery partners at DPD commit to make every parcel they deliver carbon-neutral. They measure their CO2 emissions, strive to reduce them; and offset the remaining emissions.<\/p><p><strong>No signature required:<\/strong><br\/>You may use the \"Delivery Instructions\" in the ordering process to provide succinct instructions such as \"leave in the garage if out\" (choose a cool place) if the recipient is out. The driver is instructed to leave your parcel somewhere safe if you are out to ensure that the cheese is not delayed or held for too long in a warehouse. We regret we cannot accept responsibility for the condition of the goods or non-receipt if<br\/>goods are not signed for.<br\/><br\/><em>*Please note Free UK Delivery is only valid for deliveries to the UK mainland and also excludes deliveries to the Scottish Highlands, Northern Ireland and Channel Islands. We do not currently deliver to Ireland and we do not deliver to international locations outside of the UK.<\/em><\/p><p><em>**Order before 11am for next day delivery service. Orders placed after 11am will be shipped the following working day unless named delivery day is stated.<\/em><\/p>"
+          }
+        },
+        "faq_XgCB97": {
+          "type": "faq",
+          "settings": {
+            "question": "UK Highlands, Northern Ireland & Isle of Man Delivery",
+            "answer": "<p>There are some places we simply can't get to in under a day and cost more for delivery. If you live in the UK Highlands, Northern Ireland, Isle of Man, or in a particularly remote location then an additional delivery charge and longer delivery time may apply. You will be notified of any additional charge when you go to checkout. <br\/><br\/><em>Unfortunately, we cannot deliver to Jersey or Guernsey due to no guarantee that the order will arrive within the food safety window.<\/em><\/p>"
+          }
+        },
+        "faq_NHU7Kt": {
+          "type": "faq",
+          "settings": {
+            "question": "Click & Collect",
+            "answer": "<h4><strong>If you would prefer to avoid the queues, rather not wait for delivery or avoid delivery cost then try our FREE order online Click & Collect service.<\/strong><\/h4><p>Simply order online by 11am and collect your purchases the next day from your chosen shop, or chosen day at check-out. This service is available at all four Paxton & Whitfield shops in Jermyn Street, London; Cale Street, London, and Bath. <em>Watch this space for our Canterbury shop.<\/em><\/p><p>This service is only available for the items that are listed on our website. If you want to place an order for products that are not included on the website please call the shop and place a telephone order for the entirety of your order directly with them on the phone.<br\/><br\/>See <a href=\"https:\/\/paxtonandwhitfield.co.uk\/pages\/our-shops\" target=\"_blank\" title=\"\/pages\/our-shops\">Visit Our Shops<\/a> for contact details and maps of each shop.<br\/><br\/>Please note that we are unable to process orders that include items for collection from one of the shops as well as items for delivery. If you want to split your purchase please place two separate orders – one for collection and one for delivery.<br\/><\/p><h3><strong>Place and pay for your order online<\/strong><\/h3><p>Orders placed before 11am are available for collection at your chosen shop after 11am the next day that the shop is open.<\/p><p>Orders placed after 11am are available for collection at your chosen shop after 2pm the next day that the shop is open.<\/p><p>If you do not want to pick up your goods the following day, please select the date you wish to pick up your order. <em>Please note that 2 full working days are required for any orders which include a Ham.<\/em><\/p><p><\/p><h3><strong>Pickup In Store<\/strong><\/h3><p>Maps and opening times of our shops are available at <a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/visit-us\">Visit Our Shops<\/a>. Details of the shop that you have chosen to collect from will be shown on your receipt.<\/p><p><strong>Please give a contact number so that we can call you if there are any issues with your order.<\/strong><\/p><p>On arrival at the Shop please make your way to the counter where a sales assistant will be able to collect your purchases. At particularly busy times, for example, just before Christmas please make your way to the Collection Point which will be clearly identifiable.<\/p><p>To ensure we are handing over your purchase to the correct person, please bring with you a copy of your order receipt email or, at a minimum, your order number. Goods will not be released without this information.<\/p><p>Your order will be available for collection for 24 hours. If you are unable to collect it within that time, please contact the shop from where you were meant to be collecting your goods (see <a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/visit-us\">Visit Our Shops<\/a>) to rearrange your collection.<\/p>"
+          }
+        },
+        "faq_EyiExb": {
+          "type": "faq",
+          "settings": {
+            "question": "Overseas Delivery",
+            "answer": "<p>We do not currently deliver to international locations outside of the UK. <\/p><p><\/p>"
+          }
+        },
+        "faq_7xNJ8N": {
+          "type": "faq",
+          "disabled": true,
+          "settings": {
+            "question": "Christmas Delivery",
+            "answer": "<p><em><strong>Our Christmas Delivery slots have now been filled. We apologise for the inconvenience caused. <\/strong><\/em><\/p><p><em><strong>Please be aware that pre-orders may arrive up to 2 days later than the specified date, as we want to ensure the cheese is in optimal condition for Christmas.<\/strong><\/em><\/p><ul><li>Cheese delivered on or after 14th December will have Christmas dates, to ensure your cheese is fresh for Christmas!<\/li><li>You can order your cheese, gifts and fine foods now with delivery for Christmas, please select your preferred date on the 'basket' page.<\/li><li>Christmas delivery dates vary and are subject to change, please see available dates and pricing on the 'basket' page.<\/li><li>For all other delivery queries, please see the drop downs below.<\/li><\/ul>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_3LpCBT",
+        "faq_XgCB97",
+        "faq_NHU7Kt",
+        "faq_EyiExb",
+        "faq_7xNJ8N"
+      ],
+      "settings": {
+        "narrow__width__container": false,
+        "title": "Cheese Delivery"
+      }
+    },
+    "faqs_3dKcCG": {
+      "type": "faqs",
+      "blocks": {
+        "faq_CEdkHK": {
+          "type": "faq",
+          "settings": {
+            "question": "Ordering a Gift",
+            "answer": "<p>We can deliver to friends or family and can add a brief gift message at no extra cost. There is a box for your selected words in the ordering process. There will be no invoice included in the order. Please ensure that you complete their full postal address and, if possible, their mobile number and any delivery instructions.<\/p>"
+          }
+        },
+        "faq_qw96zb": {
+          "type": "faq",
+          "settings": {
+            "question": "Quality, Cutting & Weights",
+            "answer": "<p>Cutting cheese accurately to a given weight is a real art. We don't use machines to cut the cheese - it is all done by our cheesemongers by hand. We always endeavour to get as close to the quantity ordered as possible, if we go \"under\" on one item we aim to make up for it on another. The same is true of individual cheeses, being handmade again the weights are approximate. One \"whole truckle\" described as 1.8kg will be different to another and could be slightly more or less than that.<\/p><p>We take great pride in the quality of our cheese and other products. Once you receive your goods, open and inspect them. If you have any comments or concerns please contact us straight away on <a href=\"tel:01451823460\">01451 823460<\/a>. If you feel we should see the product please email a photo to <a href=\"mailto:sales@paxtonandwhitfield.co.uk\">sales@paxtonandwhitfield.co.uk<\/a> in the first instance.<\/p>"
+          }
+        },
+        "faq_CaGDdc": {
+          "type": "faq",
+          "settings": {
+            "question": "Packing",
+            "answer": "<p>Where appropriate, to maintain optimum condition we use chilled and insulated bespoke packaging. Guidance is provided with the packaging on the best way to reuse and recycle it. We regularly review our packaging to find the most eco-friendly material which can keep your cheese order in the best possible condition.<\/p>"
+          }
+        },
+        "faq_9HkRTM": {
+          "type": "faq",
+          "settings": {
+            "question": "Payment",
+            "answer": "<p>We accept payment online by Visa, MasterCard, AMEX cards and by PayPal. Your payment is processed via a fully authorised Payment Services Provider (Stripe\/PayPal) which ensures that all your information remains totally confidential. Payment is taken as you place your order and if the payment does not authorise successfully, your order will not be successfully processed. Please check that you receive not only a confirmation of your order but also a confirmation of your payment by email. If you have not received one of these your order may not have been placed successfully.<\/p>"
+          }
+        },
+        "faq_kGzJnr": {
+          "type": "faq",
+          "settings": {
+            "question": "Knives & Alcohol",
+            "answer": "<p>Please note that by law, alcohol and the purchase of knives are only available for order by customers who are aged 18 or over.<\/p>"
+          }
+        },
+        "faq_9xWVXf": {
+          "type": "faq",
+          "settings": {
+            "question": "Substitutions & Returns",
+            "answer": "<p>Part of the attraction of artisan food is that it varies from season to season. From time to time we may not be happy with a particular product or it may not be available. In this case we may substitute something we consider equally good or better to an equivalent monetary value. Please notify us within 3 days of your expected delivery date if you have not received your order or are unhappy with it in any way.<\/p><p>Many of the products that we sell are perishable and may therefore not be returned to us after delivery. Should you wish to return a non-perishable product, please telephone our Web team on <a href=\"tel:01451823460\">01451 823460<\/a>. Products which are required to be returned will be returned at the customer's expense and, provided that they are returned in good condition within 10 working days of the original receipt, a credit will be issued for the price paid. If we are asked to arrange for collection of the goods, any costs incurred by us will be deducted from any refund. These points do not affect your statutory rights.<\/p>"
+          }
+        },
+        "faq_a3TPDk": {
+          "type": "faq",
+          "settings": {
+            "question": "Cancellation of Order",
+            "answer": "<p>We reserve the right not to accept an order or to cancel, once accepted, any order without penalty. You may cancel an order without penalty provided we receive the notification a minimum of 4 working days before the requested delivery date or shop collection date. All orders accepted and supplied subject to our standard Terms & Conditions.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_CEdkHK",
+        "faq_qw96zb",
+        "faq_CaGDdc",
+        "faq_9HkRTM",
+        "faq_kGzJnr",
+        "faq_9xWVXf",
+        "faq_a3TPDk"
+      ],
+      "settings": {
+        "narrow__width__container": false,
+        "title": "Additional delivery information"
+      }
+    }
+  },
+  "order": [
+    "page_header_VDhRrd",
+    "ancillary_page_nav_8YwiXe",
+    "main",
+    "faqs_PFTD6L",
+    "faqs_3dKcCG"
+  ]
+}

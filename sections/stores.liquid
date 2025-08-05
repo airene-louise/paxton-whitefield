@@ -1,0 +1,275 @@
+<div class="store-tabs">
+  {% assign selected_city = "London" %}
+  <ul class="store-tabs__list">
+    {% comment %} get a unqiue list of cities {% endcomment %}
+    {% assign cities = "" %}
+    {% for block in section.blocks %}
+      {% unless cities contains block.settings.city %}
+        {% assign cities = cities | append:"," | append: block.settings.city %}
+      {% endunless %}
+    {% endfor %}
+
+    {% assign cities = cities | split:"," %}
+    
+    {% for city in cities %}
+      {% unless city == blank %}
+        <li><button data-city="{{ city }}" onclick="changeStore('{{ city }}')" class="store-tabs__city {% if city ==  selected_city %} selected-city {% endif %}">{{ city }}</button></li>
+      {% endunless %}
+    {% endfor %}
+
+  </ul>
+</div>
+
+<div class="store-blocks">
+{% for block in section.blocks %}
+<div class="store-block {% if block.settings.city ==  selected_city %} selected-city {% endif %}" data-city="{{ block.settings.city }}">
+  <div class="store-block__image-container">
+    <div class="store-block__swiper swiper">
+      <div class="store-block__swiper-wrapper swiper-wrapper">
+        <div class="store-block__swiper-slide swiper-slide">
+          <div class="store-block__image">
+            {{ block.settings.image | image_url: width: '645' | image_tag: loading: "lazy", alt: block.settings.image.alt }}
+          </div>
+        </div>
+        {% if block.settings.image2 != blank %}
+        <div class="store-block__swiper-slide swiper-slide">
+          <div class="store-block__image">
+            {{ block.settings.image2 | image_url: width: '645' | image_tag: loading: "lazy", alt: block.settings.image2.alt }}
+          </div>
+        </div>
+      {% endif %}
+        {% if block.settings.image3 != blank %}
+        <div class="store-block__swiper-slide swiper-slide">
+          <div class="store-block__image">
+            {{ block.settings.image3 | image_url: width: '645' | image_tag: loading: "lazy", alt: block.settings.image3.alt }}
+          </div>
+        </div>
+      {% endif %}
+      {% if block.settings.image4 != blank %}
+        <div class="store-block__swiper-slide swiper-slide">
+          <div class="store-block__image">
+            {{ block.settings.image4 | image_url: width: '645' | image_tag: loading: "lazy", alt: block.settings.image4.alt }}
+          </div>
+        </div>
+      {% endif %}
+      {% if block.settings.image5 != blank %}
+        <div class="store-block__swiper-slide swiper-slide">
+          <div class="store-block__image">
+            {{ block.settings.image5 | image_url: width: '645' | image_tag: loading: "lazy", alt: block.settings.image5.alt }}
+          </div>
+        </div>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="store-block__details">
+    {% if block.settings.content != blank %}
+      <div class="store-block-content">{{ block.settings.content }}</div>
+    {% endif %}
+    <ul>
+      {% if block.settings.address != blank %}
+      <li>{% render 'icons', icon: 'pointer' %}{{ block.settings.address }}</li>
+      {% endif %}
+      {% if block.settings.phone_number != blank %}
+      <li>{% render 'icons', icon: 'phone-icon' %}{{ block.settings.phone_number }}</li>
+      {% endif %}
+      {% if block.settings.email != blank %}
+      <li>{% render 'icons', icon: 'envelope' %}<a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a></li>
+      {% endif %}
+    </ul>
+    {% if block.settings.opening_times != blank %}
+    <div class="store-block-opening-times">{{ block.settings.opening_times }}</div>
+    {% endif %}
+    <div class="store-block-services">
+      <ul>
+        {% if block.settings.click_collect %}
+          <li>{% render 'icons', icon: 'click-and-collect' %}Click & Collect</li>
+        {% endif %}
+        {% if block.settings.events_space %}
+          <li>{% render 'icons', icon: 'events' %}Events Space Available</li>
+        {% endif %}
+        {% if block.settings.wholesale_cheese %}
+          <li>{% render 'icons', icon: 'wholesale' %}Wholesale Cheese Service</li>
+        {% endif %}
+        {% if block.settings.wedding_events_cheese %}
+          <li>{% render 'icons', icon: 'weddings' %}FREE Wedding & Events Cheese Consultancy</li>
+        {% endif %}
+        {% if block.settings.home_delivery %}
+          <li>{% render 'icons', icon: 'home' %}Order for Home Delivery</li>
+        {% endif %}
+      </ul>
+    </div>
+    {% if block.settings.google_maps_link != blank %}
+    <div class="store-block-google-maps">
+      <a href="{{ block.settings.google_maps_link }}" target="_blank">Get Directions</a>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 6.99999V1.99999C1 1.53976 1.3731 1.16666 1.83333 1.16666H11.8333C12.2936 1.16666 12.6667 1.53976 12.6667 1.99999V12C12.6667 12.4602 12.2936 12.8333 11.8333 12.8333H6.83333M3.59259 6.99999H6.83333M6.83333 6.99999V10.2407M6.83333 6.99999L1 12.8333" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+    {% endif %}
+    {% if block.settings.google_maps_embed %}
+    <div class="store-block-map-iframe">
+      {{ block.settings.google_maps_embed | replace:'width="600" height="450"','width="438" height="276"'}}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+</div>
+
+<script>
+  function changeStore(city) {
+    var storeBlocks = document.querySelectorAll('.store-block');
+    var storeTabs = document.querySelectorAll('.store-tabs__city');
+    storeTabs.forEach(function(tab) {
+      tab.classList.remove('selected-city');
+      if (tab.dataset.city === city) {
+        tab.classList.add('selected-city');
+      }
+    });
+    storeBlocks.forEach(function(block) {
+      block.classList.remove('selected-city');
+      if (block.getAttribute('data-city') === city) {
+        block.classList.add('selected-city');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+  //check hash on page load 
+    if (window.location.hash) {
+      var hash = window.location.hash;
+      hash = hash.replace('#', '');
+      changeStore(hash)
+    }
+  });
+   
+
+
+  document.addEventListener('swiperReady', () => {
+    new Swiper(
+      '.store-block__swiper', {
+      slidesPerView: 1,
+      spaceBetween: 0,
+    })
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Stores",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Store Block",
+        "type": "store",
+        "settings": [
+          {
+            "type": "text",
+            "label": "Title",
+            "id": "title",
+            "info":"For admin only, not displayed on the store block itself."
+          },
+          {
+            "type": "text",
+            "label": "City",
+            "id": "city",
+            "info":"For tabs only, not displayed on the store block itself."
+          },
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          },
+           {
+            "type": "image_picker",
+            "label": "Image 2",
+            "id": "image2"
+          },
+          {
+            "type": "image_picker",
+            "label": "Image 3",
+            "id": "image3"
+          },
+            {
+            "type": "image_picker",
+            "label": "Image 4",
+            "id": "image4"
+          },
+            {
+            "type": "image_picker",
+            "label": "Image 5",
+            "id": "image5"
+          },
+          {
+            "type": "richtext",
+            "label": "Content",
+            "id": "content"
+          },
+          {
+            "type": "text",
+            "label": "Address",
+            "id": "address"
+          },
+          {
+            "type": "text",
+            "label": "Phone Number",
+            "id": "phone_number"
+          },
+          {
+            "type": "text",
+            "label": "Email",
+            "id": "email"
+          },
+          {
+            "type": "richtext",
+            "label": "Opening Times",
+            "id": "opening_times"
+          },
+          {
+            "type": "checkbox",
+            "label": "Click & Collect",
+            "id": "click_collect"
+          },
+          {
+            "type": "checkbox",
+            "label": "Events Space Available",
+            "id": "events_space"
+          },
+          {
+            "type": "checkbox",
+            "label": "Wholesale Cheese Service",
+            "id": "wholesale_cheese"
+          },
+          {
+            "type": "checkbox",
+            "label": "FREE Wedding & Events Cheese Consultancy",
+            "id": "wedding_events_cheese"
+          },
+          {
+            "type": "checkbox",
+            "label": "Order for Home Delivery",
+            "id": "home_delivery"
+          },
+          {
+            "type": "url",
+            "label": "Google Maps Link",
+            "id": "google_maps_link"
+          },
+          {
+            "type": "html",
+            "label": "Google Maps Embed",
+            "id": "google_maps_embed"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Stores"
+      }
+    ]
+  }
+{% endschema %}

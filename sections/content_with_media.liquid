@@ -1,0 +1,124 @@
+<section class="content-with-media">
+  <div class="content-with-media__wrapper {% if section.settings.narrow_width_container %}narrow_width_container{% endif %}">
+    <div class="content-with-media__container {% if section.settings.image_right %}image-right{% endif %}">
+      <div class="content-with-media__image">
+        <div class="content-with-media__inner">
+          <a href="{{ section.settings.image_url }}">
+            {% if section.settings.image %}
+              {{ section.settings.image
+              | image_url: width: section.settings.image.width, height: section.settings.image.hegiht
+              | image_tag:
+                alt: section.settings.image.alt,
+                width: section.settings.image.width,
+                height: section.settings.image.hegiht,
+                class: 'content-with-media__image',
+                loading: 'lazy',
+                sizes: '(min-width: 750px) 50vw, 100vw'
+              }}
+            {% else%}
+              <img width="600" height="600" src="https://picsum.photos/600/600" alt="" class="content-with-media__image" />
+            {% endif %}
+          </a>
+        </div>
+      </div>
+      <div class="content-with-media__content">
+        <div class="content-with-media__content-wrapper">
+          <h2 class="content-with-media__title">{{ section.settings.title }}</h2>
+          <div class="content-with-media__copy">{{ section.settings.content }}</div>
+          <div class="content-with-media__icons">
+            {% for block in section.blocks %}
+              <div class="content-with-media__icon">
+                <a href="{{ block.settings.url }}">
+                  <img
+                    src="{{ block.settings.icon | image_url: width: block.settings.icon.width }}"
+                    alt="{{ block.settings.icon.alt }}"
+                    class="content-with-media__icon__image"
+                    width="{{ block.settings.icon.width }}"
+                    height="{{ block.settings.icon.height }}"
+                    loading="lazy"
+                  >
+                  <span class="content-with-media__icon__title">{{ block.settings.title }}</span>
+                  <span class="content-with-media__icon__text">{{ block.settings.text }}</span>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </section>
+
+{% schema %}
+  {
+    "name": "Content with Media",
+    "class": "content-with-media",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "narrow_width_container",
+        "label": "Narrow Width Content Container",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "image_right",
+        "label": "Image On Right Side"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "image_url",
+        "label": "Image URL"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Lorem Ipsum"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      }
+    ],
+     "blocks": [
+      {
+        "type": "icon",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Icon title"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Icon Text"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Icon URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Content with Media"
+      }
+    ]
+  }
+{% endschema %}

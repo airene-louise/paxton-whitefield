@@ -1,0 +1,16 @@
+{%
+  liquid 
+    assign blog_title = blog.title
+%}
+
+<div class="blog-listing-navigation">
+   <div class="blog-listing-navigation__container">
+    <h2 class="blog-listing-navigation_intro_copy">{{section.settings.blog_header_intro_text}}</h2>
+    <p class="blog-listing-navigation_intro_body_copy">{{section.settings.blog_header_intro_body_text}}</p>
+  </div>
+  <nav class="blog-listing-navigation__nav-link">
+    {% for link in linklists.blogs.links %}
+      <a href="{{ link.url }}" class="{% if link.title == blog_title %} blog-listing-navigation__nav-link--active {% endif %}">{{ link.title }}</a>
+    {% endfor %}
+  </nav>
+</div>

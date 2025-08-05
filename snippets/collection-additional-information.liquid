@@ -1,0 +1,8 @@
+{% if collection.metafields.custom.additional_info_title != blank or collection.metafields.custom.additional_information_copy != blank %}
+  <div class="additional-info">
+    <div class="additional-info__container">
+      <h2 class="additional-info__title">{{ collection.metafields.custom.additional_info_title }}</h2>
+      <p class="additional-info__copy">{{ collection.metafields.custom.additional_information_copy | metafield_tag }}</p>
+    </div>
+  </div>
+{% endif %}

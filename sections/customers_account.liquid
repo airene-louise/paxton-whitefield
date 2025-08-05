@@ -1,0 +1,69 @@
+<section class="account">
+  <div class="account__container">
+    <div class="account__header">
+      <h1 class="account__title">My Account</h1>
+      <a href="/account/logout/" class="account__logout">Logout</a>
+      {% if customer.tags contains 'Has active product subscriptions' %}
+        <div class="account-subscriptions__cta"><a href="/pages/subscription-portal" class="account__subscriptions">Manage Subscriptions</a></div>
+      {% endif %}
+    </div>
+   
+    <div class="account__main">
+     
+      <div class="account__orders">
+        <h2 class="account__subtitle">{{ "customer.account.order_history.title" | t }}</h2>
+        {% if customer.orders.size > 0 %}
+          <table class="account__orders-table">
+            <thead>
+              <tr>
+                <th>{{ "customer.account.order_history.order" | t }}</th>
+                <th>{{ "customer.account.order_history.date" | t }}</th>
+                <th>{{ "customer.account.order_history.total" | t }}</th>
+                <th>{{ "customer.account.order_history.status" | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+                <tr>
+                  <td>
+                    <a href="{{ order.order_status_url }}">
+                      {{ order.name }}
+                    </a>
+                  </td>
+                  <td>
+                  <div class="account__order-date">
+                  {{ order.created_at | date: format: 'abbreviated_date' }}
+
+                  {% for item in order.line_items %}
+                    {% if item.product.tags contains 'Subscription' %}
+                      <span class="account__subscription-tag">{{  'shopify.notices.order.has_subscription' | t }}</span>
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  </div>
+
+                  </td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>{{ "customer.account.order_history.no_orders" | t }}</p>
+        {% endif %}
+      </div>
+      {% comment %} Addresses {% endcomment %}
+      <div class="account__addresses-wrapper">
+        <div class="sub-link">
+          <a href="/tools/recurring/login/" class="button">Manage Subscriptions</a>
+        </div> 
+        <div class="account__addresses">
+          <h2 class="account__subtitle">{{ "customer.account.addresses.title" | t }}</h2>
+          <div class="account__default-address">{{ customer.default_address | format_address }}</div>
+          <a href="{{ routes.account_addresses_url }}" class="account__edit-address">{% if customer.default_address != blank %}{{ "customer.account.addresses.edit_address" | t }}{% else %}{{ "customer.account.addresses.add_address" | t }}{% endif %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

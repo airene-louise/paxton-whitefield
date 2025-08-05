@@ -1,0 +1,37 @@
+{% liquid
+  assign base_class = "text-banner"
+%}
+
+<div class="{{ base_class }}__container">
+  <div class="{{ base_class }}__inner">
+    <h2 class="{{ base_class }}__title">{{ section.settings.title }}</h2>
+    <div class="{{ base_class }}__description">
+      {{ section.settings.description }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text Banner",
+  "tag": "section",
+  "class": "text-banner",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Title",
+      "id": "title"
+    },
+    {
+      "type": "richtext",
+      "label": "Description",
+      "id": "description"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Banner"
+    }
+  ]
+}
+{% endschema %}

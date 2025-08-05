@@ -1,0 +1,20 @@
+
+{% assign class = class | default: 'collection-card' %}
+<a href="{{ block.settings.url }}" class="{{ class }}">
+  <div class="{{ class }}__image-wrapper">
+    {% if block.settings.image %}
+      {{ block.settings.image
+        | image_url: width: block.settings.image.width
+        | image_tag:
+          alt: block.settings.image.alt,
+          width: 440,
+          height: 440,
+          loading: 'lazy',
+          sizes: '(min-width: 750px) 25vw, 100vw'
+      }}
+    {% else %}
+      <img width="375" height="250" src="https://picsum.photos/375/250" alt="" class="{{ class }}__image" />
+    {% endif %}
+  </div>
+  <p class="{{ class }}__title">{{ block.settings.title }}</p>
+</a>

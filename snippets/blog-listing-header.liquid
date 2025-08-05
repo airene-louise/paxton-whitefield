@@ -1,0 +1,8 @@
+<div class="blog-listing-header" style="background-image: url('{{ section.settings.blog_header_image | img_url: 'master' }}')">
+  <div class="blog-listing-header__container">
+    <a href="{{ section.settings.blog_header_button_link }}" class="blog-listing-header__back-button">
+      <span>{% render 'icons', icon: 'chevron-left' %}</span>
+      {{section.settings.blog_header_button_text}}
+    </a>
+  </div>
+</div>

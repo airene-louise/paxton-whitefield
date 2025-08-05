@@ -1,0 +1,210 @@
+{% liquid
+  assign menu = menu | default: linklists['main-menu']
+  assign mobile_menu_footer = mobile_menu_footer | default: linklists['mobile-menu-footer']
+  assign promo_blocks = promo_blocks
+%}
+
+{% comment %} Primary nav {% endcomment %}
+<nav class="header__menu-mobile">
+  <div class="header__menu-mobile__container">
+
+    <ul class="header__menu-mobile__list">
+      {% for item in menu.links %}
+        {% assign child_promo_blocks = promo_blocks | map: "settings" | where: "title", item.title %}
+        {% comment %} Child links {% endcomment %}
+        {% if item.links != blank or child_promo_blocks.size > 0 %}
+          <li class="header__menu-mobile__item">
+            <button class="header__menu-mobile__link has-children">
+              <span>{{ item.title }}</span>
+              <span class="header__menu-mobile__dropdown-icon">{% render "icons", icon: "chevron-right" %}</span>
+            </button>
+            <div class="header__menu-mobile__dropdown">
+              <div class="header__menu-mobile__dropdown__inner">
+                <button class="header__menu-mobile__back-button">
+                  {% render "icons", icon: "chevron-left" %} {{ item.title }}
+                  </button>
+                {% for child in item.links %}
+                  <ul class="header__menu-mobile__sublist {% if forloop.first %}is-open{% endif %}">
+    
+                  {% if child.links == blank %}
+                    {% comment %} No grandchild links {% endcomment %}
+                    <li class="header__menu-mobile-sublist__item">
+                      <a href="{{ child.url }}" class="header__menu-mobile__sublist__link">{{ child.title }}</a>
+                    </li>
+                  {% else %}        
+                    <li class="header__menu-mobile__sublist__item">
+                      <button
+                        class="header__menu-mobile__sublist__link"
+                      >
+                        <span>{{ child.title }}</span>
+                        {% render "icons", icon: "plus" %}
+                      </button>
+
+                      <ul class="header__menu-mobile__grandchildren">
+                      {% for grandchild in child.links %}
+                        <li class="header__menu-mobile__grandchildren__item">
+                          <a href="{{ grandchild.url }}" class="header__menu-mobile__grandchildren__link {% if grandchild.title == 'Shop All' %}header__menu-mobile__grandchildren__link--accented{% endif %}">{{ grandchild.title }}</a>
+                        </li>
+                      {% endfor %}
+                      </ul>
+
+                    </li>               
+                  {% endif %}
+  
+                  </ul>
+                {% endfor %}
+                <div class="header__mobile-menu__promos {{ item.title | handleize }} swiper">
+                  {% for promo_block in child_promo_blocks %}
+                    {%
+                      # If the promo block has a URL but no button text, then
+                      # the whole block should be clickable.
+                    %}
+                    {% if promo_block.url != blank and promo_block.promo_block_button_text == blank %}
+                      <a
+                        href="{{ promo_block.url }}"
+                        class="promo-block promo-block--clickable"
+                      >
+                    {% else %}
+                      <div class="promo-block">
+                    {% endif %}
+
+                      <div class="promo-block__overlay"></div>
+                      <img
+                        src="{{ promo_block.image | image_url: width: promo_block.image.width }}"
+                        alt="{{ promo_block.image.alt }}"
+                        class="promo-block__image"
+                        width="{{ promo_block.image.width }}"
+                        height="{{ promo_block.image.height }}"
+                        loading="lazy"
+                      >
+                      <div class="promo-block__content">
+                        {% if promo_block.promo_block_title != blank %}
+                          <h2 class="promo-block__title">{{ promo_block.promo_block_title }}</h2>
+                        {% endif %}
+                        {% if promo_block.promo_block_text != blank %}
+                          <p class="promo-block__text">{{ promo_block.promo_block_text }}</p>
+                        {% endif %}
+
+                        {% if promo_block.url != blank and promo_block.promo_block_button_text != blank %}
+                          <a
+                            class="promo-block__button"
+                            href="{{ promo_block.url }}"
+                          >
+                            {{ promo_block.promo_block_button_text }}
+                          </a>
+                        {% endif %}
+                      </div>
+
+                    {% if promo_block.url != blank and promo_block.promo_block_button_text == blank %}
+                      </a>
+                    {% else %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                {% if mobile_menu_footer != blank %}
+                  <div class="header__menu-mobile__footer">
+                    <h4 class="header__menu-mobile__footer__title">
+                      {{ mobile_menu_footer.title }}
+                    </h4>
+
+                    <ul class="header__menu-mobile__footer__list">
+                      {% for item in mobile_menu_footer.links %}
+                        {% liquid
+                          assign item_title = item.title
+                          assign item_url = item.url
+                          if item_title contains '|' and item_title contains 'icon:'
+                            assign item_icon = item_title | split: '|' | last | split: 'icon:' | last | strip
+                            assign item_title = item_title | split: '|' | first | strip
+                          endif
+                        %}
+                        <li class="header__menu-mobile__footer__item">
+                          <a href="{{ item_url }}">
+                            {% render 'icons', icon: item_icon %}
+                            <span>{{ item_title }}</span>
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+
+                    {% if shop.customer_accounts_enabled or shop.customer_accounts_optional %}
+                      <ul class="header__menu-mobile__footer__list list-two">
+                        <li class="header__menu-mobile__footer__item">
+                          {% if customer != blank %}
+                            <a href="{{ routes.account_url }}">
+                              {% render 'icons', icon: 'account' %}
+                              <span>My Account</span>
+                            </a>
+                          {% else %}
+                            <a href="{{ routes.account_login_url }}">
+                              {% render 'icons', icon: 'account' %}
+                              <span>Sign in or Register</span>
+                            </a>
+                          {% endif %}
+                        </li>
+                      </ul>
+                    {% endif %}
+
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+  
+        {% comment %} No child links {% endcomment %}
+        {% else %}
+          <li class="header__menu-mobile__item">
+            <a href="{{ item.url }}" class="header__menu-mobile__link">{{ item.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    {% if mobile_menu_footer != blank %}
+      <div class="header__menu-mobile__footer">
+        <h4 class="header__menu-mobile__footer__title">
+          {{ mobile_menu_footer.title }}
+        </h4>
+
+        <ul class="header__menu-mobile__footer__list">
+          {% for item in mobile_menu_footer.links %}
+            {% liquid
+              assign item_title = item.title
+              assign item_url = item.url
+              if item_title contains '|' and item_title contains 'icon:'
+                assign item_icon = item_title | split: '|' | last | split: 'icon:' | last | strip
+                assign item_title = item_title | split: '|' | first | strip
+              endif
+            %}
+            <li class="header__menu-mobile__footer__item">
+              <a href="{{ item_url }}">
+                {% render 'icons', icon: item_icon %}
+                <span>{{ item_title }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% if shop.customer_accounts_enabled or shop.customer_accounts_optional %}
+          <ul class="header__menu-mobile__footer__list list-two">
+            <li class="header__menu-mobile__footer__item">
+              {% if customer != blank %}
+                <a href="{{ routes.account_url }}">
+                  {% render 'icons', icon: 'account' %}
+                  <span>My Account</span>
+                </a>
+              {% else %}
+                <a href="{{ routes.account_login_url }}">
+                  {% render 'icons', icon: 'account' %}
+                  <span>Sign in or Register</span>
+                </a>
+              {% endif %}
+            </li>
+          </ul>
+        {% endif %}
+
+      </div>
+    {% endif %}
+
+  </div>
+</nav>

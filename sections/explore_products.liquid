@@ -1,0 +1,107 @@
+{% assign id = section.id %}
+
+<div class="explore-products-slider__container {% if section.settings.products_on_article_page %} products-on-article-page {% endif %}">
+  <div class="explore-products-slider__header">
+  <h2>{{ section.settings.title }}</h2>
+  <div class="explore-products-slider__navigation">
+    <div class="explore-products-slider__swiper-button-prev explore-products-slider__swiper-button-prev-{{ id }}">
+    {% render 'icons', icon: 'arrow-left-black' %}
+    </div>
+    <div class="explore-products-slider__swiper-button-next explore-products-slider__swiper-button-next-{{ id }}">
+    {% render 'icons', icon: 'arrow-right-black' %}
+    </div>
+  </div>
+  </div>
+  <div class="explore-products-slider__swiper-container swiper-container swiper swiper-{{ section.id }}">
+  <div class="explore-products-slider__swiper-wrapper swiper-wrapper">
+    {% if article %}
+      {% if article.metafields.custom.blog_related_products.value != blank %}
+        {% for product in article.metafields.custom.blog_related_products.value %}
+        <div class="swiper-slide">
+          {% render 'product-card', section: section, product: product %}
+        </div>
+        {% endfor %}
+      {% else %}
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            {% render 'product-card', section: section, block: block, product: block.settings.product %}
+          </div>
+        {% endfor %}
+      {% endif %}
+{% else %}
+  {% for block in section.blocks %}
+    <div class="swiper-slide">
+      {% render 'product-card', section: section, block: block, product: block.settings.product %}
+    </div>
+  {% endfor %}
+{% endif %}
+  </div>
+  </div>
+</div>
+
+
+  <script>
+  document.addEventListener("swiperReady", function() {
+  const productCarousel = new Swiper('.swiper-{{ section.id }}', {
+  slidesPerView: 2.1,
+  spaceBetween: 10,
+  breakpoints: {
+  475: {
+  slidesPerView: 2,
+  spaceBetween: 15,
+  },
+  768: {
+  slidesPerView: 3,
+  spaceBetween: 15,
+  },
+   1210: {
+  slidesPerView: 4,
+  spaceBetween: 15,
+  }
+  },
+  navigation: {
+  nextEl: ".explore-products-slider__swiper-button-next-{{ id }}",
+  prevEl: ".explore-products-slider__swiper-button-prev-{{ id }}",
+  },
+  loop: true
+  })
+  })
+  </script>
+
+{% schema %}
+  {
+  "name": "Explore products Slider",
+  "class": "explore-products",
+  "settings": [
+    {
+    "type": "checkbox",
+    "id": "products_on_article_page",
+    "label": "Show products in an article page"
+  },
+  {
+  "type": "text",
+  "id": "title",
+  "label": "Title",
+  "default": "Explore Products"
+  }
+  ],
+  "blocks":[
+  {
+  "type": "product",
+  "name": "product",
+  "settings": [
+  {
+  "type": "product",
+  "id": "product",
+  "label": "Product To Show"
+  }
+  ]
+  }
+  ],    
+  "presets": [
+  {
+  "name": "Explore Products Slider"
+  }
+  ]
+  }
+{% endschema %}

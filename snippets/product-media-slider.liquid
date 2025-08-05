@@ -1,0 +1,81 @@
+{% comment %}
+Renders a list of product's images in a slideshow
+
+Accepts:
+- product: {Object} Product Liquid object
+- base_class: {String} Adds a class to the element
+
+Usage:
+{% render 'product-media-slider', product: product, base_class:base_class %}
+{% endcomment %}
+
+<div class="swiper product__media__thumbnails-slider">
+  <div class="swiper-wrapper">
+    {% for media in product.media %}
+    <div class="swiper-slide product__media__thumbnails-slider__slide">
+      {% render 'product-media', media: media, thumbnails: true %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="product__media__thumbnails-slider--prev vertical ">
+    {% render 'icons', icon: 'chevron-left' %}
+  </div>
+
+  <div class="product__media__thumbnails-slider--next vertical">
+    {% render 'icons', icon: 'chevron-right' %}
+  </div>
+</div>
+
+<div class="product__media__slider swiper">
+  <div class="swiper-wrapper">
+    {% for media in product.media %}
+    <div class="swiper-slide product__media__slider__slide">
+      {% render 'product-media', media: media, forloop: forloop %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="product__media__slider__pagination"> 
+    <span class="product__media__slider__pagination__current">0</span>
+    <span class="product__media__slider__pagination__total">0</span>
+  </div>
+</div>
+
+<script>
+  const runSwiper = () => {
+    const swiper = new Swiper(".product__media__thumbnails-slider", {
+      direction: 'vertical',
+      autoHeight: true,
+      slidesPerView: 'auto',
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".product__media__thumbnails-slider--next",
+        prevEl: ".product__media__thumbnails-slider--prev",
+      },
+    });
+
+    const swiper2 = new Swiper(".product__media__slider", {
+      slidesPerView: 1,
+      navigation: {
+        nextEl: ".product__media__slider--next",
+        prevEl: ".product__media__slider--prev",
+      },
+      zoom: true,
+      pagination: {
+        el: ".product__media__slider__pagination"
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+      breakpoints: {
+        767: {
+          slidesPerView: 1
+        }
+      }
+    });
+    document.querySelector('.product__media__slider').addEventListener('click', (e) => {
+      swiper2.zoom.toggle(e);
+    })
+  }
+  window.Swiper ? runSwiper() : document.addEventListener("swiperReady", runSwiper)
+</script>

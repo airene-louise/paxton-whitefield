@@ -1,0 +1,130 @@
+{% liquid
+  assign menu = menu | default: linklists['main-menu']
+  assign promo_blocks = promo_blocks
+%}
+
+{% comment %} Primary nav {% endcomment %}
+<nav class="header__menu-desktop">
+  <div class="header__menu-desktop__container">
+    <ul class="header__menu-desktop__list">
+      {% for item in menu.links %}
+        {% assign child_promo_blocks = promo_blocks | map: "settings" | where: "title", item.title %}
+  
+        {% comment %} Child links {% endcomment %}
+        {% if item.links != blank or child_promo_blocks.size > 0 %}
+          <li class="header__menu-desktop__item">
+
+            <a href="{{ item.url }}" class="header__menu-desktop__link has-children">
+              <span>{{ item.title }}</span>
+            </a>
+
+            <div class="header__menu-desktop__dropdown">
+              <div class="header__menu-desktop__dropdown__container">
+
+                <div class="header__menu-desktop__dropdown__inner">
+                  {% for child in item.links %}
+                    <ul class="header__menu-desktop__sublist">
+      
+                    {% if child.links == blank %}
+                      {% comment %} No grandchild links {% endcomment %}
+                      <li class="header__menu-desktop-sublist__item">
+                        <a href="{{ child.url }}" class="header__menu-desktop__sublist__link">{{ child.title }}</a>
+                      </li>
+                    {% else %}        
+                      <li class="header__menu-desktop__sublist__item">
+                        <a href="{{ child.url }}" class="header__menu-desktop__sublist__link">{{ child.title }}</a>
+                      </li>
+                      <ul class="header__menu-desktop__grandchildren">
+                        {% for grandchild in child.links %}
+                          <li class="header__menu-desktop__grandchildren__item">
+                          {% assign collection = collections[grandchild.handle] %}
+                          {% assign badge = collection.metafields.custom.badge %}
+                            {% liquid
+                              assign is_shop_all = false
+                              assign lower_case_title = grandchild.title | downcase
+                              if lower_case_title == 'shop all'
+                                assign is_shop_all = true
+                              endif
+                            %}
+                            <a href="{{ grandchild.url }}" class="header__menu-desktop__grandchildren__link {% if is_shop_all %}header__menu-desktop__grandchildren__link--accented{% endif %}">
+                            {{ grandchild.title }} 
+                            {% if badge %}
+                              <span class="header__badges">{{ badge }}</span>
+                            {% endif %}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+
+                    {% endif %}
+    
+                    </ul>
+                  {% endfor %}
+
+                  {% if child_promo_blocks.size > 0 %}
+                    <div class="header__menu-desktop__dropdown__promo-blocks">
+                    {% for promo_block in child_promo_blocks %}
+                      {%
+                        # If the promo block has a URL but no button text, then
+                        # the whole block should be clickable.
+                      %}
+                      {% if promo_block.url != blank and promo_block.promo_block_button_text == blank %}
+                        <a
+                          href="{{ promo_block.url }}"
+                          class="promo-block promo-block--clickable"
+                        >
+                      {% else %}
+                        <div class="promo-block">
+                      {% endif %}
+
+                        <div class="promo-block__overlay"></div>
+                        <img
+                          src="{{ promo_block.image | image_url: width: promo_block.image.width }}"
+                          alt="{{ promo_block.image.alt }}"
+                          class="promo-block__image"
+                          width="{{ promo_block.image.width }}"
+                          height="{{ promo_block.image.height }}"
+                          loading="lazy"
+                        >
+                        <div class="promo-block__content">
+                          {% if promo_block.promo_block_title != blank %}
+                            <h2 class="promo-block__title">{{ promo_block.promo_block_title }}</h2>
+                          {% endif %}
+                          {% if promo_block.promo_block_text != blank %}
+                            <p class="promo-block__text">{{ promo_block.promo_block_text }}</p>
+                          {% endif %}
+
+                          {% if promo_block.url != blank and promo_block.promo_block_button_text != blank %}
+                            <a
+                              class="promo-block__button"
+                              href="{{ promo_block.url }}"
+                            >
+                              {{ promo_block.promo_block_button_text }}
+                            </a>
+                          {% endif %}
+                        </div>
+
+                      {% if promo_block.url != blank and promo_block.promo_block_button_text == blank %}
+                        </a>
+                      {% else %}
+                        </div>
+                      {% endif %}
+
+                    {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </li>
+  
+        {% comment %} No child links {% endcomment %}
+        {% else %}
+          <li class="header__menu-desktop__item">
+            <a href="{{ item.url }}" class="header__menu-desktop__link">{{ item.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>

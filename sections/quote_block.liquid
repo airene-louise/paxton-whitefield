@@ -1,0 +1,73 @@
+<div class="quote__block{% if section.settings.narrow__width__container %} narrow__width__container{% endif %}">
+  <div class="quote__block-container" style="background-color:{{ section.settings.background_colour }};">
+  <div class="quote__block__icon-left">
+  {% render 'icons', icon: 'quote-up' %}
+</div>
+  {% for block in section.blocks %}
+  <div class="quote__block-inner">
+  <h3 class="quote__block-text">{{ block.settings.quote_text }}</h3>
+  <p class="quote__block__person-name">{{ block.settings.quote_by_name }}</p>
+  </div>
+  {% endfor %}
+  <div class="quote__block__icon-right">
+  {% render 'icons', icon: 'quote-down' %}
+</div>
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --bg-color: {{ section.settings.section_background_colour }};
+  }
+</style>
+
+
+{% schema %}
+{
+  "name": "Quote block",
+  "class": "quote__block-outer",
+  "settings": [
+  {
+  "type": "checkbox",
+  "id": "narrow__width__container",
+  "label": "Narrow width container",
+  "default": true
+  },
+  {
+  "type": "color",
+  "id": "section_background_colour",
+  "label": "Background Color For Section",
+  "default": "#FFFFFF"
+  },
+  {
+  "type": "color",
+  "id": "background_colour",
+  "label": "Background Color For Quote",
+  "default": "#FFFFFF"
+  }
+  ],
+  "blocks": [
+  {
+  "type": "text",
+  "name": "Quote Content",
+  "settings": [
+  {
+  "type": "textarea",
+  "label": "Quote Text",
+  "id": "quote_text"
+  },
+  {
+  "type": "text",
+  "label": "Quote By",
+  "id": "quote_by_name"
+  }
+  ]
+  }
+  ],
+  "presets": [
+  {
+  "name": "Quote block"
+  }
+  ]
+}
+{% endschema %}

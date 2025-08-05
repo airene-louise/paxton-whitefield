@@ -1,0 +1,128 @@
+{% assign breadcrumbs_modifier = breadcrumbs_modifier | default: '' %}
+{%- assign pageTemplate = template | split: '.' | first -%}
+
+{% capture divider_html %}
+  <li class="breadcrumbs__divider"><span aria-hidden="true" class="breadcrumbs__arrow">{% render 'icons', icon: 'chevron-right' %}</span></li>
+{% endcapture %}
+
+<nav role="navigation" aria-label="breadcrumbs" class="{{ breadcrumbs_modifier }}">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumbs breadcrumbs__list">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a class="hover:underline" href="{{ routes.root_url }}" itemprop="item" title="Home"><span itemprop="name">Home</span></a>
+      <meta itemprop="position" content="1">
+    </li>
+    {{ divider_html }}
+    {%- case pageTemplate -%}
+      {%- when 'page' -%}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a class="hover:underline" href="{{ page.url }}" itemprop="item" title="{{ page.title }}" aria-current="page"
+            ><span itemprop="name">{{ page.title }}</span></a
+          >
+          <meta itemprop="position" content="2">
+        </li>
+      {%- when 'product' -%}
+        {%- if product.metafields.custom.breadcrumb_collection != blank -%}
+          {% assign breadcrumb_collection = collections[product.metafields.custom.breadcrumb_collection] %}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="hover:underline" href="{{ breadcrumb_collection.url }}" itemprop="item" title="{{ breadcrumb_collection.title }}"
+              ><span itemprop="name">{{ breadcrumb_collection.title }}</span></a
+            >
+            <meta itemprop="position" content="2">
+          </li>
+          {{ divider_html }}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span class="text-border" itemprop="name">{{ product.title }}</span>
+            <meta itemprop="position" content="3">
+          </li>
+        {%- else -%}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="hover:underline" href="{{ product.url }}" itemprop="item" title="{{ collection.title }}"
+              ><span itemprop="name">{{ collection.title }}</span></a
+            >
+            <meta itemprop="position" content="2">
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span class="text-border" itemprop="name">{{ product.title }}</span>
+            <meta itemprop="position" content="3">
+          </li>
+        {%- endif -%}
+      {%- when 'collection' and collection.handle -%}
+        {%- if collection.metafields.custom.breadcrumb_collection != blank -%}
+          {% assign breadcrumb_collection = collections[collection.metafields.custom.breadcrumb_collection] %}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="hover:underline" href="{{ breadcrumb_collection.url }}" itemprop="item" title="{{ breadcrumb_collection.title }}"
+              ><span itemprop="name">{{ breadcrumb_collection.title }}</span></a
+            >
+            <meta itemprop="position" content="2">
+          </li>
+          {{ seperator }}
+        {%- endif -%}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a class="hover:underline" href="{{ collection.url }}" itemprop="item" title="{{ collection.title }}" aria-current="page"
+            ><span itemprop="name">{{ collection.title }}</span></a
+          >
+          <meta
+            itemprop="position"
+            content="{% if collection.metafields.custom.breadcrumb_collection != blank %}3{% else %}2{% endif %}"
+          >
+        </li>
+      {%- when 'blog' -%}
+        {%- if current_tags -%}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="hover:underline" href="{{ blog.url }}" itemprop="item" title="{{ blog.title }}"
+              ><span itemprop="name">{{ blog.title }}</span></a
+            >
+            <meta itemprop="position" content="2">
+          </li>
+          {{ seperator }}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            {% capture tag_url %}{{blog.url}}/tagged/{{ current_tags | join: "+" }}{% endcapture %}
+            <a class="hover:underline" href="{{ tag_url }}" itemprop="item" title="{{ current_tags | join: " + " }}" aria-current="page"
+              ><span itemprop="name">{{ current_tags | join: ' + ' }}</span></a
+            >
+            <meta itemprop="position" content="3">
+          </li>
+        {%- else -%}
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="hover:underline" href="{{ blog.url }}" itemprop="item" title="{{ blog.title }}" aria-current="page"
+              ><span itemprop="name">{{ blog.title }}</span></a
+            >
+            <meta itemprop="position" content="2">
+          </li>
+        {%- endif -%}
+      {%- when 'article' -%}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a class="hover:underline" href="{{ blog.url }}" itemprop="item" title="{{ blog.title }}"
+            ><span itemprop="name">{{ blog.title }}</span></a
+          >
+          <meta itemprop="position" content="2">
+        </li>
+        {{ seperator }}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a class="hover:underline" href="{{ article.url }}" itemprop="item" title="{{ article.title }}" aria-current="page"
+            ><span itemprop="name">{{ article.title }}</span></a
+          >
+          <meta itemprop="position" content="3">
+        </li>
+      {%- when 'search' -%}
+        {%- capture search_terms -%}
+        {%- if request.page_type == 'search' and search.terms != blank -%}
+            results for "{{ search.terms | split: ' AND ' | last | split: 'product_type:' | last }}"
+        {%- endif -%}
+        {%- endcapture -%}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+          <a class="hover:underline" href="{{ request.path }}" itemprop="item" title="Search {{ search_terms }}" aria-current="page"
+            ><span itemprop="name">Search {{ search_terms }}</span></a
+          >
+          <meta itemprop="position" content="2">
+        </li>
+      {%- else -%}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+          <a class="hover:underline" href="{{ request.path }}" itemprop="item" title="{{ page_title }}" aria-current="page"
+            ><span itemprop="name">{{ page_title }}</span></a
+          >
+          <meta itemprop="position" content="2">
+        </li>
+    {%- endcase -%}
+  </ol>
+</nav>

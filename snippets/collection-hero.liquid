@@ -1,0 +1,55 @@
+{% liquid
+  assign image_desktop = image_desktop | default: section.settings.image_desktop
+  assign image_mobile = image_mobile | default: section.settings.image_mobile
+  assign collections_nav = collections_nav.value
+  if collections_nav == blank and section.settings.collections_nav != blank
+    assign collections_nav = section.settings.collections_nav.links | map: 'object'
+  endif
+%}
+
+<div class="collection__hero">
+
+  {% if image_desktop != blank %}
+    <picture>
+      {% if image_mobile %}
+        <source
+          media="(max-width: 749px)"
+          srcset="{{ image_mobile | image_url: width: image_mobile.width }}"
+        >
+      {% endif %}
+
+      {{ image_desktop
+      | image_url: width: image_desktop.width
+      | image_tag: alt: image_desktop.alt
+      }}
+    </picture>
+  {% endif %}
+
+  <div class="collection__hero__container">
+    {% if collection.title %}
+      <h1 class="collection__hero__title">{{ collection.title }}</h1>
+    {% endif %}
+
+    {% if collection.description %}
+      <div class="collection__hero__description rte">
+        {{ collection.description }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if collections_nav != blank %}
+    <div class="collection__connected__container">
+      <div class="collection__connected">
+        {% for collection in collections_nav %}
+          <a
+            class="collection__connected__item"
+            href="{{ collection.url }}"
+          >
+            {{ collection.title }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</div>  

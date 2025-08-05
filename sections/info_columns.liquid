@@ -1,0 +1,88 @@
+<div class="info-columns__container">
+  <div class="info-columns__inner">
+  {% for block in section.blocks %}
+    <div class="info-columns__item">
+    {% if block.settings.image != blank %}
+      <img
+      src="{{ block.settings.image | image_url: width: block.settings.image.width }}"
+      alt="{{ block.settings.image.alt }}"
+      class="info-columns__image"
+      width="{{ block.settings.image.width }}"
+      height="{{ block.settings.image.height }}"
+      loading="lazy"
+      >
+    {% else %}
+      <img height="100" width="100" src="https://picsum.photos/100/100" alt="placeholder" class="info-columns__image">
+    {% endif %}
+    <div class="info-columns__content">
+      {% if block.settings.title != blank %}
+      <h3 class="info-columns__title">{{ block.settings.title }}</h3>
+      {% endif %}
+      {% if block.settings.subtitle != blank %}
+      <h5 class="info-columns__subtitle">{{ block.settings.subtitle }}</h5>
+      {% endif %}
+      {% if block.settings.text != blank %}
+      <p class="info-columns__text">{{ block.settings.text }}</p>
+      {% endif %}
+      {% if block.settings.button_text != blank and block.settings.button_url != blank %}
+      <a href="{{ block.settings.button_url }}" class="info-columns__button">{{ block.settings.button_text }}</a>
+      {% endif %}
+    </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+  "name": "Info columns",
+  "class": "info-columns",
+  "tag": "section",
+  "settings": [
+    
+  ],
+  "blocks": [
+  {
+  "type": "item",
+  "name": "Item",
+  "settings": [
+    {
+    "type": "image_picker",
+    "id": "image",
+    "label": "IMAGE"
+      },
+      {
+    "type": "text",
+    "id": "title",
+    "label": "TITLE"
+    },
+      {
+    "type": "text",
+    "id": "subtitle",
+    "label": "SUBTITLE"
+    },
+    {
+    "type": "text",
+    "id": "text",
+    "label": "TEXT"
+    },
+    {
+    "type": "url",
+    "id": "button_url",
+    "label": "BUTTON URL"
+    },
+    {
+    "type": "text",
+    "id": "button_text",
+    "label": "BUTTON text"
+    }
+  ]
+  }
+  ],
+  "presets": [
+  {
+  "name": "Info columns"
+  }
+  ]
+  }
+{% endschema %}

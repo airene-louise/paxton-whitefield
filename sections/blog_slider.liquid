@@ -1,0 +1,156 @@
+{% assign id = section.id %}
+<section  class="blog-slider__wrapper {% if section.settings.blog_on_article_page %} blog-on-article-page {% endif %}">
+  <div class="blog-slider__container">
+    {% if section.settings.title %}
+  <div class="blog-slider__header">
+    <h2 class="blog-slider__title">{{ section.settings.title }}</h2>
+    <p  class="blog-slider__small-text">{{ section.settings.copy }}</p>
+  </div>
+  {% endif %}
+
+  <div class="blog-slider__swiper-container swiper-container swiper swiper-{{ section.id }}">
+  <div class="blog-slider__swiper-wrapper swiper-wrapper">
+   {% if article %}
+     {%  if article.metafields.custom.related_articles.value != blank %}
+      {% for related_posts in article.metafields.custom.related_articles.value %}
+      <div class="swiper-slide">
+        {% render 'article-card', section: section, post: article: related_posts %}
+      </div>
+      {% endfor %}
+    {%  else %}
+      {% for block in section.blocks %}
+      <div class="swiper-slide">
+        {% render 'article-card', section: section, block: block, article: block.settings.article %}
+      </div>
+      {% endfor %}
+    {%  endif %}
+  {% else %}
+    {% for block in section.blocks %}
+    <div class="swiper-slide">
+      {% render 'article-card', section: section, block: block, article: block.settings.article %}
+    </div>
+    {% endfor %}
+  {% endif %}
+  </div>  
+  </div>
+
+  <div class="blog-slider__footer">
+  <a class="blog-slider__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta }}</a>
+  </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("swiperReady", function() {
+  const blogCarousel = new Swiper('.swiper-{{ section.id }}', {
+    slidesPerView: 1.2,
+    spaceBetween: 15,
+    breakpoints: {
+    768: {
+    slidesPerView: 2,
+    spaceBetween: 15,
+    },
+    1068: {
+    slidesPerView: 3,
+    spaceBetween: 15,
+    },
+    1268: {
+    slidesPerView: 4,
+    spaceBetween: 15,
+    }
+    },
+    navigation: {
+    nextEl: ".blog-slider__swiper-button-next-{{ id }}",
+    prevEl: ".blog-slider__swiper-button-prev-{{ id }}",
+    },
+    rewind: true,
+  })
+  })
+</script>
+
+{% schema %}
+  {
+  "name": "Blog Slider",
+  "class":"blog-slider",
+  "settings": [
+  {
+    "type": "checkbox",
+    "id": "blog_on_article_page",
+    "label": "Show posts in an article page"
+  },
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Title",
+    "default": "Blog"
+  },
+  {
+    "type": "textarea",
+    "id": "copy",
+    "label": "Copy Below Title",
+    "default": "Some text will be shown here"
+  },
+  {
+    "type": "range",
+    "id": "margin_top",
+    "min": 0,
+    "max": 10,
+    "step": 1,
+    "unit": "rem",
+    "label": "Margin Top",
+    "default": 0
+  },
+  {
+    "type": "range",
+    "id": "margin_bottom",
+    "min": 0,
+    "max": 10,
+    "step": 1,
+    "unit": "rem",
+    "label": "Margin Bottom",
+    "default": 2
+  },
+  {
+    "type": "text",
+    "id": "cta",
+    "label": "CTA",
+    "default": "View All"
+  }, 
+  {
+    "type": "url",
+    "id": "cta_link",
+    "label": "CTA Link"
+  },
+  {
+    "type": "text",
+    "id": "article_cta",
+    "label": "Article CTA",
+    "default": "Read More"
+  }
+  ],
+  "blocks":[
+  {
+    "type": "blog-post",
+    "name": "Blog Post",
+    "settings": [
+    {
+      "type": "article",
+      "id": "article",
+      "label": "Blog Post to Show"
+    },
+    {
+    "type": "text",
+    "id": "blog_title",
+    "label": "Blog Title",
+    "default": "Health"
+    }
+    ]
+  }
+  ],    
+  "presets": [
+  {
+  "name": "Blog Slider"
+  }
+  ]
+  }
+{% endschema %}

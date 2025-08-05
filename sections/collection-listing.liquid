@@ -1,0 +1,77 @@
+<div class="collection-listing">
+  <div class="collection__header">
+    {{ page.metafields.custom.header_image  | image_url: width: 2150, height: 500, crop: 'center' | image_tag:
+      loading: "lazy",
+      sizes: '(min-width: 750px) 100vw, 100vw',
+      widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946, 2150',
+      alt: page.metafields.custom.header_image.alt
+    }}
+  </div>  
+  <div class="collection-listing__wrapper">
+    <div class="collection-listing__header">
+      <h1 class="collection-listing__title">{{ page.title }}</h1>
+      <p class="collection-listing__description">{{ page.metafields.custom.description }}</p>
+    </div>
+    <div class="collection-listing__grid collection-listing__grid--{{ section.settings.grid_columns }}-col">
+      {% for item in page.metafields.custom.collections.value %}
+        <a href="{{ item.url }}" class="collection-listing__card">
+          {{ item.featured_image
+            | image_url: width: item.image.width
+            | image_tag:
+              alt: item.featured_image.alt,
+              width: 440,
+              height: 440,
+              loading: 'lazy',
+              sizes: '(min-width: 750px) 25vw, 100vw'
+          }}
+          <h3 class="collection-listing__card__title">{{ item.title }}</h3>
+          <div class="collection-listing__card__description">{{ item.description }}</div>
+          <span class="collection-listing__card__button">Shop Now</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="additional-info">
+    <div class="additional-info__container">
+      <h2 class="additional-info__title">{{ page.metafields.custom.additional_information_title_}}</h2>
+      <p class="additional-info__copy">{{ page.metafields.custom.additional_information_text }}</p>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Collection Listing",
+    "tag": "section",
+    "settings": [
+      {
+        "type":"paragraph",
+        "content":"This section is used to display collection listings on pages. It's content is managed in page metafields"
+      },
+      {
+        "type": "select",
+        "label": "Grid columns",
+        "id": "grid_columns",
+        "default": "3",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Listing"
+      }
+    ]
+  }
+  {% endschema %}

@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "show_title": false
+      }
+    },
+    "content_with_media_R9RCXE": {
+      "type": "content_with_media",
+      "name": "Content with Media",
+      "settings": {
+        "narrow_width_container": false,
+        "image_right": false,
+        "image": "shopify:\/\/shop_images\/Paxton_WhitfieldFeb25WebRes-24.jpg",
+        "image_url": "",
+        "title": "Thank You for entering, we will be in contact if you are successful. Good luck!",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "content_with_media_R9RCXE"
+  ]
+}

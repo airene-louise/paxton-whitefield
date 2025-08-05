@@ -1,0 +1,111 @@
+{% liquid
+  assign id = section.id
+  assign slides_per_view_tablet = 4
+  assign slides_per_view_desktop = 6
+
+  if section.blocks.size < 4
+    assign slides_per_view_tablet = section.blocks.size
+  endif
+
+  if section.blocks.size < 6
+    assign slides_per_view_desktop = section.blocks.size
+  endif
+%}
+<section class="explore-collections__wrapper">
+  {% if section.settings.title %}
+    <div class="explore-collections__header">
+      <span class="explore-collections__title__text">{{ section.settings.title }}</span>
+      <a href="{{ section.settings.button_url }}" class="explore-collections__cta-button desktop">{{ section.settings.button_text }}</a>
+    </div>
+  {% endif %}
+
+  <div class="explore-collections">
+    <div class="swiper explore-collections__swiper-{{ id }}">
+      <div class="swiper-wrapper explore-collections__swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide explore-collections__swiper-slide">
+            {% render 'collection-card', block: block, class: 'collection-card-small' %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.button_text %}
+    <a href="{{ section.settings.button_url }}" class="explore-collections__cta-button mobile">{{ section.settings.button_text }}</a>
+  {% endif %}
+</section>
+
+<!-- Initialize Swiper -->
+<script>
+  document.addEventListener('swiperReady', () => {
+    new Swiper(".explore-collections__swiper-{{ id }}", {
+      slidesPerView: 2.1,
+      spaceBetween: 10,
+      breakpoints: {
+        768: {
+          slidesPerView: {{ slides_per_view_tablet }},
+          spaceBetween: 20,
+        },
+        1068: {
+          slidesPerView: {{ slides_per_view_desktop }},
+          spaceBetween: 20,
+        }
+      },
+    });
+  });
+</script>
+
+  {% schema %}
+    {
+      "name": "Explore Collections small",
+      "max_blocks": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Section title",
+          "default": "Shop by range"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "CTA button text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "CTA link"
+        }
+      ],
+      "blocks":[
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings":[
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+            {
+              "type": "url",
+              "id": "url",
+              "label": "Collection link"
+            }
+          ]
+        }
+      ],    
+      "presets": [
+        {
+          "name": "CTA Boxes Small"
+        }
+      ]
+    }
+  {% endschema %}
+  

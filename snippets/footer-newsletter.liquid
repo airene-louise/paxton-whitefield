@@ -1,0 +1,55 @@
+{% liquid
+  assign base_class = "footer"
+  assign newsletter_signup_title = form_list_id | default: section.settings.newsletter_signup_title
+  assign form_list_id = form_list_id | default: section.settings.klaviyo_newsletter_id
+  assign success_message = success_message | default: section.settings.form_success_message
+  assign error_message = error_message | default: section.settings.form_error_message
+%}
+
+<div class="{{ base_class }}__newsletter">
+ <h6 class="newsletter-title">{{ newsletter_signup_title }}</h6>
+ <form
+  data-klaviyo-form
+  data-list-id="{{ form_list_id }}"
+  class="{{ base_class }}__form"
+>
+  <div class="{{ base_class }}__form__inner">
+    <div class="{{ base_class }}__form__input-group">
+      <label for="email" class="visually-hidden">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        class="{{ base_class }}__form__input"
+        required
+      >
+    </div>
+
+    <button
+      type="submit"
+      class="{{ base_class }}__form__submit"
+    >
+      Sign up
+    </button>
+  </div>
+
+  {% if success_message %}
+    <div
+      class="{{ base_class }}__form__success-message hide"
+      data-success-message
+    >
+      {{ success_message }}
+    </div>
+  {% endif %}
+
+  {% if error_message %}
+    <div
+      class="{{ base_class }}__form__error-message hide"
+      data-error-message
+    >
+      {{ error_message }}
+    </div>
+  {% endif %}
+</form>
+</div>

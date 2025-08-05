@@ -1,0 +1,56 @@
+<div class="{{ modal_class }} custom-modal">
+  <div class="{{ modal_class }}__header custom-modal__header">
+    <h2 class="{{ modal_class }}__title  custom-modal__title">{{ modal_title }}</h2>
+    <button class="{{ modal_class }}__close  custom-modal__close">{% render 'icons', icon: 'close' %}</button>
+  </div>
+  <div class="{{ modal_class }}__content  custom-modal__content">
+    <div class="{{ modal_class }}__text rte  custom-modal__text">{{ modal_text }}</div>
+  </div>
+</div>
+<div class="{{ modal_class }}__overlay custom-modal__overlay"></div>
+
+{% unless product.tags contains "Archive" or product.tags contains "archive" %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Scope everything within this block to the specific modal by class name
+      var modalClass = '{{ modal_class }}';
+
+      // Select the modal and the overlay specific to this instance
+      var modal = document.querySelector('.' + modalClass);
+      var overlay = document.querySelector('.' + modalClass + '__overlay');
+
+      // Function to toggle modal and overlay visibility
+      function toggleModalVisibility(isVisible) {
+        if (isVisible) {
+          modal.classList.add('is-visible');
+          overlay.classList.add('is-visible');
+        } else {
+          modal.classList.remove('is-visible');
+          overlay.classList.remove('is-visible');
+        }
+      }
+
+      // Select the button that opens the modal, scoped to this modal
+      var openModalButton = document.querySelector(`a[href="#${modalClass}"]`);
+
+      // Add an event listener to the open button
+      openModalButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default action
+        toggleModalVisibility(true);
+      });
+
+      // Select the button that closes the modal
+      var closeModalButton = modal.querySelector('.' + modalClass + '__header button');
+
+      // Add an event listener to the close button
+      closeModalButton.addEventListener('click', function() {
+        toggleModalVisibility(false);
+      });
+
+      // Add an event listener to the overlay to close the modal
+      overlay.addEventListener('click', function() {
+        toggleModalVisibility(false);
+      });
+    });
+  </script>
+{% endunless %}

@@ -1,0 +1,26 @@
+
+{% if product.metafields.custom.related_articles %}
+  <section class="product-articles__container">
+    {% for articleHandle in product.metafields.custom.related_articles.value %}
+      {% for article in blogs['news'].articles %}
+        {% assign handle = 'news/' | append: articleHandle %}
+        {% if article.handle == handle %}
+          {% render 'article-card', article: article %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </section>
+{% endif %}
+{% schema %}
+{
+  "name": "Product Articles",
+  "class":"product-articles",
+  "settings": [
+  ],
+  "presets": [
+    {
+    "name": "Product Articles"
+    }
+  ]
+}
+{% endschema %}

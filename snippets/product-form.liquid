@@ -1,0 +1,262 @@
+{% comment %}
+  Renders a product form for atc
+
+  Usage:
+  {% render 'product-form' %}
+{% endcomment %}
+
+{% liquid
+  assign show_notify_modal = true
+  for tag in product.tags
+    if tag == 'back-in-stock' or tag == 'Archive' or tag == 'archive'
+      assign show_notify_modal = true
+    endif
+  endfor
+
+  assign show_only_pick_up = product.available
+  for variant in product.variants
+    for store in variant.store_availabilities
+      if store.location.name == 'Bourton'
+        if store.available
+          assign show_only_pick_up = false
+        endif
+      endif
+    endfor
+  endfor
+%}
+
+{%- assign product = product | default: product -%}
+{%- form 'product', product, class: 'ProductForm', data-productForm: 'true' -%}
+  {% render 'product-swatches', product: product %}
+  <input type="hidden" name="name" value="" class="product__name">
+
+  {% if product.selling_plan_groups.size > 0 %}
+    <div id="recharge-subscription-widget"></div>
+  {% endif %}
+
+  <script>
+    window.RC = window.RC || {};
+    window.RC.params = window.RC.params || {};
+    window.RC.params.api_key = "{{ shop.metafields.recharge.api_key }}";
+
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.ReChargeWidget) {
+        window.ReChargeWidget.init();
+      }
+    });
+  </script>
+
+  {% if product.selling_plan_groups.size > 0 %}
+    {% liquid
+      assign object = product.metafields.pdp.subscription_message.value
+    %}
+
+    <input type="hidden" name="properties[isSubscription]" value="Next working day Tuesday – Friday">
+
+    <div class="pdp-subscription-delivery-note">
+      {% render 'icons', icon: 'delivery' %}
+      <div class="subscription-delivery-note__text">
+        <span class="subscription-delivery-note__text__title">Please note:</span>
+        <span class="subscription-delivery-note__text__text">{{ object.message }} </span>
+        {% if object.link_url %}
+          <a href="{{ object.link_url }}">{{ object.link_title }}</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="product__button__wrapper">
+    <h2 class="product__title">{{ product.title }}</h2>
+    <div class="product__quantity {% if product.title contains 'Gift' %}hide{% endif %}">
+      <input
+        type="button"
+        value="-"
+        class="minus"
+        data-action="decrease"
+        {% if product.title contains 'Gift' %}
+          disabled
+        {% endif %}
+      >
+      <input
+        type="number"
+        step="1"
+        min="1"
+        {% if product.title contains 'Gift' %}
+          max="1" readonly
+        {% endif %}
+        name="quantity"
+        value="1"
+        title="Qty"
+        class="item-quantity"
+        size="4"
+      >
+      <input
+        type="button"
+        value="+"
+        class="plus"
+        data-action="increase"
+        {% if product.title contains 'Gift' %}
+          disabled
+        {% endif %}
+      >
+    </div>
+
+    {% comment %}
+      If product is completely sold out show either notify me modal toggle CTA or sold out CTA depending on product tags
+      If product has sold out variants then we need to toggle the notify me modal CTA when a sold out swatch is selected
+    {% endcomment %}
+
+    {% unless product.tags contains 'Archive' or product.tags contains 'archive' %}
+      {% if product.type == 'Gift Card' or product.type == 'Event' %}
+        {% if product.metafields.custom.gift_card %}
+          <input type="hidden" name="properties[isGiftCard]" value="{{ product.metafields.custom.gift_card }}">
+        {% endif %}
+
+        <button
+          type="submit"
+          class="product__atc-button"
+          id="atcButton"
+          data-ph-capture-attribute-product-name="{{product.title}}"
+          data-ph-capture-attribute-product-price="{{product.price | divided_by: 100 }}"
+        >
+          <span>
+            {{- 'product.add_to_cart' | t }}&nbsp;<span data-price class="recharge-inner-most-price">
+              {{- product.price | money -}}
+            </span></span
+          >
+        </button>
+      {% else %}
+        {% unless product.tags contains 'sold-out' or product.available == false or show_only_pick_up %}
+          {% if product.metafields.custom.gift_card %}
+            <input type="hidden" name="properties[isGiftCard]" value="{{ product.metafields.custom.gift_card }}">
+          {% endif %}
+
+          <button
+            type="submit"
+            class="product__atc-button"
+            id="atcButton"
+            data-ph-capture-attribute-product-name="{{product.title}}"
+            data-ph-capture-attribute-product-price="{{product.price | divided_by: 100 }}"
+          >
+            <span>
+              {{- 'product.add_to_cart' | t }}&nbsp;<span data-price class="recharge-inner-most-price">
+                {{- product.price | money -}}
+              </span></span
+            >
+          </button>
+          {% if show_notify_modal %}
+            <button
+              onclick="toggleNotifyModal()"
+              type="button"
+              id="alternativeButton"
+              class="product__preorder-button button button--full-width accent-color-button"
+              style="display: none;"
+            >
+              <span>{{ 'product.notify_me' | t }}</span>
+            </button>
+          {% endif %}
+        {% else %}
+          {% if show_notify_modal %}
+            <button
+              onclick="toggleNotifyModal()"
+              type="button"
+              id="alternativeButton"
+              class="product__preorder-button button button--full-width accent-color-button"
+              style="display: inline-block;"
+            >
+              <span>{{ 'product.notify_me' | t }}</span>
+            </button>
+          {% else %}
+            <button
+              type="button"
+              id="alternativeButton"
+              class="product__preorder-button button button--full-width"
+              style="display:inline-block"
+            >
+              <span>{{ 'product.sold_out' | t }}</span>
+            </button>
+          {% endif %}
+        {% endunless %}
+      {% endif %}
+    {% endunless %}
+  </div>
+
+  {% unless product.title contains 'Membership' or product.type == 'Gift Card' or product.type == 'Event' %}
+    {% unless product.metafields.custom.gift_card %}
+      <p
+        class="product__pick-up-only {% unless show_only_pick_up %}hide{% endunless %}"
+      >
+        {{ 'product.pick_up_only' | t }}
+      </p>
+    {% endunless %}
+  {% endunless %}
+{%- endform -%}
+
+{% if show_notify_modal %}
+  {% render 'product-notify-me', base_class: 'product' %}
+{% endif %}
+<script>
+  function updateQuantity(button, change) {
+    const quantityInput = button.parentElement.querySelector('.item-quantity');
+    let currentQuantity = parseInt(quantityInput.value);
+    currentQuantity = isNaN(currentQuantity) ? 1 : currentQuantity;
+    const newQuantity = currentQuantity + change;
+    if (newQuantity >= 1) {
+      quantityInput.value = newQuantity;
+    }
+  };
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const atcButton = document.getElementById('atcButton');
+    const productNameInput = document.querySelector('.product__name');
+
+    if (!atcButton || !productNameInput) return;
+
+    const form = atcButton.closest('form');
+
+    function getVariantsArray() {
+      return (
+        window.Shopify?.product?.variants ||
+        window.ThemeVars?.product?.variants ||
+        []
+      );
+    }
+
+    function getCurrentVariant() {
+      if (!form) return null;
+      const variantSelector = form.querySelector('input[name="id"]:checked, select[name="id"], input[name="id"]');
+      if (!variantSelector) return null;
+      const variantId = variantSelector.value;
+      return getVariantsArray().find(v => String(v.id) === String(variantId)) || null;
+    }
+
+    function updatePosthogAttrs() {
+      const name = productNameInput.value;
+      if (name) {
+        atcButton.setAttribute('data-ph-capture-attribute-product-name', name);
+      }
+
+      const variant = getCurrentVariant();
+      if (variant) {
+        // price
+        if (typeof variant.price === 'number') {
+          atcButton.setAttribute('data-ph-capture-attribute-product-price', (variant.price / 100).toString());
+        }
+        // variant id
+        atcButton.setAttribute('data-ph-capture-attribute-variant-id', String(variant.id));
+      }
+    }
+
+    // Initial run
+    updatePosthogAttrs();
+
+    // Observe value attribute changes (covers programmatic updates)
+    const observer = new MutationObserver(updatePosthogAttrs);
+    observer.observe(productNameInput, { attributes: true, attributeFilter: ['value'] });
+
+    // Also listen for change / input events in case the theme triggers them
+    ['input', 'change'].forEach(evt => productNameInput.addEventListener(evt, updatePosthogAttrs));
+  });
+</script>

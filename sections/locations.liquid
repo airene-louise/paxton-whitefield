@@ -1,0 +1,81 @@
+<section class="locations__wrapper">
+  {% if section.settings.title %}
+  <h2 class="locations__title">{{ section.settings.title }}</h2>
+  {% endif %}
+  {% if section.settings.description %}
+  <p class="locations__text">{{ section.settings.description }}</p>
+  {% endif %}
+  <div class="locations__blocks">
+  {% for block in section.blocks %}
+    <a href="{{ block.settings.url }}" class="locations__location">
+    <div class="locations__location__image-wrapper">
+      {% if block.settings.image %}
+      {{ block.settings.image
+        | image_url: width: block.settings.image.width
+        | image_tag:
+        alt: block.settings.image.alt,
+        width: 440,
+        height: 500,
+        class: 'locations__location__image',
+        loading: 'lazy',
+        sizes: '(min-width: 750px) 25vw, 100vw'
+      }}
+      {% else %}
+      <img width="375" height="250" src="https://picsum.photos/375/250" alt="" class="locations__location__image" />
+      {% endif %}
+    </div>
+    <p class="locations__location__title">{{ block.settings.title }}</p>
+    </a>
+  {% endfor %}
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Locations",
+  "class": "locations",
+  "max_blocks": 4,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description"
+      }
+    ],
+    "blocks":[
+      {
+        "type": "location",
+        "name": "Location",
+        "settings":[
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],    
+  "presets": [
+    {
+      "name": "Locations"
+    }
+  ]
+}
+{% endschema %}

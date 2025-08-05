@@ -1,0 +1,74 @@
+
+{% for block in section.blocks %}
+  <div class="image-blocks__block {% if section.settings.full_image %}full-image{% endif %}">
+  <div class="image-blocks__block__overlay"></div>
+    <img
+      class="image-blocks__block__image"
+      src="{{ block.settings.image | image_url: width: image_width }}"
+      alt="{{ block.settings.image.alt | default: block.settings.title }}"
+      width="{{ image_width }}"
+      height="auto"
+      loading="lazy"
+    >
+    <div class="image-blocks__block__content ">
+      <h2 class="image-blocks__block__title">{{ block.settings.title }}</h2>
+      {% if block.settings.button_text != blank %}
+        <a class="image-blocks__block__button" href="{{ block.settings.button_url }}">{{ block.settings.button_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+{% schema %}
+  {
+    "name": "Image Blocks",
+    "tag": "section",
+    "class": "image-blocks",
+    "max_blocks": 2,
+    "settings": [
+      {
+  "type": "checkbox",
+  "id": "full_image",
+  "label": "Just an image - full width",
+  "default": true
+  }
+    ],
+    "blocks": [
+      {
+        "name": "Image banner",
+        "type": "banner",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "default": "Lorem ipsum",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button text"
+          },
+          {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image Blocks"
+      }
+    ]
+  }
+{% endschema %}

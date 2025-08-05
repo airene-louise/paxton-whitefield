@@ -1,0 +1,75 @@
+{% assign mediaType = section.settings.mediaType %}
+
+<div class="image__video">
+  <div class="image__video__container">
+    {% if mediaType == "video" %}
+      <div class="image__video__content" style="margin: 0 auto;">
+        <div class="video-container {% if section.settings.mobile_video_id != blank %}desktop-only{% endif %}">
+          {{ section.settings.desktop_video_id | video_tag: autoplay: false, loop: false, muted: false, controls: true }}
+        </div>
+        {% if section.settings.mobile_video_id != blank %}
+          <div class="video-container mobile-only">
+            {{ section.settings.mobile_video_id | video_tag: autoplay: false, loop: false, muted: false, controls: true }}
+          </div>
+        {% endif %}
+      </div>
+    {% elsif mediaType == "image" %}
+      <div class="image__video_image {% if section.settings.mobile_image != blank %}desktop-only{% endif %}">
+        <img src="{{ section.settings.imageUrl | img_url: 'master' }}" alt="{{ section.settings.imageUrl.alt | default: 'Image' }}">
+      </div>
+      {% if section.settings.mobile_image != blank %}
+        <div class="image__video_image mobile-only">
+          <img src="{{ section.settings.mobile_image | img_url: 'master' }}" alt="{{ section.settings.mobile_image.alt | default: 'Mobile Image' }}">
+        </div>
+      {% endif %}
+    {% else %}
+      <p>Invalid media type specified</p>
+    {% endif %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Video or Image",
+  "settings": [
+    {
+      "type": "select",
+      "label": "Media Type",
+      "id": "mediaType",
+      "options": [
+        { "value": "video", "label": "Video" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "video"
+    },
+    {
+      "type": "video",
+      "label": "Video ID (Desktop)",
+      "id": "desktop_video_id"
+    },
+    {
+      "type": "video",
+      "label": "Video ID (Mobile)",
+      "id": "mobile_video_id"
+    },
+    {
+      "type": "image_picker",
+      "label": "Image (Desktop)",
+      "id": "imageUrl",
+      "info": "Select an image for desktop (if media type is set to image)"
+    },
+    {
+      "type": "image_picker",
+      "label": "Image (Mobile)",
+      "id": "mobile_image",
+      "info": "Select an image for mobile devices (optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video or Image"
+    }
+  ]
+}
+{% endschema %}

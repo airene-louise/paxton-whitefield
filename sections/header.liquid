@@ -1,0 +1,365 @@
+{% liquid 
+  assign sticky = section.settings.sticky 
+  if section.settings.logo_svg_url != blank
+    assign logo = section.settings.logo_svg_url
+  elsif section.settings.logo != blank
+    assign logo = section.settings.logo | image_url: width: section.settings.logo.width
+  else
+    assign logo = "https://via.placeholder.com/150x50?text=Logo+Image"
+  endif
+  if section.settings.navigation == blank
+    assign menu = linklists['main-menu']
+  else
+    assign menu = section.settings.navigation
+  endif
+%}
+<header class="header {% unless template.name == 'collection' %} {% if sticky %}header--sticky{% endif %} {% endunless %}">
+  <div class="header__container">
+    <div class="header__inner">
+
+      <div class="header__left">
+        <div class="header__actions__item header__actions__item--hamburger-button">
+          <button class="header__actions__link" aria-label="Toggle mobile menu" onclick="openMobileMenu();">
+           <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 1H19.8939" stroke="black"/>
+              <path d="M0 9H19.8939" stroke="black"/>
+              <path d="M0 17H19.8939" stroke="black"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="header__acreditations header__acreditations--desktop">
+          {% if section.settings.accred-logo-left != blank %}
+            {{ section.settings.accred-logo-left | image_url: width: 120 | image_tag: width: 65, alt: section.settings.accred-logo-left.alt }}
+          {% endif %}
+          {% if section.settings.accred-logo-right != blank %}
+            {{ section.settings.accred-logo-right | image_url: width: 120 | image_tag: width: 60, alt: section.settings.accred-logo-right.alt }}
+          {% endif %}
+        </div>  
+
+        <div class="header__actions__item header__actions__item--search">
+          <button
+            class="header__actions__link header__search-button"
+            onclick="toggleSearchForm()"
+          >
+            {% render "icons", icon: "search" %}
+          </button>
+          <form class="header__search-form" action="/search" method="get">
+            <input
+              type="text"
+              name="q"
+              class="header__search-input"
+              placeholder="{{ 'search.search' | t }}"
+              autocomplete="off"
+              data-search-input
+            >
+          </form>
+        </div>
+      </div>
+    
+      {% comment %} Logo {% endcomment %}
+      <div class="header__logo">
+        <a href="{{ shop.url }}">
+          {{ logo | image_url: width: 315, height: 48 | image_tag: width: 315, height: 48, alt: shop.title }}
+        </a>
+      </div>
+    
+      {% comment %} Header actions (search, minicart, account) {% endcomment %}
+      <div class="header__actions">
+        <ul class="header__actions__list">
+
+          <li class="header__actions__item header__actions__item--shops">
+            <a href="/pages/our-shops" class="header__actions__link">
+              {% render "icons", icon: "our-shops" %}<span>Our Shops</span>
+            </a>
+          </li>
+
+          <li class="header__actions__item header__actions__item--phone">
+            <a href="tel:{{ section.settings.phone }}" class="header__actions__link">
+              {% render "icons", icon: "phone-icon" %}<span>{{ section.settings.phone_label }} {{ section.settings.phone }}</span>
+            </a>
+          </li>
+
+          {% if shop.customer_accounts_enabled or shop.customer_accounts_optional %}
+            <li class="header__actions__item">
+              <a href="{{ routes.account_url }}" class="header__actions__link">
+               {% render "icons", icon: "account" %}<span>Account</span>
+              </a>
+            </li>
+          {% endif %}
+
+          <li class="header__actions__item">
+            <a
+              href="{{ routes.cart_url }}"
+              class="header__actions__link header__actions__link--minicart"
+              data-cart-count="{{ cart.item_count }}"
+            >
+              {% render "icons", icon: "cart" %}
+              <span>Basket</span>
+            </a>
+            <div class="add-to-cart-popup">
+              <button class="add-to-cart-popup__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <line x1="1.47819" y1="1.27422" x2="14.7413" y2="14.5373" stroke="#070D30" stroke-width="1.8"/>
+                  <line x1="14.7419" y1="1.81022" x2="1.47874" y2="15.0733" stroke="#070D30" stroke-width="1.8"/>
+                </svg>
+              </button>
+              <div class="add-to-cart-popup__inner">
+                <div class="add-to-cart-popup__arrow"></div>
+                <span class="add-to-cart-popup__title">Added to basket</span>
+                <span class="add-to-cart-popup__product-title"></span>
+                <a
+                  href="/cart"
+                  class="add-to-cart-popup__button"
+                >
+                  Go to basket
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+
+  {% assign promo_blocks = section.blocks | where: "type", "megamenu_promo_block" %}
+  {% render "header-menu-desktop", menu: menu, promo_blocks: promo_blocks %}
+
+  {% assign mobile_menu_footer = linklists[section.settings.mobile_menu_footer] %}
+  {% render "header-menu-mobile"
+    menu: menu,
+    logo: logo,
+    mobile_menu_footer: mobile_menu_footer
+    promo_blocks: promo_blocks
+  %}
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  {% unless template.name == 'collection' %}
+    {% if sticky %}
+      // If user has scrolled past a certain point, add is-scrolling to header
+      const header = document.querySelector('.header');
+      const headerContainer = document.querySelector('.header__container');
+      const headerContainerHeight = headerContainer.offsetHeight;
+      headerContainer.style.setProperty(
+        '--header-container-height',
+        `${headerContainerHeight}px`
+      );
+      const scrollThreshold = 30;
+      const tolerance = 15;
+      let lastScrollTop = 0;
+      let ticking = false;
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > scrollThreshold) {
+              header.classList.add('is-scrolling');
+            } else if (window.scrollY < scrollThreshold - tolerance) {
+              header.classList.remove('is-scrolling');
+            }
+            
+            if (window.scrollY > lastScrollTop + 5) {
+              headerContainer.classList.add('is-scrolling-down');
+              header.classList.add('is-scrolling-down'); 
+            } else if (window.scrollY < lastScrollTop - 5) {
+              headerContainer.classList.remove('is-scrolling-down');
+              header.classList.remove('is-scrolling-down');
+            }
+            
+            lastScrollTop = window.scrollY <= 0 ? 0 : window.scrollY;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, {passive: true});
+    {% endif %}
+  {% endunless %}
+
+  // Add dropdown controls for mobile
+  const dropdownButtons = document.querySelectorAll('.header__menu-mobile__link.has-children');
+    dropdownButtons.forEach(function(dropdownButton) {
+      dropdownButton.addEventListener('click', function() {
+      this.parentElement.classList.toggle('is-open');
+      });
+    });
+  });
+
+  function toggleSearchForm() {
+    const searchForm = document.querySelector('.header__search-form');
+    if (searchForm) {
+      searchForm.classList.toggle('is-open');
+      searchForm.querySelector('input').focus();
+    }
+  }
+
+  function openMobileMenu() {
+    const nav = document.querySelector('.header__menu-mobile');
+    const close = document.querySelector('.header__actions__item--hamburger-button  button');
+    const header = document.querySelector('.header');
+    header.classList.add('mobile-open');
+    nav && nav.classList.add('is-open');
+    document.body.classList.add('no-scroll');
+    document.querySelector('html').classList.add('no-scroll');
+    close.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="0.581092" y1="0.593834" x2="17.6337" y2="17.6464" stroke="black"/><line x1="17.6338" y1="0.353553" x2="0.581254" y2="17.4061" stroke="black"/></svg>';
+    close.setAttribute('onclick', 'closeMobileMenu()');
+  }
+
+  function closeMobileMenu() {
+    const nav = document.querySelector('.header__menu-mobile');
+    const close = document.querySelector('.header__actions__item--hamburger-button  button');
+    const header = document.querySelector('.header');
+    header.classList.remove('mobile-open');
+    nav && nav.classList.remove('is-open');
+    document.body.classList.remove('no-scroll');
+    document.querySelector('html').classList.remove('no-scroll');
+
+    close.innerHTML = '<svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.893555 1H20.7875" stroke="black" stroke-width="1.5"/><path d="M0.893555 9H20.7875" stroke="black" stroke-width="1.5"/><path d="M0.893555 17H20.7875" stroke="black" stroke-width="1.5"/></svg>';
+    close.setAttribute('onclick', 'openMobileMenu()');
+  }
+
+  const dropdowns = document.querySelectorAll('.header__menu-mobile__dropdown');
+
+  dropdowns.forEach(dropdown => {
+    const mobileDrawers = dropdown.querySelectorAll('.header__menu-mobile__sublist');
+
+    mobileDrawers.forEach(drawer => {
+      drawer.addEventListener('click', () => {
+        drawer.classList.toggle('is-open');
+      });
+    });
+  });
+
+  document.querySelectorAll('.header__menu-mobile__back-button').forEach(back => {
+    back.addEventListener('click', function() {
+      document.querySelectorAll('.header__menu-mobile__item').forEach(item => {
+        item.classList.remove('is-open');
+      });
+    });
+  }); 
+
+</script>
+
+{% schema %}
+  {
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "id": "accred-logo-left",
+      "label": "accred logo left",
+      "type": "image_picker"
+    },
+    {
+      "id": "accred-logo-right",
+      "label": "accred logo right",
+      "type": "image_picker"
+    },
+    {
+      "id": "sticky",
+      "label": "Use sticky header?",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image",
+      "info": "Use this input if the logo is not an SVG"
+    },
+    {
+      "type": "url",
+      "id": "logo_svg_url",
+      "label": "Logo image URL (SVG)",
+      "info": "Only fill this if the logo is an SVG"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation",
+      "label": "Main Menu",
+      "info": "You can create a menu at Online Store > Navigation. Uses 'main-menu' if blank."
+    },
+    {
+      "type": "checkbox",
+      "id": "is_new",
+      "label": "Is new badge",
+      "info": "Show a badge next to the menu link saying new"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_limited",
+      "label": "Is limited badge",
+      "info": "Show a badge next to the menu link saying it is limited edition"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "01451 823460"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone Label",
+      "default": "Call us on:"
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_menu_footer",
+      "label": "Mobile Footer Menu",
+      "info": "You can create a menu at Online Store > Navigation. Uses 'mobile-menu-footer' if blank."
+    }
+  ],
+  "blocks": [
+    {
+    "type": "megamenu_promo_block",
+    "name": "Megamenu promo block",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Parent link title"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Promo block image"
+      },
+      {
+        "type": "text",
+        "id": "promo_block_title",
+        "label": "Promo block title"
+      },
+      {
+        "type": "textarea",
+        "id": "promo_block_text",
+        "label": "Promo block text"
+      },
+      {
+        "type": "text",
+        "id": "promo_block_button_text",
+        "label": "Promo Button Text"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Promo block URL"
+      }
+    ]
+    }
+  ]
+  }
+{% endschema %}

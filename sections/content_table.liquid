@@ -1,0 +1,62 @@
+<div class="content-table">
+  <div class="content-table__content {% if section.settings.narrow__width__container %}narrow__width__container{% endif %}">
+    <table>
+      <tr class="table__header-row">
+        <th>{{ section.settings.table_header_title }}</th>
+        <th>{{ section.settings.table_header_description }}</th>
+      </tr>
+      {% for block in section.blocks %}
+      <tr class="table__data-row">
+        <td>{{ block.settings.left_column_content }}</td>
+        <td>{{ block.settings.right_column_content }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Content table",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "narrow__width__container",
+      "label": "Narrow width container"
+    },
+    {
+      "type": "text",
+      "id": "table_header_title",
+      "label": "Table header title"
+    },
+    {
+      "type": "text",
+      "id": "table_header_description",
+      "label": "Table header description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "textarea",
+          "label": "Left Column Content",
+          "id": "left_column_content"
+        },
+        {
+          "type": "textarea",
+          "label": "Right Column Content",
+          "id": "right_column_content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content table"
+    }
+  ]
+}
+{% endschema %}

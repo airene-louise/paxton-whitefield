@@ -1,0 +1,31 @@
+<div class="{{ base_class }}__social-icons {{ inner_class }}">
+   {% if settings.twitter_url %}
+   <a href="{{ settings.twitter_url }}">
+        {% render: "icons", icon: "twitter" %}
+    </a>
+   {% endif %}
+   
+   {% if settings.facebook_url %}
+   <a href="{{ settings.facebook_url }}">
+        {% render: "icons", icon: "facebook" %}
+    </a>
+   {% endif %}
+   
+   {% if settings.instagram_url %}
+   <a href="{{ settings.instagram_url }}">
+        {% render: "icons", icon: "instagram" %}
+    </a>
+   {% endif %}
+   
+   {% if settings.youtube_url %}
+   <a href="{{ settings.youtube_url }}">
+        {% render: "icons", icon: "youtube" %}
+    </a>
+   {% endif %}
+   
+   {% if settings.linkedin_url %}
+   <a href="{{ settings.linkedin_url }}">
+        {% render: "icons", icon: "linkedin" %}
+    </a>
+   {% endif %}
+</div>

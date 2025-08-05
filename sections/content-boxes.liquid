@@ -1,0 +1,187 @@
+
+<section class="content-boxes__wrapper content-boxes__wrapper--{{ section.id }}">
+  <div class="content-boxes__swiper swiper content-boxes__swiper--{{ section.id }}">
+    <div class="swiper-wrapper content-boxes__swiper-wrapper">
+      {% assign count = 0 %}
+      {% for block in section.blocks %}
+        {% assign count = count | plus: 1 %}
+        <div class="swiper-slide">
+          <a href="{{ block.settings.button_url }}" class="content-box">
+            <div class="content-box__overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }}"></div>
+            <img
+              src="{{ block.settings.image | image_url: width: block.settings.image.width }}"
+              alt="{{ block.settings.image.alt }}"
+              class="content-block__image"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="lazy"
+            > 
+            <div class="content-box__content">
+              {% if block.settings.title != blank %}
+                <h2 class="content-box__title">{{ block.settings.title }}</h2>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <p class="content-box__text">{{ block.settings.text }}</p>
+              {% endif %}
+              {% if block.settings.button_url != blank %}
+                <span class="content-box__button">{{ block.settings.button_text }}</span>
+              {% endif %}
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+    <div class="content-boxes__controls">
+      <div class="content-boxes__swiper-button-prev">
+        {% render 'icons', icon: 'arrow-left-black' %}
+      </div>
+      <div class="content-boxes__pagination content-boxes__pagination--{{ section.id }}"></div>
+      <div class="content-boxes__swiper-button-next">
+        {% render 'icons', icon: 'arrow-right-black' %}
+      </div>
+    </div>
+</section>
+
+<!-- Initialize Swiper -->
+<script>
+  document.addEventListener('swiperReady', () => {
+
+    let swiper = new Swiper(".content-boxes__swiper--{{ section.id }}", {
+      slidesPerView: 1,
+      spaceBetween: 15,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 15
+        },
+        1068: {
+          slidesPerView: {{ count }},
+          spaceBetween: 15
+       
+        },
+        1268: {
+          slidesPerView: {{ count }},
+          spaceBetween: 15
+        }
+      },
+      navigation: {
+        nextEl: ".content-boxes__swiper-button-next",
+        prevEl: ".content-boxes__swiper-button-prev",
+      },
+      pagination: {
+        el: ".content-boxes__pagination--{{ section.id }}",
+        type: "fraction",
+      },
+      rewind: true,
+    });
+  });
+</script>
+
+
+
+{% if section.settings.full_width != false %}
+  <style> 
+    .content-boxes__wrapper--{{ section.id }} {
+      width: 100%;
+      max-width: 100%;
+      padding: 0px;
+    }
+  </style>
+{% endif %}
+
+{% if count == 2 %}
+  <style>
+    @media (max-width: 768px) {
+      .content-boxes__wrapper--{{ section.id }} .content-boxes__swiper-wrapper {
+          transform: none;
+          display: block;
+      }
+      .content-boxes__wrapper--{{ section.id }} .content-boxes__controls{
+        display: none;
+      }
+      .content-boxes__wrapper--{{ section.id }} .swiper-slide + .swiper-slide {
+        margin-top: 10px;
+      }
+
+      .content-boxes__wrapper--{{ section.id }} .content-box * {
+        color: white;
+        border-color: white;
+      }
+      .content-boxes__wrapper--{{ section.id }} .content-box__button {
+        border-color: white;
+      }
+    }
+  </style>
+{% endif %}
+
+
+  {% schema %}
+  {
+    "name": "Content Boxes",
+    "class": "content-boxes",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width?",
+        "default": false
+      }
+    ],
+    "blocks":[
+    {
+      "type": "content-block",
+      "name": "Content Block",
+      "settings":[
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "overlay_opacity",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "unit": "%",
+            "label": "Overlay Opacity",
+            "default": 30
+          },
+          {
+            "type": "checkbox",
+            "id": "light",
+            "label": "Light?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button URL"
+          }
+        ]
+      }
+    ],    
+    "presets": [
+    {
+      "name": "Content Boxes"
+    }
+    ]
+  }
+  {% endschema %}

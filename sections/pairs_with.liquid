@@ -1,0 +1,47 @@
+{% if product.metafields.shopify--discovery--product_recommendation.complementary_products != blank %}
+
+  <div class="product-slider container">
+    <h2 class="product-slider__title">
+      <span class="product-slider__title__text">Pairs perfectly with...</span>
+    </h2>
+    <div class="swiper product-slider__swiper-{{ id }}">
+      <div class="swiper-wrapper product-slider__swiper-wrapper">
+      {% for item in product.metafields.shopify--discovery--product_recommendation.complementary_products.value %}
+          <div class="swiper-slide product-slider__swiper-slide">
+            {% render 'product-card', product: item %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('swiperReady', () => {
+      new Swiper(".product-slider__swiper-{{ id }}", {
+        slidesPerView: 2.2,
+        spaceBetween: 10,
+        breakpoints: {
+          768: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+          },
+          1068: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+          },
+          1268: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+          }
+        },
+        rewind: true
+      })
+    })
+
+    window.Quickshop ? window.Quickshop.init() : 
+    document.addEventListener('quickshopReady', () => {
+      Quickshop.init();
+    });
+  </script>
+
+{% endif %}

@@ -1,0 +1,87 @@
+<div class="collection">
+  {% render "collection-header", section: section %}
+  <div class="collection__inner">
+    <div class="collection__products-count search">
+      <div class="collection__products-count__inner">
+        <div class="collection__products-count-toggle" onclick="toggleFilters()">
+            <span>Search Results</span>
+        </div>
+        <span class="collection__products-count-wrapper">
+          <span data-products-count>{{ search.results_count  }}</span>
+          <span>{{ "collection.products_count" | t }}</span>
+        </span>
+        <span class="collection__grid-selection">
+          <span class="collection__grid-selection__single-column">
+            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.2019" y="0.5" width="19" height="19" stroke="black" stroke-opacity="0.4"/>
+            </svg>
+          </span>
+          <span class="collection__grid-selection__multi-column">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.674561" y="0.5" width="8.61577" height="8.7" fill="#F5A800" stroke="#F5A800"/>
+              <rect x="10.8843" y="0.5" width="8.61577" height="8.7" fill="#F5A800" stroke="#F5A800"/>
+              <rect x="0.674561" y="10.8" width="8.61577" height="8.7" fill="#F5A800" stroke="#F5A800"/>
+              <rect x="10.8843" y="10.8" width="8.61532" height="8.7" fill="#F5A800" stroke="#F5A800"/>
+            </svg>
+          </span>
+        </span>
+      </div>
+    </div>
+    
+    <div class="collection__products-grid collection__products-grid--4-col">
+      {% liquid
+        paginate search.results by 16
+          assign products_count = paginate.items
+          assign paginate = paginate
+          for item in search.results 
+            unless item.tags contains "Archive" or item.tags contains "archive"  or item.tags contains "partner" or item.tags contains "Partner"
+              render 'product-card', product: item
+            endunless
+          endfor
+        endpaginate
+      %}
+      <div data-paginate-items="{{ products_count }}" hidden></div>
+      <div data-paginate-pages="{{ paginate.pages }}" hidden></div>
+    </div>
+    {% if paginate.pages > 1 %}
+      {% render 'pagination', paginate: paginate %}
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+const columnSelector = document.querySelector('.collection__grid-selection');
+  const singleSelector = document.querySelector('.collection__grid-selection__single-column');
+  const multiSelector = document.querySelector('.collection__grid-selection__multi-column');
+  const productsGrid = document.querySelector('.collection__products-grid');
+  
+  columnSelector.querySelectorAll("span").forEach(span => {
+    span.addEventListener('click', function () {
+      columnSelector.querySelectorAll("span").forEach(span => {
+        span.classList.remove('active');
+      });
+      span.classList.add('active');
+      productsGrid.classList.remove('single-column', 'multi-column');
+      if (span.classList.contains('collection__grid-selection__single-column')) {
+        productsGrid.classList.add('single-column');
+        span.querySelector('svg rect').style.fill = '#F5A800';
+        span.querySelector('svg rect').style.stroke = '#F5A800';
+        multiSelector.style.opacity = '0.4';
+        multiSelector.querySelectorAll('svg rect').forEach(rect => {
+          rect.style.fill = 'none';
+          rect.style.stroke = 'black';
+        });
+      } else {
+        productsGrid.classList.add('multi-column');
+        multiSelector.querySelectorAll('svg rect').forEach(rect => {
+          rect.style.fill = '#F5A800';
+          rect.style.stroke = '#F5A800';
+          span.style.opacity = '1';
+        })
+        singleSelector.querySelector('svg rect').style.fill = 'none';
+        singleSelector.querySelector('svg rect').style.stroke = 'black';
+      }
+    })
+  });
+</script>

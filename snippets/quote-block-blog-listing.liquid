@@ -1,0 +1,14 @@
+<div class="quote__block quote__block--blog">
+  <div class="quote__block-container" style="background-color:#F5EFE8;">
+  <div class="quote__block__icon-left">
+  {% render 'icons', icon: 'quote-up' %}
+</div>
+  <div class="quote__block-inner">
+  <h3 class="quote__block-text">{{ blog.metafields.custom.quote_blog.value.quote_text }}</h3>
+  <p class="quote__block__person-name">{{ blog.metafields.custom.quote_blog.value.quote_person }}</p>
+  </div>
+  <div class="quote__block__icon-right">
+  {% render 'icons', icon: 'quote-down' %}
+</div>
+  </div>
+</div>

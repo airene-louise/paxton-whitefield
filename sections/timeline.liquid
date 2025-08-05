@@ -1,0 +1,175 @@
+{% assign sectionId = section.settings.timeline_title | handleize %}
+<div class="timeline__container">
+{% if section.settings.timeline_title != blank %}
+  <div class="timeline__header">
+    <h3 class="timeline__title">{{ section.settings.timeline_title }}</h3>
+  </div>
+{% endif %}
+  <div class="timeline__swiper--{{ sectionId }} swiper">
+    <div class="swiper-wrapper">
+
+      {% for block in section.blocks %}
+
+        <div class="timeline__item swiper-slide">
+
+          <div class="timeline__item__inner {% if block.settings.image != blank %} timeline__item__inner--with-image {% endif %}">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image
+                | image_url: width : '600'
+                | image_tag: loading: 'lazy', class: "timeline__item__image"
+              }}
+            {% endif %}
+
+            <div class="timeline__item__content">
+              <h3 class="timeline__item__title">
+                {{ block.settings.title }}
+              </h3>
+              <p class="timeline__item__text">
+                {{ block.settings.content }}
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      {% endfor %}
+
+      {% comment %}
+        Empty slide to make sure the last slide gets the active state on desktop
+      {% endcomment %}
+      <div class="timeline__item timeline__item--empty  swiper-slide"></div>
+
+    </div>
+  </div>
+
+  <div class="timeline__thumbs-wrapper">
+
+    <div class="timeline__thumbs--{{ sectionId }} swiper">
+
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %} 
+          <div class="timeline__thumbs__slide swiper-slide">
+            <span>{{ block.settings.title }}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <div class="timeline__thumbs__nav">
+      <div class="timeline__thumbs__nav-button timeline__thumbs__nav-button--prev timeline__thumbs__nav-button--prev--{{ sectionId }}">
+        {% render 'icons', icon: "arrow-left" %}
+      </div>
+
+      <div class="timeline__thumbs__nav-button timeline__thumbs__nav-button--next timeline__thumbs__nav-button--next--{{ sectionId }}">
+        {% render 'icons', icon: "arrow-right" %}
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('swiperReady', () => {
+    const timelineThumbs = new Swiper(
+      '.timeline__thumbs--{{ sectionId }}',
+    {
+      spaceBetween: 30,
+      slidesPerView: 'auto',
+      navigation:{
+        nextEl: '.timeline__thumbs__nav-button--next--{{ sectionId }}',
+        prevEl: '.timeline__thumbs__nav-button--prev--{{ sectionId }}',
+      },
+      breakpoints: {
+        767: {
+          spaceBetween: 40,
+        }
+      },
+      on: {
+        click: function () {
+          if (!this.clickedIndex) return;
+          timelineSwiper.slideTo(this.clickedIndex);
+          const currentSlide = this.slides[this.clickedIndex];
+          this.slides.forEach(slide => {
+            slide.classList.remove('swiper-slide-active');
+          });
+          currentSlide.classList.add('swiper-slide-active');
+        },
+
+        slideChange: function () {
+          timelineSwiper.slideTo(this.activeIndex);
+        }
+      }
+    });
+
+    const timelineSwiper = new Swiper(
+      '.timeline__swiper--{{ sectionId }}',
+    {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      thumbs: {
+        swiper: timelineThumbs,
+      },
+      breakpoints: {
+        767: {
+          slidesPerView: 2.4,
+          spaceBetween: 20,
+        }
+      },
+      on: {
+        slideChange: function () {
+          timelineThumbs.slideTo(this.activeIndex);
+          timelineThumbs.slides.forEach(slide => {
+            slide.classList.remove('swiper-slide-active');
+          });
+          timelineThumbs.slides[this.activeIndex].classList.add('swiper-slide-active');
+        }
+      }
+    });
+  });
+</script>
+
+{% schema %}  
+{
+  "name": "Timeline",
+  "tag": "section",
+  "class": "timeline",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "timeline_title",
+      "label": "Timeline title",
+      "default": "Timeline Title"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Timeline item",
+      "type": "timeline-item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (date)"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline"
+    }
+  ]
+}
+{% endschema %}

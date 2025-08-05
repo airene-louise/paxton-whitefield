@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "show_title": false
+      }
+    },
+    "page_header_y3PE48": {
+      "type": "page-header",
+      "settings": {
+        "background_image": "shopify:\/\/shop_images\/Cheese_Banner_-_2160x500px.jpg",
+        "page_title": "Unsubscribe Success",
+        "page_subtitle": "",
+        "show_page_title": true,
+        "hide_image_on_mobile": false
+      }
+    },
+    "contact_FwLUX7": {
+      "type": "contact",
+      "disabled": true,
+      "settings": {
+        "subtitle": "",
+        "title": "",
+        "intro_text": "",
+        "success_message": "",
+        "section_one_title": "Email",
+        "section_one_text": "<p>sales@paxtonandwhitfield.co.uk<\/p>",
+        "section_two_title": "Phone",
+        "section_two_text": "<p>01451 823460<\/p>",
+        "section_three_title": "Our Shops",
+        "section_three_text": "<p>- London<\/p><p>- Bath<\/p><p>- Canterbury<\/p><p>- HQ: Bourton on the Water<\/p>",
+        "section_four_title": "Fill out our form",
+        "section_four_text": "<p><em>And we can direct your enquiry to the suitable <\/em>department<em>. We look forward to hearing from you.<\/em><\/p>",
+        "hide_details": false
+      }
+    },
+    "content_richtext_TDagf7": {
+      "type": "content_richtext",
+      "name": "Content Richtext",
+      "settings": {
+        "content": "<h2>We are sorry to see you go. If you would like to re-subscribe at any time then please do via the homepage. We still look forward to being your number one choice of online cheesemonger.<\/h2>",
+        "use_collection_content": false,
+        "background_color": "#FFF9F4",
+        "text_color": "#000000",
+        "text_align": "left",
+        "margin": 40,
+        "padding": 40,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    }
+  },
+  "order": [
+    "main",
+    "page_header_y3PE48",
+    "contact_FwLUX7",
+    "content_richtext_TDagf7"
+  ]
+}

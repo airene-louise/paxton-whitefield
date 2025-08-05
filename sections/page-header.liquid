@@ -1,0 +1,78 @@
+{% if collection.metafields.custom.collection_page_header %}
+  {% assign background_image = collection.metafields.custom.collection_page_header %}
+{% else %}
+  {% assign background_image = section.settings.background_image %}
+{% endif %}
+
+{% liquid 
+  assign image_classes = 'page-header_background-image'
+  if section.settings.hide_image_on_mobile
+    assign image_classes = image_classes | append: ' hide-on-mobile'
+  endif
+%}
+
+<div class="page-header">
+  {% if background_image != blank %}
+    {{ background_image |
+      image_url: width: 1440 |
+      image_tag:
+        widths: '300, 600, 900, 1100, 1400, 1440',
+        sizes: '(max-width: 350px) 350px, (max-width: 700px) 700px, (min-width: 1440px) 1440px',
+        class: image_classes
+    }}
+  {% endif %}
+<div class="page-header-container">
+  {% if section.settings.show_page_title %}
+    <h1 class="page-header-title">
+      {% if section.settings.page_title != blank %}
+        {{ section.settings.page_title }}
+      {% else %}
+        {{ page.title }}
+      {% endif %}
+    </h1>
+  {% endif %}
+  {% if section.settings.page_subtitle != blank %}
+    <h2 class="page-header-subtitle">{{ section.settings.page_subtitle }}</h2>
+  {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page Header",
+  "settings": [
+  {
+    "type": "image_picker",
+    "label": "Header background image",
+    "id": "background_image"
+  },
+  {
+    "type": "textarea",
+    "label": "Page title",
+    "id": "page_title"
+  },
+   {
+    "type": "textarea",
+    "label": "Page subtitle",
+    "id": "page_subtitle"
+  },
+  {
+    "type": "checkbox",
+    "label": "Show Page Title?",
+    "id": "show_page_title",
+    "default": true
+  },
+  {
+    "type": "checkbox",
+    "label": "Hide image on mobile?",
+    "id": "hide_image_on_mobile",
+    "default": false
+  }
+  ],
+  "presets": [
+    {
+      "name": "Page Header"
+    }
+  ]
+}
+{% endschema %}

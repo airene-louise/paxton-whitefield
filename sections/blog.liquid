@@ -1,0 +1,57 @@
+<div class="blog">
+  {% render 'blog-listing-header', section: section %}
+  {% render 'blog-listing-navigation', section: section %}
+{% paginate blog.articles by 11 %}
+    <div class="blog-grid blog-grid--first">
+        {% for article in blog.articles limit: 3 %}
+            {% render 'article-card', article: article, double: double, forloopindex: forloop.index %}
+        {% endfor %}
+    </div>
+      {% render 'quote-block-blog-listing', section: section %}
+    <div class="blog-grid blog-grid--second">
+        {% for article in blog.articles offset: 3 %}
+            {% render 'article-card', article: article, double: double, forloopindex: forloop.index %}
+        {% endfor %}
+    </div>
+    {% render 'pagination', paginate: paginate %}
+{% endpaginate %}
+</div>
+
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "class": "blog",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "blog_header_image",
+      "label": "Blog Header Image"
+    },
+     {
+      "type": "url",
+      "id": "blog_header_button_link",
+      "label": "Blog Header Button URL"
+    },
+     {
+      "type": "text",
+      "id": "blog_header_button_text",
+      "label": "Blog Header Button Text",
+      "default": "Back"
+    },
+    {
+      "type": "text",
+      "id": "blog_header_intro_text",
+      "label": "Blog Header Intro Text",
+      "default": "Our Blog"
+    },
+     {
+      "type": "textarea",
+      "id": "blog_header_intro_body_text",
+      "label": "Blog Header Intro Body Text",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+}
+{% endschema %}

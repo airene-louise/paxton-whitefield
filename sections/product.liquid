@@ -1,0 +1,245 @@
+{% liquid
+  assign base_class = "product"
+%}
+<div class="product__breadcrumbs">
+  {% render 'breadcrumbs', show_home: true, show_back_arrow: false %}
+</div>
+
+<div class="product__inner">
+
+  <div class="product__gallery-wrapper">
+    {% render 'product-media-slider', product: product, base_class: base_class %}
+  </div>
+
+  <div class="product__info-wrapper">
+    <div class="product__info">
+
+      <div class="product__info__header">
+        {% render 'product-title-info', product: product, base_class: base_class %}
+         {% if product.metafields.custom.product_short_description != blank %}
+          <p class="product__description">{{ product.metafields.custom.product_short_description }}</p>
+        {% else %}
+          <div class="product__description">{{ product.description }}</div>
+        {% endif %}
+      </div>
+      <div class="product__review-stars">
+        <div class="yotpo-widget-instance" data-yotpo-instance-id="645215" data-yotpo-product-id="{{product.id}}" data-yotpo-cart-product-id="{{item.product.id}}" data-yotpo-section-id="{{template.name}}"></div>
+      </div>
+      <div class="product__mobile-price">
+        {% render 'price', product: product, base_class: 'product' %}
+      </div>
+
+      {% if product.metafields.custom.product_information_icons != blank %}
+      <div class="product__info-icons">
+        {% for icon in product.metafields.custom.product_information_icons.value %}
+          <div class="product__info-icons__block">
+            <img
+              src="{{ icon.icon | image_url: width: 50 }}"
+              alt="{{ icon.text }}"
+              width="auto"
+              height="auto"
+              loading="eager"
+            >
+            <span class="product__info-icons__block__text">{{ icon.text }}</span>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% unless product.tags contains "Archive" or product.tags contains "archive" %}
+        {% render 'product-form', base_class: base_class %}
+        <div class="product__usps">
+          {% for block in section.blocks %}
+            <div class="product__usp">
+              <img class="product__usp__icon" src="{{ block.settings.icon | img_url: 'master' }}" alt="{{ block.settings.title }}">
+              <p class="product__usp__title">{{ block.settings.title }}&nbsp;<a href="{% if forloop.first %}#delivery-info{% else %}{{ block.settings.link_url }}{% endif %}">{{ block.settings.link_text }}</a></p>
+            </div>
+          {% endfor %}
+        </div>
+      {% endunless %}
+      <div class="product__details">
+        {% if product.metafields.custom.bundle_products_metafield.value != blank %}
+          <div class="product__details__item active">            
+            <h2 class="product__details__item__title">{% if product.selling_plan_groups.size > 0 %}This Month's Cheese{% else %}Bundle Details{% endif %}<span>{% render 'icons', icon: 'chevron-down' %}</span></h2>
+            <div class="product__details__item__collapse">
+              <div class="product__details__item__text--bundles">
+                {% for bundle_product in product.metafields.custom.bundle_products_metafield.value %}
+                  <div class="product__details__bundle-product">
+                    {{ bundle_product.images[0]  | image_url: width: 275, height: 177, crop: 'center' | image_tag:
+                      loading: "lazy",
+                      sizes: '(min-width: 750px) 25vw, 100vw',
+                      widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946, 2150',
+                      alt: bundle_product.images[0].alt
+                    }}
+                    <h4 class="product__details__bundle-product__title">{{ bundle_product.title }}</h4>
+                    <p class="product__details__bundle-product__description">{{ bundle_product.metafields.custom.product_short_description }}</p>
+                    {% if bundle_product.metafields.custom.nutritional_info != blank %}
+                      <div><a class="product__details__bundle-product__modal-trigger" href="#nutritional-info--{{ bundle_product.id }}">Nutritional Information</a></div>
+                    {% endif %}
+                  </div>
+   
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if product.metafields.custom.product_short_description %}
+          <div class="product__details__item">            
+            <h2 class="product__details__item__title">Product Details<span>{% render 'icons', icon: 'chevron-down' %}</span></h2>
+            <div class="product__details__item__collapse">
+              <div class="product__details__item__text">{{ product.description }}</div>
+            </div>
+          </div>
+        {% endif %}
+        {% if product.metafields.custom.nutritional_info %}
+          <div class="product__details__item">            
+            <h2 class="product__details__item__title">Nutritional Information<span>{% render 'icons', icon: 'chevron-down' %}</span></h2>
+            <div class="product__details__item__collapse">
+              <div class="product__details__item__text">{{ product.metafields.custom.nutritional_info | metafield_tag }}</div>
+            </div>
+          </div>
+        {% endif %}
+        {% if product.metafields.custom.how_to %}
+          <div class="product__details__item">            
+            <h2 class="product__details__item__title">How To<span>{% render 'icons', icon: 'chevron-down' %}</span></h2>
+            <div class="product__details__item__collapse">
+              <div class="product__details__item__text">{{ product.metafields.custom.how_to | metafield_tag }}</div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% if product.metafields.custom.bundle_products_metafield.value != blank %}
+  {% for bundle_product in product.metafields.custom.bundle_products_metafield.value %}
+    {% if bundle_product.metafields.custom.nutritional_info != blank %}
+
+      {% capture modal_class %}nutritional-info--{{ bundle_product.id }}{% endcapture %}
+      {% capture modal_title %}{{ bundle_product.title }} Nutritional Information{% endcapture %}
+      {% assign modal_text = bundle_product.metafields.custom.nutritional_info | metafield_tag %}
+
+      {% render 'custom-modal', product:product, modal_class: modal_class, modal_title: modal_title, modal_text: modal_text %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% render 'custom-modal', product:product, modal_class: 'delivery-info', modal_title: section.settings.delivery_info_title, modal_text: section.settings.delivery_info_text %}
+
+<script>
+
+{% unless product.tags contains "Archive" or product.tags contains "archive" %}
+  const atcButton = document.querySelector('.product__button__wrapper');
+  const desktopOffset = atcButton.offsetTop;
+  const mobileOffset = atcButton.offsetTop + 150;
+
+  // makes button sticky when scrolling using an event listener and a class
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth > 1024) {
+      if (window.scrollY > desktopOffset) {
+        atcButton.classList.add('sticky');
+      } else {
+        atcButton.classList.remove('sticky');
+      }
+    } else {
+      if (window.scrollY > mobileOffset) {
+        atcButton.classList.add('sticky');
+      } else {
+        atcButton.classList.remove('sticky');
+      }
+    }
+  });
+{% endunless %}
+
+const productDetails = document.querySelectorAll('.product__details__item');
+
+productDetails.forEach((drawer) => {
+  drawer.addEventListener('click', function(event) {
+
+  console.log("event", event.target);
+
+    // Prevent the default action for elements that have existing event listeners or are interactive
+    const isInteractiveElement = event.target.tagName === 'A' || 
+                                 event.target.tagName === 'BUTTON' || 
+                                 event.target.closest('a') || 
+                                 event.target.closest('button');
+
+    if (isInteractiveElement) {
+      event.stopPropagation(); // Stop the event from reaching the drawer's click listener
+      return; // Do nothing if it's a link or button
+    }
+
+    // If the click is not on an interactive element, toggle the 'active' class
+    if (drawer.classList.contains('active')) {
+      drawer.classList.remove('active');
+    } else {
+      drawer.classList.add('active');
+    }
+  });
+
+  // Ensure that any click on links or buttons stops propagation, preserving their behavior
+  const linksAndButtons = drawer.querySelectorAll('a, button');
+  linksAndButtons.forEach((item) => {
+    item.addEventListener('click', function(event) {
+      event.stopPropagation(); // Stop the event from reaching the drawer's click listener
+    });
+  });
+});
+
+
+window.Quickshop ? window.Quickshop.init() : 
+document.addEventListener('quickshopReady', () => {
+    Quickshop.init();
+});
+</script>
+
+
+{% schema %}
+  {
+    "name": "Product",
+    "tag": "section",
+    "class": "product",
+    "settings": [
+      {
+        "type": "text",
+        "id": "delivery_info_title",
+        "label": "Delivery Info Title"
+      },
+      {
+        "type": "richtext",
+        "id": "delivery_info_text",
+        "label": "Delivery Info Text"
+      }
+    ],
+     "blocks": [
+      {
+        "name": "USP",
+        "type": "usp",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link Text"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link URL"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

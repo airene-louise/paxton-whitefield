@@ -1,0 +1,95 @@
+<!--
+  NOTE: This is banner component that displays text and a button alongside a product carousel.
+  One swiper carousel with many products can be added along with a title, subtitle and a call to action link.
+-->
+
+{% comment %}
+  This snippet can be rendered on any page.
+  Usage :
+  {% render 'product-slider', 
+  products: collection.products,
+  title: text, 
+  sub_title: text, 
+  cta_text: text,
+  cta_link: text,
+  id: section.id,
+  %}
+
+{% endcomment %}
+
+{% if sub_title != blank %}
+  <span class="product-slider__sub-title">{{ sub_title }}</span>
+{% endif %}
+
+
+<div class="product-slider__header">
+  {% if title != blank %}
+    <h2 class="product-slider__title">
+      <span class="product-slider__title__text">{{ title }}</span>
+    </h2>
+  {% endif %}
+
+  <div class="product-slider__navigation">
+    <div class="product-slider__swiper-button-prev">
+      {% render 'icons', icon: 'arrow-left-black' %}
+    </div>
+
+    <div class="product-slider__swiper-button-next">
+      {% render 'icons', icon: 'arrow-right-black' %}
+    </div>
+  </div>
+</div>
+
+{% if products != blank %}
+  <div class="product-slider product-slider-{{ id }}">
+    <div class="swiper product-slider__swiper-{{ id }}">
+      <div class="swiper-wrapper product-slider__swiper-wrapper">
+        {% for product in products limit: 8 %}
+          <div class="swiper-slide product-slider__swiper-slide">
+            {% render 'product-card', product: product %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if cta_link != blank %}
+  <div class="product-slider__cta">
+    <a href="{{ cta_link }}" style="text-decoration: none;">
+      <button class="button custom-{{ id }}-button" href="{{ cta_link }}">{{ cta_text }}</button>
+    </a>
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener('swiperReady', () => {
+    new Swiper(".product-slider__swiper-{{ id }}", {
+      slidesPerView: 2.2,
+      spaceBetween: 10,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        1068: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+        1268: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        }
+      },
+      navigation: {
+        nextEl: '.product-slider__swiper-button-next',
+        prevEl: '.product-slider__swiper-button-prev',
+      },
+    })
+  })
+
+  window.Quickshop ? window.Quickshop.init() : 
+  document.addEventListener('quickshopReady', () => {
+    Quickshop.init();
+  });
+</script>

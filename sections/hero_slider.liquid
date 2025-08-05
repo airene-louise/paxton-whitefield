@@ -1,0 +1,183 @@
+<div class="hero-slider__wrapper">  
+  <div class="hero-slider hero-slider-{{ section.id }}">
+    <div class="hero-slider__controls">
+    {% if section.blocks.size > 1  %}
+      <div class="hero-slider__swiper-{{ section.id }}-button-prev">
+        {% render 'icons', icon: 'arrow-left' %}
+      </div>
+      <div class="hero-slider__pagination"></div>
+      <div class="hero-slider__swiper-{{ section.id }}-button-next">
+        {% render 'icons', icon: 'arrow-right' %}
+      </div>
+    {% endif %}
+    </div>
+    <div class="swiper hero-slider__swiper-{{ section.id }}">
+      <div class="swiper-wrapper hero-slider__swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide hero-slider__swiper-slide">
+            <div class="hero-slide {% unless block.settings.desktop_image_two %}hero-slide__single-image{% endunless %}">
+              {% if block.settings.show_overlay %}
+                <div class="hero-slide__overlay"></div>
+              {% endif %}
+              <div class="hero-slide__images-container">
+                {% assign desktop_width = 2000 %}
+                {% assign mobile_width = 1280 %}
+                {% if block.settings.desktop_image_two %}
+                  {% assign desktop_width = 750 %}
+                {% endif %}
+               {% if block.settings.desktop_image %}
+                {{ block.settings.desktop_image  | image_url: width: desktop_width |  image_tag: width: desktop_width, height: nil, alt: block.settings.desktop_image.alt, class: 'hero-slide__desktop-image', loading: 'lazy' }}
+              {% endif %}
+              {% if block.settings.desktop_image_two %}
+                {{ block.settings.desktop_image_two  | image_url: width: desktop_width |  image_tag: width: desktop_width, height: nil, alt: block.settings.desktop_image_two.alt, class: 'hero-slide__desktop-image', loading: 'lazy' }}
+              {% endif %}
+              {% if block.settings.mobile_image %}
+                {{ block.settings.mobile_image  | image_url: width: block.settings.mobile_image.width |  image_tag: width: mobile_width, height: nil, alt: block.settings.mobile_image.alt, class: 'hero-slide__mobile-image', loading: 'lazy' }}               
+              {% endif %}
+              </div>
+              <div class="hero-slide__content">
+                {% if block.settings.title != blank %}
+                  {% if block.settings.h1 %}
+                    <h1 class="hero-slide__title">{{ block.settings.title }}</h1>
+                  {% else %}
+                    <h2 class="hero-slide__title">{{ block.settings.title }}</h2>
+                  {% endif %}
+                {% endif %}
+                {% if block.settings.subtitle != blank %}
+                  <span class="hero-slide__subtitle">{{ block.settings.subtitle }}</span>
+                {% endif %}
+                <div class="hero-slide__buttons">
+                  {% if block.settings.button_text != blank %}
+                    <a href="{{ block.settings.button_url }}" class="hero-slide__buttons--button">{{ block.settings.button_text }}</a>
+                  {% endif %}
+                  {% if block.settings.button_text_two != blank %}
+                    <a href="{{ block.settings.button_url_two }}" class="hero-slide__buttons--button">{{ block.settings.button_text_two }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Initialize Swiper -->
+<script>
+  document.addEventListener('swiperReady', () => {
+    new Swiper(".hero-slider__swiper-{{ section.id }}", {
+      slidesPerView: 1,
+      navigation: {
+        nextEl: ".hero-slider__swiper-{{ section.id }}-button-next",
+        prevEl: ".hero-slider__swiper-{{ section.id }}-button-prev",
+      },
+      pagination: {
+        el: ".hero-slider__pagination",
+        type: "fraction",
+      },
+      mousewheel: true,
+      keyboard: true,
+      {% if section.settings.autoplay %}
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      {% endif %}
+      loop: true,
+      rewind: true,
+    })
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Hero Slider",
+    "tag": "section",
+    "class": "hero_slider",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay",
+        "default": true
+      }
+    ],
+    "blocks": [
+          {
+            "name": "Hero Slide",
+            "type": "hero_slide",
+            "settings": [
+          {
+            "type": "image_picker",
+            "id": "desktop_image",
+            "label": "Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "desktop_image_two",
+            "label": "Desktop Image Two"
+          },
+          {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_overlay",
+            "label": "Show Overlay",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Seasonal cheeses & gifts"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Sub Title",
+            "default": "Discover our range."
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "button Text",
+            "default": "Shop seasonal cheese"
+          },
+          {
+            "type": "url",
+            "id": "button_url",
+            "label": "button Url",
+            "default": "/collections/all"
+          },
+          {
+            "type": "text",
+            "id": "button_text_two",
+            "label": "Button Two Text",
+            "default": "Shop gift boxes"
+          },
+          {
+            "type": "url",
+            "id": "button_url_two",
+            "label": "Button Url",
+            "default": "/collections/all"
+          },
+          {
+            "type": "checkbox",
+            "id": "h1",
+            "label": "Show title as H1",
+            "default": false
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+      "name": "Hero Slider"
+      }
+    ]
+  }
+{% endschema %}

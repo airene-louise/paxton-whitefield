@@ -1,0 +1,31 @@
+{%- comment -%}
+  This section is used as markup for the recommendations module
+{%- endcomment -%}
+
+<div class="product-page related-products__wrapper">
+  <div class="related-products__inner">
+    <div class="related-products__content">
+      <h2>{{ 'product.our_cheesemongers_also_recommend' | t }}</h2>
+    </div>
+    <div class="related-products__slider__wrapper swiper">
+      <div class="related-products__product-list swiper-wrapper">
+      {% if recommendations.performed %}
+          {% if recommendations.products_count > 0 %}
+              {% for product in recommendations.products %}
+                <div class="swiper-slide">
+                  {% render 'product-card', product: product %}
+                </div>
+              {% endfor %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div> 
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Related Products Recos",
+  "class":"related-products-section-recos"
+} 
+{% endschema %}

@@ -1,0 +1,61 @@
+{% liquid
+  assign base_class = "page"
+%}
+
+<div class="{{ base_class }}__container">
+  {% if section.settings.show_title %}
+    <h1 class="{{ base_class }}__title">{{ page.title }}</h1>
+  {% endif %}
+
+  <div class="{{ base_class }}__content">
+    {{ page.content }}
+  </div>
+
+  {% if template.suffix == "how_to" %}
+    {% if page.metafields.custom.how_to_steps != blank %}
+      <div class="{{ base_class }}__how-to-steps">
+        {% for step in page.metafields.custom.how_to_steps.value %}
+          <div class="{{ base_class }}__how-to-step">
+
+            <div class="{{ base_class }}__how-to-step__content">
+              {{ step.content | metafield_tag }}
+            </div>
+
+            <div class="{{ base_class }}__how-to-step__image-container">
+              {{ step.image
+              | image_url: width: 800
+              | image_tag:
+                alt: step.image.alt,
+                class: "page__how-to-step__image"
+              }}
+            </div>
+
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Page",
+    "tag": "section",
+    "class": "page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_title",
+        "label": "Show page title?",
+        "default": false
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

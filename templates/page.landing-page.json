@@ -1,0 +1,183 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "show_title": false
+      }
+    },
+    "hero_slider_7kzyjD": {
+      "type": "hero_slider",
+      "blocks": {
+        "hero_slide_M7gnzy": {
+          "type": "hero_slide",
+          "settings": {
+            "desktop_image": "shopify:\/\/shop_images\/Job_Oppertunities_Banner_-_Cheese_rooms_-_2160x720px_3a67f6e8-ced2-4897-9eb8-0f63b0ff7fa1.jpg",
+            "show_overlay": false,
+            "title": "Landing page for Ben",
+            "subtitle": "",
+            "button_text": "",
+            "button_url": "",
+            "button_text_two": "Shop easter cheeses",
+            "button_url_two": "shopify:\/\/collections\/all",
+            "h1": true
+          }
+        }
+      },
+      "block_order": [
+        "hero_slide_M7gnzy"
+      ],
+      "name": "Hero Slider",
+      "settings": {
+        "autoplay": true
+      }
+    },
+    "richtext_gkPFPg": {
+      "type": "richtext",
+      "name": "Rich text",
+      "settings": {
+        "content": "<p>testing rich text feature<\/p>"
+      }
+    },
+    "shop_the_selection_febwjD": {
+      "type": "shop_the_selection",
+      "blocks": {
+        "product_fxFrK4": {
+          "type": "product",
+          "settings": {
+            "featured_product": "barkham-blue"
+          }
+        },
+        "product_GNc4TL": {
+          "type": "product",
+          "settings": {
+            "featured_product": "blu-di-nicoletta"
+          }
+        }
+      },
+      "block_order": [
+        "product_fxFrK4",
+        "product_GNc4TL"
+      ],
+      "name": "Shop The Selection",
+      "settings": {
+        "title": "selection of easter cheese",
+        "description": "Shop seasonal cheeses from our meticulously curated selection.",
+        "image": "shopify:\/\/shop_images\/easter_hamper.jpg",
+        "url": "shopify:\/\/blogs\/recipes"
+      }
+    },
+    "tabs_divider_pyhN4T": {
+      "type": "tabs_divider",
+      "name": "Tabs divider",
+      "settings": {}
+    },
+    "text_banner_DXh4Yc": {
+      "type": "text-banner",
+      "name": "Text Banner",
+      "settings": {
+        "title": "test example for a title",
+        "description": "<p>body text here<\/p>"
+      }
+    },
+    "tabs_navigation_jtyrKk": {
+      "type": "tabs_navigation",
+      "blocks": {
+        "button_fnk3J8": {
+          "type": "button",
+          "settings": {
+            "button_text": "button 1"
+          }
+        },
+        "button_T8AYbN": {
+          "type": "button",
+          "settings": {
+            "button_text": "button 2"
+          }
+        }
+      },
+      "block_order": [
+        "button_fnk3J8",
+        "button_T8AYbN"
+      ],
+      "name": "Tabs navigation",
+      "settings": {}
+    },
+    "explore_products_wTzQL9": {
+      "type": "explore_products",
+      "blocks": {
+        "product_7FNeGH": {
+          "type": "product",
+          "settings": {
+            "product": "easter-cheese-board-2025"
+          }
+        },
+        "product_knqihr": {
+          "type": "product",
+          "settings": {
+            "product": "baron-bigod"
+          }
+        },
+        "product_8XWtez": {
+          "type": "product",
+          "settings": {
+            "product": "brie-de-meaux-1"
+          }
+        }
+      },
+      "block_order": [
+        "product_7FNeGH",
+        "product_knqihr",
+        "product_8XWtez"
+      ],
+      "name": "Explore Products Slider",
+      "settings": {
+        "products_on_article_page": false,
+        "title": "Explore Products"
+      }
+    },
+    "contact_j7U8Bn": {
+      "type": "contact",
+      "name": "Contact",
+      "settings": {
+        "subtitle": "",
+        "title": "",
+        "intro_text": "",
+        "success_message": "",
+        "section_one_title": "Write to us",
+        "section_one_text": "<p>Your address goes here.<\/p>",
+        "section_two_title": "Call us",
+        "section_two_text": "<p>Your phone number and times goes here<\/p>",
+        "section_three_title": "Visit us",
+        "section_three_text": "<p>Your blurb and link to stores goes here<\/p>",
+        "section_four_title": "Work with us",
+        "section_four_text": "<p>Your work number and email goes here<\/p>",
+        "hide_details": true
+      }
+    },
+    "image_video_dwxJr4": {
+      "type": "image_video",
+      "name": "Video or Image",
+      "settings": {
+        "mediaType": "video",
+        "desktop_video_id": "shopify:\/\/files\/videos\/Red Leicester - Sparkenhoe.mp4",
+        "mobile_video_id": "shopify:\/\/files\/videos\/Littlelepevideo.mp4",
+        "imageUrl": "shopify:\/\/shop_images\/Easter_family_cheeseboard_WR_Landscape_ab4fd51a-129c-479e-b359-25545bf29126.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/The_cheese_discovery_subscription_box_product_image_26018483-2095-42da-8ea1-6185563a73f9.jpg"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero_slider_7kzyjD",
+    "richtext_gkPFPg",
+    "shop_the_selection_febwjD",
+    "tabs_divider_pyhN4T",
+    "text_banner_DXh4Yc",
+    "tabs_navigation_jtyrKk",
+    "explore_products_wTzQL9",
+    "contact_j7U8Bn",
+    "image_video_dwxJr4"
+  ]
+}

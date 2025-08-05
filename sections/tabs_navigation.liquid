@@ -1,0 +1,93 @@
+{% liquid
+  assign base_class = "tabs-navigation"
+%}
+
+<div class="{{ base_class }}__container">
+  <ul class="{{ base_class }}__list">
+    {% for block in section.blocks %}
+      <li class="{{ base_class }}__item">
+        <button
+            class="{{ base_class }}__button {% if forloop.first %}active{% endif %}"
+            data-tab-index="{{ forloop.index0 }}"
+            >
+            {{ block.settings.button_text }}
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabsDividers = document.querySelectorAll('.tabs-divider');
+    tabsDividers.forEach((divider, index) => {
+      const prevSiblings = getPreviousSiblings(divider);
+      prevSiblings.forEach((sibling) => {
+        sibling.setAttribute('data-tab-index', index);
+        sibling.setAttribute('data-tab-content', true);
+        if (index !== 0) {
+          sibling.classList.add('hide');
+        }
+      });
+    });
+
+    const tabButtons = document.querySelectorAll('.{{ base_class }}__button');
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', handleTabClick);
+    });
+
+    function getPreviousSiblings(elem, filter) {
+      let sibs = [];
+      while (elem = elem.previousSibling) {
+        if (elem.nodeType === 3) continue; // text node
+        if (elem.classList.contains('{{ base_class }}')) break;
+        if (elem.classList.contains('tabs-divider')) break;
+        if (!filter || filter(elem)) sibs.push(elem);
+      }
+      return sibs;
+    }
+
+    function handleTabClick(event) {
+      const target = event.currentTarget;
+      const tabButtons = document.querySelectorAll('.{{ base_class }}__button');
+      tabButtons.forEach((button) => {
+        button.classList.remove('active');
+      });
+      target.classList.add('active');
+      const tabIndex = target.getAttribute('data-tab-index');
+      const tabSections = document.querySelectorAll('[data-tab-content]');
+      tabSections.forEach((section) => {
+        if (section.getAttribute('data-tab-index') === tabIndex) {
+          section.classList.remove('hide');
+        } else {
+          section.classList.add('hide');
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Tabs navigation",
+  "class": "tabs-navigation",
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Tab button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Navigation Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabs navigation"
+    }
+  ]
+}
+{% endschema %}

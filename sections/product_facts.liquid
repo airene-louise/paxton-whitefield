@@ -1,0 +1,51 @@
+{% if product.metafields.custom.facts_main_image != blank %}
+  <div class="product-facts">
+    <div class="product-facts__wrapper">
+      {{ product.metafields.custom.facts_main_image | image_url: width: '750' |  image_tag: loading: 'lazy', alt: product.metafields.custom.facts_main_image.alt }}
+
+      <div class="product-facts__content">
+        <div class="product-facts__blocks">
+          {% if product.metafields.custom.facts_main_title_one != blank %}
+          <h3 class="product-facts__title">{{ product.metafields.custom.facts_main_title_one }}</h3>
+          {% endif %}
+          <div class="product-facts__text">
+            {{ product.metafields.custom.key_facts | metafield_tag }}
+          </div>
+          {% if product.metafields.custom.facts_main_title_two != blank %}
+            <h3 class="product-facts__title">{{ product.metafields.custom.facts_main_title_two }}</h3>
+            {% endif %}
+          <div class="product-facts__text">
+            {{ product.metafields.custom.store_and_serve | metafield_tag }}
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+  {% endif %}
+
+
+  {% if product.metafields.custom.facts_main_two_image != blank %}
+    <div class="product-facts">
+      <div class="product-facts__wrapper product-facts__wrapper--reverse">
+        {{ product.metafields.custom.facts_main_two_image | image_url: width: '750' | image_tag: loading: 'lazy', alt: product.metafields.custom.facts_main_two_image.alt }}
+  
+        <div class="product-facts__content">
+          <div class="product-facts__blocks">
+            {% if product.metafields.custom.facts_main_two_title_one != blank %}
+            <h3 class="product-facts__title">{{ product.metafields.custom.facts_main_two_title_one }}</h3>
+            {% endif %}
+            <div class="product-facts__text">
+              {{ product.metafields.custom.facts_main_two_text_block_one | metafield_tag }}
+            </div>
+            {% if product.metafields.custom.facts_main_two_title_two != blank %}
+              <h3 class="product-facts__title">{{ product.metafields.custom.facts_main_two_title_two }}</h3>
+              {% endif %}
+            <div class="product-facts__text">
+              {{ product.metafields.custom.facts_main_two_text_block_two | metafield_tag }}
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+
+  {% endif %}

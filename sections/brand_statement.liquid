@@ -1,0 +1,56 @@
+<div class="brand-statement">
+  <div class="container">
+    <div class="brand-statement__inner">
+      {% if section.settings.subtitle != blank %}
+        <h3 class="brand-statement__subtitle-text">{{ section.settings.subtitle }}</h3>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <h3 class="brand-statement__title-text">{{ section.settings.title }}</h3>
+      {% endif %}
+      {% if section.settings.small_text != blank %}
+        <p class="brand-statement__small-text">{{ section.settings.small_text }}</p>
+      {% endif %}
+      {% if section.settings.learn_more_url and section.settings.learn_more_button != blank %}
+        <a href="{{ section.settings.learn_more_url }}" class="brand-statement__button">{{ section.settings.learn_more_button }}</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand Statement",
+  "settings": [
+  {
+    "type": "text",
+    "label": "Subtitle",
+    "id": "subtitle"
+  },
+  {
+    "type": "text",
+    "label": "Title",
+    "id": "title"
+  },
+  {
+    "type": "text",
+    "label": "Small Text",
+    "id": "small_text"
+  },
+  {
+    "type": "text",
+    "label": "Learn More Button Text",
+    "id": "learn_more_button"
+  },
+  {
+    "type": "url",
+    "label": "Learn More URL",
+    "id": "learn_more_url"
+  }
+  ],
+  "presets": [
+  {
+    "name": "Brand Statement"
+  }
+  ]
+}
+{% endschema %}

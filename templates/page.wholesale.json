@@ -1,0 +1,527 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "show_title": false
+      }
+    },
+    "page_header_7HQ8qD": {
+      "type": "page-header",
+      "settings": {
+        "background_image": "shopify:\/\/shop_images\/Wholesale_Banner_-_JST_Window-_2160x720px.jpg",
+        "page_title": "Wholesale Cheese with Paxton's",
+        "page_subtitle": "Our Wholesale Cheese Team works with retailers, hoteliers and chefs here in the UK and across the world to supply first-class cheese and fine foods along with a generous serving of tailored support.",
+        "show_page_title": true,
+        "hide_image_on_mobile": false
+      }
+    },
+    "ancillary_page_nav_RA49w9": {
+      "type": "ancillary-page-nav",
+      "blocks": {
+        "link_qdTfJN": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/press-enquires",
+            "button_text": "Press Enquires"
+          }
+        },
+        "link_gQLNH8": {
+          "type": "Link",
+          "settings": {
+            "button_url": "\/pages\/wholesale#britishwholesalecheeseforexport",
+            "button_text": "Export Cheese"
+          }
+        },
+        "link_fzLXFi": {
+          "type": "Link",
+          "settings": {
+            "button_url": "shopify:\/\/pages\/corporate",
+            "button_text": "Corporate"
+          }
+        }
+      },
+      "block_order": [
+        "link_qdTfJN",
+        "link_gQLNH8",
+        "link_fzLXFi"
+      ],
+      "settings": {}
+    },
+    "content_richtext_CXVqwH": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<h1>Wholesale<\/h1>",
+        "use_collection_content": false,
+        "background_color": "#FFF9F4",
+        "text_color": "#000000",
+        "text_align": "center",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "content_richtext_btXP4c": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<p>Paxton & Whitfield offer a fantastic range of carefully sourced and high-quality wholesale cheese and fine artisan foods to your business. We supply cheese to some of the finest restaurants, hotels and retail outlets in the UK. <\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "center",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "image_blocks_BzU9Lh": {
+      "type": "image_blocks",
+      "blocks": {
+        "banner_LVzL4Q": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Job_Oppertunities_Banner_-_Cheese_rooms_-_2160x720px_3a67f6e8-ced2-4897-9eb8-0f63b0ff7fa1.jpg",
+            "title": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "banner_LVzL4Q"
+      ],
+      "settings": {
+        "full_image": true
+      }
+    },
+    "content_richtext_PwbfjE": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<h1>Why Paxton & Whitfield?<\/h1>",
+        "use_collection_content": false,
+        "background_color": "#FFF9F4",
+        "text_color": "#000000",
+        "text_align": "center",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "content_richtext_689Pej": {
+      "type": "content_richtext",
+      "settings": {
+        "content": "<p><strong>Fast delivery<\/strong>: We can deliver same day in London and overnight to most areas of the UK.<br\/><br\/><strong>Training & Support<\/strong>: We offer bespoke training and events for wholesale customers as we firmly believe that well- informed chefs and FoH staff will pass on their enthusiasm to the diner. You can come to a Paxton & Whitfield shop and enjoy a tasting experience like no other, we can come to you with the cheese and accompaniment variations you would like to try, or we can arrange a virtual tasting via video. These events are always informative and interactive, but most of all, fun.<br\/><br\/><strong>A personal service<\/strong>: We are always just at the end of a phone. For businesses in Central London your cheese will often be delivered by the Cheesemonger who actually cut it, giving you a unique chance to ask specific questions about your cheese!<br\/><br\/><strong>Robust supply chain<\/strong>: We work closely with artisan cheesemakers and have built strong relationships with the producers directly. Many cheesemakers have supplied Paxton & Whitfield for generations, and this ensures we get the finest quality cheese.<br\/><br\/><strong>Quality guaranteed<\/strong>: We have a dedicated team in the Cotswolds maturing our cheeses. They look after the longer-term maturation of hard cheeses, or the short-term ripening and care of smaller, soft cheeses. We can take full advantage of the seasonality of cheeses and support British farmers in a sustainable way. This approach means we have quality at the core of everything we do.<\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "left",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "contact_6ibbtW": {
+      "type": "contact",
+      "settings": {
+        "subtitle": "",
+        "title": "What to do next",
+        "intro_text": "<p>We always like to hear from new customers. Please get<br\/>in touch using the form below<\/p>",
+        "success_message": "Thank you, we will be on contact shortly",
+        "section_one_title": "Write to us",
+        "section_one_text": "<p>Trade Account Manager, 93 Jermyn Street, London, SW1Y<br\/>6JE<\/p>",
+        "section_two_title": "Call us",
+        "section_two_text": "<p>020 7930 0259<\/p>",
+        "section_three_title": "Visit us",
+        "section_three_text": "<p>93 Jermyn Street, London, SW1Y<br\/>6JE<\/p>",
+        "section_four_title": "Email us",
+        "section_four_text": "<p>trademanager@paxtonandwhitfield.co.uk or fill in the form:<\/p>"
+      }
+    },
+    "content_richtext_Frrgbq": {
+      "type": "content_richtext",
+      "disabled": true,
+      "settings": {
+        "content": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.<\/p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?<\/p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "left",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "content_with_media_i7EMAH": {
+      "type": "content_with_media",
+      "disabled": true,
+      "settings": {
+        "narrow_width_container": true,
+        "image_right": false,
+        "image": "shopify:\/\/shop_images\/Cheese_2_-_Collections_Highlight_-_660x750px.jpg",
+        "image_url": "",
+        "title": "Wholesale cheese for hotels, restaurants and caterers",
+        "content": "<p>From our sites in London, Bath and the Cotswolds, we supply many of the finest hotels, restaurants, bakeries and cafes.<\/p><p>Our cheese list supports indie British cheesemakers; including several smaller artisan dairies and we also stock excellent examples of Continental favourites. We offer fast delivery and a personal service.<\/p><p>We can deliver same-day in London and overnight to most areas of the UK.<\/p><p>Whether you're a small independent business or part of a major group, we can be relied upon to bring you the very best quality British and Continental cheese in the quantities you require at a time that's convenient to you.<\/p>"
+      }
+    },
+    "content_with_media_AJJCcH": {
+      "type": "content_with_media",
+      "disabled": true,
+      "settings": {
+        "narrow_width_container": true,
+        "image_right": true,
+        "image": "shopify:\/\/shop_images\/XOcave-agedironingport.jpg",
+        "image_url": "",
+        "title": "Wholesale cheese for hotels, restaurants and caterers",
+        "content": "<p><strong>Supply Chain<\/strong><\/p><p>We have developed a robust supply chain, working closely with artisan cheesemakers and building strong relationships with the producers directly. Many cheesemakers have supplied Paxton & Whitfield for generations, and this ensures we get the finest quality cheese.<\/p><p><strong>Training & Support<\/strong><\/p><p>We offer bespoke training and events for wholesale customers as we firmly believe that well- informed chefs and waiters will pass on their enthusiasm to the diner. You can come to a Paxton & Whitfield shop and enjoy a tasting experience like no other, we can come to you with the cheese and accompaniment variations you would like to try, or we can arrange a virtual tasting via video. These events are always informative and interactive, but most of all, fun. <\/p><p><strong>What to do next<\/strong><\/p><p>To find out more about wholesale cheese supply to your business, please contact our London Manager.  Email: <a href=\"mailto:trade@paxtonandwhitfield.co.uk\" target=\"_blank\">trade@paxtonandwhitfield.co.uk<\/a> <br\/>Call: <a href=\"https:\/\/www.paxtonandwhitfield.co.uk\/0207%20930%200259\" target=\"_blank\">0207 930 0259<\/a><\/p>"
+      }
+    },
+    "content_with_media_XFaBdH": {
+      "type": "content_with_media",
+      "disabled": true,
+      "settings": {
+        "narrow_width_container": true,
+        "image_right": false,
+        "image": "shopify:\/\/shop_images\/DriftwoodGoatsCheeseHighResport.jpg",
+        "image_url": "",
+        "title": "Wholesale cheese for retail",
+        "content": "<p>Paxton & Whitfield has a full range of cheese, fine foods and associated gifting and homewares to supply your business. We can deliver to anywhere in the UK and have realistic minimum order requirements and speedy service.<\/p><p>In some cases, we have bought cheese from the same dairies for generations and this helps us select the finest batches for us to sell on our own counters, and yours!<br\/><br\/>From grab-and-go cheeses, to whole cheddar truckles, small batch-produced biscuits and fruit-packed chutneys, we can supply wholesale to freshen up your range.<\/p><p>None of our food products are available in supermarkets and much of our cheese and associated produce is sourced from the UK.<\/p>"
+      }
+    },
+    "content_with_media_9gV9jT": {
+      "type": "content_with_media",
+      "disabled": true,
+      "settings": {
+        "narrow_width_container": true,
+        "image_right": true,
+        "image": "shopify:\/\/shop_images\/WholeStilton-webpx.jpg",
+        "image_url": "",
+        "title": "Wholesale cheese for retail",
+        "content": "<p>We work with only the best suppliers and have carefully selected everything that we sell.<\/p><p>2019 saw the launch of our brand-new cheese homewares range – everything you need to serve and sell with cheese from the Cheesemongers’ Favourite Knife, to Camembert Bakers. All branded Paxton & Whitfield and available wholesale.<\/p><p><strong>Contact<\/strong><br\/>Email: <a href=\"mailto:wholesale@paxtonandwhitfield.co.uk\">wholesale@paxtonandwhitfield.co.uk<\/a><br\/>Call: <a href=\"tel:01451823460\">01451 823460<\/a> <br\/><br\/>Our gifting can add interest to any retail space and we refresh the range throughout the year to have a seasonal offer which will help boost sales.<\/p><p>We offer full traceability and our warehouse is BRC accredited.<\/p><p>For any further information please email <a href=\"mailto:sales@paxtonandwhitfield.co.uk\">sales@paxtonandwhitfield.co.uk<\/a><\/p>"
+      }
+    },
+    "content_with_media_PqRyxk": {
+      "type": "content_with_media",
+      "disabled": true,
+      "settings": {
+        "narrow_width_container": true,
+        "image_right": false,
+        "image": "shopify:\/\/shop_images\/LanarkBlueCuttingHighResport.jpg",
+        "image_url": "",
+        "title": "British Wholesale Cheese for Export",
+        "content": "<p>Paxton & Whitfield is recognised around the world as a purveyor of the very best of British cheese and fine foods. We have been the Royal Cheesemongers since 1850 and our branded products are designed to tell this story.<\/p><p>We can work with your business to supply you the highest quality cheese, fine foods and cheese-related homewares which will bring a little slice of St James’s into your range!<\/p><p>Our wholesale team will train your staff – from around the world if necessary – so that they know the fascinating story of our company and have knowledge about the products they are selling.<\/p><p>Please contact our wholesale team for information about which cheeses we are able to export and for any other help. <\/p>"
+      }
+    },
+    "content_richtext_MWhDcC": {
+      "type": "content_richtext",
+      "disabled": true,
+      "settings": {
+        "content": "<p>While the earlier years were good for Paxton & Whitfield, times were tougher from the 1860s. Smart society's appetite for traditional English farmhouse cheese was fading in favour of Continental cheese and, in England, factory style production was becoming the established practice. Many artisan cheeses totally disappeared as small farmers sent their milk to industrial creameries. This trend continued throughout the two World Wars and, in the 1940s, with eggs, butter and cheese in short supply 93 Jermyn Street became an ordinary grocery shop.<\/p><p>After World War II and a series of different owners, business improved as Paxtons rekindled their contacts with the traditional cheesemakers of rural Britain and started bringing in the best that Europe could offer. Two new Paxtons opened, in Stratford upon Avon and Bath not to mention their virtual shop on the web. Customers who value quality know they will always be able to find it at Paxtons. As Winston Churchill once observed \"a gentleman buys his cheese at Paxton & Whitfield\". In Paxton's third century of trading we hope you will allow us to help you enjoy the fascinating and diverse world of cheese too.<\/p>",
+        "use_collection_content": false,
+        "background_color": "#fff9f4",
+        "text_color": "#000000",
+        "text_align": "left",
+        "margin": 40,
+        "padding": 0,
+        "full_width": false,
+        "max_width": 900,
+        "spacing": 10
+      }
+    },
+    "faqs_4BNrU6": {
+      "type": "faqs",
+      "blocks": {
+        "faq_WkrmqE": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you have a minimum order quantity?",
+            "answer": "<p>We aim to be as flexible as possible with MOQs and simply charge £10 for delivery if your order is under £250. If your order is over £250, delivery is free.<\/p>"
+          }
+        },
+        "faq_EhxWDP": {
+          "type": "faq",
+          "settings": {
+            "question": "Whole price vs cut price",
+            "answer": "<p>Trade whole price is the price per unit if you take the pack size. Trade cut price is the price per unit if you take less than the pack size.<\/p>"
+          }
+        },
+        "faq_Xx8zLJ": {
+          "type": "faq",
+          "settings": {
+            "question": "Payment",
+            "answer": "<p>Payment is in advance by proforma invoice.<\/p>"
+          }
+        },
+        "faq_kzGq4x": {
+          "type": "faq",
+          "settings": {
+            "question": "When do you deliver?",
+            "answer": "<p>We can usually dispatch the following day as long as we have sufficient stock and we receive payment following issue of the Proforma.  We deliver Tuesday through to Friday each week.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_WkrmqE",
+        "faq_EhxWDP",
+        "faq_Xx8zLJ",
+        "faq_kzGq4x"
+      ],
+      "settings": {
+        "narrow__width__container": false,
+        "title": "Frequently asked questions"
+      }
+    },
+    "image_blocks_xbNmFh": {
+      "type": "image_blocks",
+      "blocks": {
+        "banner_CzW3Pt": {
+          "type": "banner",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/adb4d22bd5db7cab2bb66f705abffc6c.png",
+            "title": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "banner_CzW3Pt"
+      ],
+      "settings": {
+        "full_image": true
+      }
+    },
+    "explore_products_D8Xb7e": {
+      "type": "explore_products",
+      "blocks": {
+        "product_7kKFDX": {
+          "type": "product",
+          "settings": {
+            "product": "evenlode"
+          }
+        },
+        "product_MdBRqe": {
+          "type": "product",
+          "settings": {
+            "product": "paxton-whitfield-trinity"
+          }
+        },
+        "product_CYn6T6": {
+          "type": "product",
+          "settings": {
+            "product": "st-helena"
+          }
+        },
+        "product_Nxczmt": {
+          "type": "product",
+          "settings": {
+            "product": "the-buckingham-hamper"
+          }
+        },
+        "product_UzpH7Y": {
+          "type": "product",
+          "settings": {
+            "product": "the-buckingham-hamper"
+          }
+        }
+      },
+      "block_order": [
+        "product_7kKFDX",
+        "product_MdBRqe",
+        "product_CYn6T6",
+        "product_Nxczmt",
+        "product_UzpH7Y"
+      ],
+      "disabled": true,
+      "settings": {
+        "products_on_article_page": false,
+        "title": "Explore Products"
+      }
+    },
+    "explore_collections_small_njAQym": {
+      "type": "explore_collections_small",
+      "blocks": {
+        "collection_iLRnB6": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4297dac06f76dabe2720d0e23340e277.png",
+            "title": "Blue cheese",
+            "url": ""
+          }
+        },
+        "collection_YLdqiT": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4297dac06f76dabe2720d0e23340e277.png",
+            "title": "Blue cheese",
+            "url": ""
+          }
+        },
+        "collection_6gBbqW": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4297dac06f76dabe2720d0e23340e277.png",
+            "title": "Blue cheese",
+            "url": ""
+          }
+        },
+        "collection_A746RK": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4297dac06f76dabe2720d0e23340e277.png",
+            "title": "Blue cheese",
+            "url": ""
+          }
+        },
+        "collection_pdY7jM": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4297dac06f76dabe2720d0e23340e277.png",
+            "title": "Blue cheese",
+            "url": ""
+          }
+        },
+        "collection_YCx3xQ": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4297dac06f76dabe2720d0e23340e277.png",
+            "title": "Blue cheese",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_iLRnB6",
+        "collection_YLdqiT",
+        "collection_6gBbqW",
+        "collection_A746RK",
+        "collection_pdY7jM",
+        "collection_YCx3xQ"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Explore more collections",
+        "button_text": "All cheese types",
+        "button_url": ""
+      }
+    },
+    "icons_banner_q4QWDR": {
+      "type": "icons_banner",
+      "blocks": {
+        "icon_izbhyW": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        },
+        "icon_3kVdmA": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        },
+        "icon_Vxnwqe": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        },
+        "icon_DFPaeB": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        },
+        "icon_DE6RTz": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        },
+        "icon_Gd6hFE": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        },
+        "icon_njEYiL": {
+          "type": "icon",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/Vector_2.svg",
+            "title": "Short title",
+            "text": "This is a short text",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "icon_izbhyW",
+        "icon_3kVdmA",
+        "icon_Vxnwqe",
+        "icon_DFPaeB",
+        "icon_DE6RTz",
+        "icon_Gd6hFE",
+        "icon_njEYiL"
+      ],
+      "disabled": true,
+      "settings": {
+        "background_colour": "#f5efe8",
+        "main_title": "Example section for icons with text underneath",
+        "main_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+        "border_bottom": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "page_header_7HQ8qD",
+    "ancillary_page_nav_RA49w9",
+    "content_richtext_CXVqwH",
+    "content_richtext_btXP4c",
+    "image_blocks_BzU9Lh",
+    "content_richtext_PwbfjE",
+    "content_richtext_689Pej",
+    "contact_6ibbtW",
+    "content_richtext_Frrgbq",
+    "content_with_media_i7EMAH",
+    "content_with_media_AJJCcH",
+    "content_with_media_XFaBdH",
+    "content_with_media_9gV9jT",
+    "content_with_media_PqRyxk",
+    "content_richtext_MWhDcC",
+    "faqs_4BNrU6",
+    "image_blocks_xbNmFh",
+    "explore_products_D8Xb7e",
+    "explore_collections_small_njAQym",
+    "icons_banner_q4QWDR"
+  ]
+}

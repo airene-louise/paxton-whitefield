@@ -1,0 +1,55 @@
+{% comment %}
+    Renders a list of product's swatches (m,l,xl etc)
+
+    Usage:
+    {% render 'product_swatches' %}
+{% endcomment %}
+{% if product.has_only_default_variant %}
+  <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+  <div class="yotpo-widget-instance" data-yotpo-instance-id="650310" should-auto-inject="false" product-handle="{{product.handle}}" widget-type="SubscriptionsAddToCartWidget" full-format-product-price="{{ product.price | money }}"></div>
+{% else %}
+  <div class="swatch-wrapper"></div>
+  <div class="yotpo-widget-instance" data-yotpo-instance-id="650310" should-auto-inject="false" product-handle="{{product.handle}}" widget-type="SubscriptionsAddToCartWidget" full-format-product-price="{{ product.price | money }}"></div>
+  <script>
+    (function () {
+      if (window.SwatchGroup) {
+        initSwatches();
+      } else {
+        document.addEventListener("swatchesReady", initSwatches);
+      }
+
+      {% liquid
+        assign swatch_dropdown = false
+        if product.metafields.custom.swatch_dropdown == true
+          assign swatch_dropdown = true
+        endif
+      %}
+
+      function initSwatches() {
+        new SwatchGroup({
+          wrapper: ".swatch-wrapper",
+          productData: {{ product | json }},
+          swatchData: {{ product.metafields.swatches | json }},
+          swatchDropdown: {{ swatch_dropdown }},
+          allowUnavailableSelections: true
+        }).selectSwatchesFromUrl();
+      }
+    })();
+
+    document.addEventListener("variantChanged", function(event) {
+      const {variant, available, wrapper} = event.detail;
+      const atcButton = document.querySelector("#atcButton");
+
+
+      atcButton.style.opacity = available ? "1" : "0.5";
+      atcButton.style.pointer_events = available ? "" : "none";
+      atcButton.querySelector('span').innerHTML = available ? "Add to Cart" : "Sold Out";
+      //loop through each current swatch element and add option selected
+      const currentSwatchLabels = wrapper.querySelectorAll('.swatch-group__current');
+      currentSwatchLabels.forEach(function (item, index) {
+        const optionIndex = index+1;
+        item.innerHTML = event.detail.variantSelectedOptions["option"+optionIndex]
+      });
+    })
+  </script>
+{% endif %}

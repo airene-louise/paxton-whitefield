@@ -1,0 +1,13 @@
+<div class="faqs-accordion__item">
+  <input type="checkbox" name="faqs-accordion-{{ section.id }}" class="faqs-accordion__item__trigger" hidden id="faqs-accordionItem-{{ section.id }}-{{ forloop.index }}">
+  <div class="faqs-accordion__item__wrapper">
+    <label for="faqs-accordionItem-{{ section.id }}-{{ forloop.index }}" class="faqs-accordion__item__title">
+      <span>{{ block.settings.question }}</span>
+      <span class="faqs-accordion__item__dropdown-arrow">
+      {% render "icons", icon: "plus", class: "faqs-accordion__item__plus" %}
+      {% render "icons", icon: "minus", class: "faqs-accordion__item__minus" %}
+      </span>
+    </label>
+    <div class="faqs-accordion__item__content rte">{{ block.settings.answer }}</div>
+  </div>
+</div>

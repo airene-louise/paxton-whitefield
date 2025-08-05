@@ -1,0 +1,110 @@
+{% comment %}
+  The 'shop-the-selection' base class is defined in the Schema, that's why we start with the __container.
+  The section renders like this: <section class="shopify-section shop-the-selection"></section>
+{% endcomment %}
+
+{% assign id = section.id %}
+
+<div class="shop-the-selection__container">
+  <h2 class="shop-the-selection__title">{{ section.settings.title }}</h2>
+  <p class="shop-the-selection__description">{{ section.settings.description }}</p>
+  <div class="shop-the-selection__wrapper">
+    <div class="shop-the-selection__image-container">
+      <a href="{{ section.settings.url }}">
+        <img class="shop-the-selection__image" loading="lazy" src="{{ section.settings.image | img_url: '1200x' }}" alt="{{ section.settings.image.alt }}">
+      </a>
+    </div>
+    <div class="shop-the-selection__content">
+      <div class="shop-the-selection__shop-the-selection swiper">
+        <div class="shop-the-selection__products swiper-wrapper">
+          {% for block in section.blocks %}
+            {% render 'product-card', product: block.settings.featured_product, additional_classes: 'swiper-slide', lifestyle_shot_first: true %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="shop-the-selection__navigation">
+        <div class="shop-the-selection__swiper-button-prev shop-the-selection__swiper-button-prev-{{ id }}">
+          {% render 'icons', icon: 'arrow-left' %}
+        </div>
+        <div class="shop-the-selection__swiper-button-next shop-the-selection__swiper-button-next-{{ id }}">
+          {% render 'icons', icon: 'arrow-right' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('swiperReady', () => {
+  const pressCarouselSwiper = new Swiper('.shop-the-selection__shop-the-selection ', {
+    slidesPerView: 2.3,
+    spaceBetween: 14,
+    navigation: {
+      nextEl: ".shop-the-selection__swiper-button-next-{{ id }}",
+      prevEl: ".shop-the-selection__swiper-button-prev-{{ id }}",
+    },
+    breakpoints: {
+      1200: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+        grid: {
+          rows: 2,
+          fill: 'row'
+        },
+      }
+    }
+  })
+})
+</script>
+
+
+{% schema %}
+{
+  "name": "Shop The Selection",
+  "class": "shop-the-selection",
+  "tag": "section",
+  "settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "TITLE",
+    "default": "Our Christmas Selection"
+  },
+   {
+    "type": "textarea",
+    "id": "description",
+    "label": "SELECTION DESCRIPTION",
+    "default": "Shop seasonal cheeses from our meticulously curated selection."
+  },
+  {
+    "type": "image_picker",
+    "id": "image",
+    "label": "IMAGE"
+  },
+  {
+    "type": "url",
+    "id": "url",
+    "label": "URL"
+  }
+  ],
+  "blocks": [
+    {
+    "name": "Product",
+    "type": "product",
+    "settings": [
+      {
+      "type": "product",
+      "id": "featured_product",
+      "label": "PRODUCT"
+      }
+    ]
+    }
+  ],
+  "presets": [
+  {
+    "name": "Shop The Selection"
+  }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+
+<div class="faqs__container {% if section.settings.narrow__width__container %}narrow__width__container{% endif %}">
+  <h2 class="faqs__title">{{ section.settings.title }}</h2>
+  <div class="faqs__content">
+    {% for block in section.blocks %}
+      {% render 'faq-accordion', block: block, forloop: forloop, section: section %}
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "FAQs",
+  "tag": "section",
+  "class": "faqs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "narrow__width__container",
+      "label": "Narrow Width container"
+    },
+      {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently asked questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs"
+    }
+  ]
+}
+{% endschema %}

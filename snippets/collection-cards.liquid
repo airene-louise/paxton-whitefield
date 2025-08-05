@@ -1,0 +1,57 @@
+
+<section class="explore-collections__wrapper collection">
+  <div class="explore-collections__header">
+    <h2 class="explore-collections__title__text">{{ collection.metafields.custom.collection_cards_title}}</h2>
+    <a href="{{ collection.metafields.custom.collection_cards_button_url }}" class="explore-collections__cta-button desktop">{{ collection.metafields.custom.collection_cards_button_text }}</a>
+  </div>
+  <div class="explore-collections">
+    <div class="swiper explore-collections__swiper">
+      <div class="swiper-wrapper explore-collections__swiper-wrapper">
+      {% for item in collection.metafields.custom.collection_listing_cards.value %}
+        <div class="swiper-slide explore-collections__swiper-slide">
+          <a href="{{ item.url }}" class="collection-card-small">
+            <div class="collection-card-small__image-wrapper">
+              {{ item.image
+                | image_url: width: item.image.width
+                | image_tag:
+                  alt: item.image.alt,
+                  width: 440,
+                  height: 440,
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 25vw, 100vw'
+              }}
+            </div>
+            <p class="collection-card-small__title">{{ item.title }}</p>
+          </a>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+   <a href="{{ collection.metafields.custom.collection_cards_button_url }}" class="explore-collections__cta-button mobile">{{ collection.metafields.custom.collection_cards_button_text }}</a>
+</section>
+
+<!-- Initialize Swiper -->
+<script>
+  // console.log('cta link', '{{ cta_link }}')
+  document.addEventListener('swiperReady', () => {
+    new Swiper(".explore-collections__swiper", {
+      slidesPerView: 2.2,
+      spaceBetween: 10,
+      breakpoints: {
+        768: {
+        slidesPerView: 4,
+        spaceBetween: 20,
+        },
+        1068: {
+        slidesPerView: 6,
+        spaceBetween: 20,
+        },
+        1268: {
+        slidesPerView: 6,
+        spaceBetween: 20,
+        },
+      },
+    })
+  })
+</script>

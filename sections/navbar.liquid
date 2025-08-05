@@ -1,0 +1,100 @@
+{% liquid
+  assign base_class = "navbar"
+%}
+
+<nav class="{{ base_class }}__inner">
+  <ul
+    id="navbar-{{ section.id }}"
+    class="{{ base_class }}__list"
+  >
+    <li class="{{ base_class }}__item {{ base_class }}__item--toggle-wrapper">
+      <button
+        class="{{ base_class }}__toggle-button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="navbar-{{ section.id }}"
+      >
+        {% render "icons", icon: "chevron-down" %}
+      </button>
+    </li>
+    {% for block in section.blocks %}
+      {% liquid
+        assign is_active = false
+        if block.settings.url == request.path
+          assign is_active = true
+        endif
+      %}
+      <li class="{{ base_class }}__item {% if is_active %}active{% endif %}">
+        <a
+          href="{{ block.settings.url }}"
+          class="{{ base_class }}__link"
+          title="{{ block.settings.title }}"
+        >
+          <img
+            src="{{ block.settings.icon | image_url: width: 32 }}"
+            width="16"
+            height="16"
+            loading="eager"
+            alt="{{ block.settings.icon.alt | default: block.settings.title }}"
+            class="{{ base_class }}__icon"
+          >
+          <span class="{{ base_class }}__title">{{ block.settings.title }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+
+<script>
+  (function() {
+    const navbarList = document.getElementById("navbar-{{ section.id }}");
+    if (navbarList) {
+      const toggleButton = navbarList.querySelector(
+        ".{{ base_class }}__toggle-button"
+      );
+      if (toggleButton) {
+        toggleButton.addEventListener("click", function() {
+          const isExpanded = navbarList.getAttribute("aria-expanded") === "true";
+          toggleButton.setAttribute("aria-expanded", !isExpanded);
+          navbarList.classList.toggle("active");
+        });
+      }
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Navbar",
+  "class": "navbar",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Nav item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "icon"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navbar"
+    }
+  ]
+}
+{% endschema %}
