@@ -331,7 +331,9 @@ class SwatchGroup {
                     available: variant.dataset.available == "true"
                 }
             });
-            document.querySelector(".product__info-wrapper [data-price]").innerHTML = toMoneyString(variant.dataset.price);
+            document.querySelectorAll(".product__price__container [data-price]").forEach((element) => {
+                element.innerHTML = toMoneyString(variant.dataset.price);
+            });
             document.dispatchEvent(variantChangedEvent);
         }
     }
