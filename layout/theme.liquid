@@ -69,7 +69,7 @@
     </script>
     <!-- End Posthog -->
   </head>
-  <body class="template-{{ template.name }} {% if template contains 'collection' and collection.image != blank %}has-image{% endif %}">
+  <body class="template-{{ template.name }} {% if template contains 'collection' and collection.image != blank %}has-image{% endif %} {% if template contains 'product' and product.tags contains 'requires_age_verification'%} hide-overflow{% endif %}">
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe

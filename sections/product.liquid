@@ -1,6 +1,7 @@
 {% liquid
   assign base_class = "product"
 %}
+
 <div class="product__breadcrumbs">
   {% render 'breadcrumbs', show_home: true, show_back_arrow: false %}
 </div>
@@ -127,6 +128,40 @@
 {% endif %}
 
 {% render 'custom-modal', product:product, modal_class: 'delivery-info', modal_title: section.settings.delivery_info_title, modal_text: section.settings.delivery_info_text %}
+
+{% if product.tags contains 'requires_age_verification' %}
+  <div id="age-verification-modal" style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); z-index:9999; display:flex; align-items:center; justify-content:center;">
+    <div style="background:white; padding:2rem; border-radius:8px; text-align:center; max-width:90%; width:400px;">
+      <h2>Age Verification</h2>
+      <p>You must be 18 years old or over to view this product.</p>
+      <button id="age-yes" style="margin:1rem; padding:0.5rem 1rem;">I am 18+</button>
+      <button id="age-no" style="margin:1rem; padding:0.5rem 1rem;">Leave</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var modal = document.getElementById('age-verification-modal');
+      var yesBtn = document.getElementById('age-yes');
+      var noBtn = document.getElementById('age-no');
+
+      yesBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        sessionStorage.setItem('ageVerified', 'true');
+        document.querySelector('body').classList.remove('hide-overflow');
+      });
+
+      noBtn.addEventListener('click', function() {
+        window.location.href = 'https://www.google.com';
+      });
+
+      // Keep modal blocked if not verified yet
+      if (sessionStorage.getItem('ageVerified') === 'true') {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+{% endif %}
 
 <script>
 

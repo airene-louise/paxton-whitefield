@@ -9806,3 +9806,7 @@ button.swiper-pagination-bullet {
   flex-flow: column wrap;
 }
 
+.hide-overflow{
+  overflow: hidden;
+}
+
